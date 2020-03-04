@@ -102,11 +102,6 @@ namespace PHX {
 
     virtual void addDependentField(const PHX::FieldTag& ft);
 
-    // DEPRECATED: use new const version below
-    template<typename DataT,typename...Props>
-    PHALANX_DEPRECATED
-    void addDependentField(const PHX::MDField<DataT,Props...>& f);
-
     template<typename DataT,typename...Props>
     void addDependentField(const PHX::MDField<const DataT,Props...>& f);
 

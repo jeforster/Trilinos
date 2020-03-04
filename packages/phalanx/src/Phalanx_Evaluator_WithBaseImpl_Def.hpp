@@ -340,24 +340,6 @@ addDependentField(const PHX::FieldTag& ft)
 }
 
 //**********************************************************************
-// DEPRECATED!!!!
-template<typename Traits>
-template<typename DataT,typename...Props>
-void PHX::EvaluatorWithBaseImpl<Traits>::
-addDependentField(const PHX::MDField<DataT,Props...>& f)
-{
-  this->addDependentField(f.fieldTag());
-
-  using NCF = PHX::MDField<typename std::remove_const<DataT>::type,Props...>;
-  this->field_binders_.emplace(f.fieldTag().identifier(),
-                               PHX::MemoryBinder<NCF>(const_cast<NCF*>(&f)));
-#ifdef PHX_DEBUG
-  this->field_printers_.emplace(f.fieldTag().identifier(),
-                                PHX::FieldPrinter<NCF>(const_cast<NCF*>(&f)));
-#endif
-}
-
-//**********************************************************************
 template<typename Traits>
 template<typename DataT,typename...Props>
 void PHX::EvaluatorWithBaseImpl<Traits>::
