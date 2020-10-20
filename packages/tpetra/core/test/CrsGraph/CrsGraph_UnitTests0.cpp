@@ -114,7 +114,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, BadConst, LO, GO , Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, BadConst, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraph, BadConst, Node )
 #endif
   {
     using Teuchos::REDUCE_MIN;
@@ -191,7 +191,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, BadGIDs, LO, GO , Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, BadGIDs, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraph, BadGIDs, Node )
 #endif
   {
     const bool debug = Tpetra::Details::Behavior::debug("CrsGraph");
@@ -237,7 +237,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, ExcessAllocation, LO, GO , Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, ExcessAllocation, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraph, ExcessAllocation, Node )
 #endif
   {
     using Teuchos::Comm;
@@ -296,7 +296,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, insert_remove_LIDs, LO, GO , Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, insert_remove_LIDs, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraph, insert_remove_LIDs, Node )
 #endif
   {
     using Teuchos::Comm;
@@ -352,7 +352,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, CopiesAndViews, LO, GO , Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, CopiesAndViews, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraph, CopiesAndViews, Node )
 #endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -454,7 +454,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, WithStaticProfile, LO, GO , Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, WithStaticProfile, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraph, WithStaticProfile, Node )
 #endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -492,7 +492,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, EmptyGraphAlloc0, LO, GO , Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, EmptyGraphAlloc0, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraph, EmptyGraphAlloc0, Node )
 #endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -623,7 +623,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, EmptyGraphAlloc1, LO, GO , Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, EmptyGraphAlloc1, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraph, EmptyGraphAlloc1, Node )
 #endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -678,7 +678,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, DottedDiag, LO, GO , Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, DottedDiag, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraph, DottedDiag, Node )
 #endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -743,7 +743,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, NonLocals, LO, GO , Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, NonLocals, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraph, NonLocals, Node )
 #endif
   {
     using Teuchos::as;
@@ -942,22 +942,26 @@ namespace { // (anonymous)
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, WithStaticProfile,  LO, GO, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, CopiesAndViews,     LO, GO, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, BadGIDs,            LO, GO, NODE )
-#else
-#define UNIT_TEST_GROUP(NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, EmptyGraphAlloc0, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, EmptyGraphAlloc1, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, ExcessAllocation, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, BadConst, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, insert_remove_LIDs, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, NonLocals, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, DottedDiag, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, WithStaticProfile, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, CopiesAndViews, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, BadGIDs, NODE )
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+#else
+#define UNIT_TEST_GROUP(NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, EmptyGraphAlloc0, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, EmptyGraphAlloc1, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, ExcessAllocation, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, BadConst, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, insert_remove_LIDs, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, NonLocals, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, DottedDiag, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, WithStaticProfile, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, CopiesAndViews, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, BadGIDs, NODE )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
+#endif
 
 } // namespace (anonymous)

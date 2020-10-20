@@ -58,7 +58,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, ReplaceDiagonal, Scalar, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, ReplaceDiagonal, Scalar, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, ReplaceDiagonal, Scalar, Node )
 #endif
   {
     using Teuchos::Comm;
@@ -223,7 +223,7 @@ namespace { // (anonymous)
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, ReplaceDiagonal, SCALAR, LO, GO, NODE )
 #else
 #define UNIT_TEST_GROUP( SCALAR, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, ReplaceDiagonal, SCALAR,NODE )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, ReplaceDiagonal, SCALAR,NODE )
 #endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()

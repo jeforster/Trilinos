@@ -270,7 +270,11 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
   }
 
   ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, AlphaBetaMultiply, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, AlphaBetaMultiply, Scalar, Node )
+#endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef CrsMatrix<Scalar,LO,GO,Node> MAT;
@@ -351,7 +355,11 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
   // Make sure that CrsMatrix and RowMatrix have the correct typedefs,
   // and that the typedefs match up with their corresponding template
   // parameters.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, Typedefs, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, Typedefs, Scalar, Node )
+#endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef CrsMatrix<Scalar,LO,GO,Node> MAT;
@@ -399,7 +407,11 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
   }
 
   ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, ActiveFill, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, ActiveFill, Scalar, Node )
+#endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef CrsMatrix<Scalar,LO,GO,Node> MAT;
@@ -479,7 +491,11 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
     }
   }
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, ThreeArraysESFC, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, ThreeArraysESFC, Scalar, Node )
+#endif
   {
     typedef ScalarTraits<Scalar> ST;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -557,7 +573,11 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
 
 
   ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, SetAllValues, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, SetAllValues, Scalar, Node )
+#endif
   {
     typedef ScalarTraits<Scalar> ST;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -677,7 +697,11 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
   //
   // Thanks to Andrey for pointing this out and giving a test case
   // (given below, with only minor modifications from his patch).
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, GraphOwnedByFirstMatrixSharedBySecond, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, GraphOwnedByFirstMatrixSharedBySecond, Scalar, Node )
+#endif
   {
     typedef Tpetra::global_size_t GST;
     typedef Teuchos::ScalarTraits<Scalar> STS;
@@ -712,7 +736,11 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
   }
 
  ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, ExtractBlockDiagonal, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, ExtractBlockDiagonal, Scalar, Node )
+#endif
   {
     typedef ScalarTraits<Scalar> ST;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -798,7 +826,11 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
   }
 
  ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, ScaleBlockDiagonal, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, ScaleBlockDiagonal, Scalar, Node )
+#endif
   {
     typedef ScalarTraits<Scalar> ST;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -893,7 +925,11 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
   }
 
  ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, ScaleBlockDiagonal_Forward, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, ScaleBlockDiagonal_Forward, Scalar, Node )
+#endif
   {
     typedef ScalarTraits<Scalar> ST;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -1003,7 +1039,11 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
 
 
  ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, ScaleBlockDiagonal_Transpose, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, ScaleBlockDiagonal_Transpose, Scalar, Node )
+#endif
   {
     typedef ScalarTraits<Scalar> ST;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -1112,7 +1152,11 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
   }
 
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, ApplyHelpers, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, ApplyHelpers, Scalar, Node )
+#endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef CrsMatrix<Scalar,LO,GO,Node> MAT;
@@ -1260,9 +1304,6 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( SCALAR, LO, GO, NODE ) \
-#else
-#define UNIT_TEST_GROUP( SCALAR, NODE ) \
-#endif
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, AlphaBetaMultiply, LO, GO, SCALAR, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, ActiveFill,        LO, GO, SCALAR, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, Typedefs,          LO, GO, SCALAR, NODE ) \
@@ -1271,12 +1312,20 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, GraphOwnedByFirstMatrixSharedBySecond, LO, GO, SCALAR, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, ExtractBlockDiagonal,      LO, GO, SCALAR, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, ApplyHelpers,      LO, GO, SCALAR, NODE )  
+#else
+#define UNIT_TEST_GROUP( SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, AlphaBetaMultiply, SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, ActiveFill,        SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, Typedefs,          SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, ThreeArraysESFC,   SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, SetAllValues,      SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, GraphOwnedByFirstMatrixSharedBySecond, SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, ExtractBlockDiagonal,      SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, ApplyHelpers,      SCALAR, NODE )  
+#endif
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP_NO_ORDINAL_SCALAR( SCALAR, LO, GO, NODE ) \
-#else
-#define UNIT_TEST_GROUP_NO_ORDINAL_SCALAR( SCALAR, NODE ) \
-#endif
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, ScaleBlockDiagonal,      LO, GO, SCALAR, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, ScaleBlockDiagonal_Forward,     LO, GO, SCALAR, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, ScaleBlockDiagonal_Transpose,     LO, GO, SCALAR, NODE )
@@ -1286,5 +1335,17 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
   TPETRA_INSTANTIATE_SLGN( UNIT_TEST_GROUP )
 
   TPETRA_INSTANTIATE_SLGN_NO_ORDINAL_SCALAR ( UNIT_TEST_GROUP_NO_ORDINAL_SCALAR )
+#else
+#define UNIT_TEST_GROUP_NO_ORDINAL_SCALAR( SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, ScaleBlockDiagonal,      SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, ScaleBlockDiagonal_Forward,     SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, ScaleBlockDiagonal_Transpose,     SCALAR, NODE )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_SN( UNIT_TEST_GROUP )
+
+  TPETRA_INSTANTIATE_SN_NO_ORDINAL_SCALAR ( UNIT_TEST_GROUP_NO_ORDINAL_SCALAR )
+#endif
 
 }

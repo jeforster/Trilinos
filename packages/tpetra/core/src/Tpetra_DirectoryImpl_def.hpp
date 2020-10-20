@@ -1449,23 +1449,22 @@ namespace Tpetra {
 //
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_DIRECTORYIMPL_INSTANT(LO,GO,NODE) \
-#else
-#define TPETRA_DIRECTORYIMPL_INSTANT(NODE) \
-#endif
   namespace Details { \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     template class Directory< LO , GO , NODE >; \
     template class ReplicatedDirectory< LO , GO , NODE >; \
     template class ContiguousUniformDirectory< LO, GO, NODE >; \
     template class DistributedContiguousDirectory< LO , GO , NODE >; \
     template class DistributedNoncontiguousDirectory< LO , GO , NODE >; \
+  }
 #else
+#define TPETRA_DIRECTORYIMPL_INSTANT(NODE) \
+  namespace Details { \
     template class Directory<NODE >; \
     template class ReplicatedDirectory<NODE >; \
     template class ContiguousUniformDirectory<NODE >; \
     template class DistributedContiguousDirectory<NODE >; \
     template class DistributedNoncontiguousDirectory<NODE >; \
-#endif
   }
+#endif
 
 #endif // TPETRA_DIRECTORYIMPL_DEF_HPP

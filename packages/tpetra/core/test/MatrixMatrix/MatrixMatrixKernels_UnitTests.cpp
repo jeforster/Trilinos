@@ -1033,7 +1033,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMatKernels, operations_test,SC, NT) 
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Tpetra_MatMatKernels, operations_test,SC, LO, GO, NT)
 #else
 #define UNIT_TEST_GROUP_SC_LO_GO_NO( SC, NT )			\
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Tpetra_MatMatKernels, operations_test,SC, NT)
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Tpetra_MatMatKernels, operations_test,SC, NT)
 #endif
 
 

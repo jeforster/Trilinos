@@ -79,7 +79,7 @@ typedef Tpetra::global_size_t GST;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(Map, removeEmptyProcesses_MpiComm_noncontigMap, LO, GO, NT)
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(Map, removeEmptyProcesses_MpiComm_noncontigMap, NT)
+TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(Map, removeEmptyProcesses_MpiComm_noncontigMap, NT)
 #endif
 {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -239,7 +239,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(Map, removeEmptyProcesses_MpiComm_noncontigMap
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(Map, removeEmptyProcesses_MpiComm_contigMap, LO, GO, NT)
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(Map, removeEmptyProcesses_MpiComm_contigMap, NT)
+TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(Map, removeEmptyProcesses_MpiComm_contigMap, NT)
 #endif
 {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -394,7 +394,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(Map, removeEmptyProcesses_MpiComm_contigMap, N
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( Map, removeEmptyProcesses_SerialComm1, LO, GO, NT )
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( Map, removeEmptyProcesses_SerialComm1, NT )
+TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( Map, removeEmptyProcesses_SerialComm1, NT )
 #endif
 {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -545,7 +545,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( Map, removeEmptyProcesses_SerialComm1, NT )
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( Map, removeEmptyProcesses_SerialComm2, LO, GO, NT )
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( Map, removeEmptyProcesses_SerialComm2, NT )
+TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( Map, removeEmptyProcesses_SerialComm2, NT )
 #endif
 {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -614,16 +614,20 @@ TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( Map, removeEmptyProcesses_SerialComm2, NT )
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( Map, removeEmptyProcesses_MpiComm_contigMap, LO, GO, NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( Map, removeEmptyProcesses_SerialComm1, LO, GO, NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( Map, removeEmptyProcesses_SerialComm2, LO, GO, NT )
-#else
-#define UNIT_TEST_GROUP(NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( Map, removeEmptyProcesses_MpiComm_noncontigMap, NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( Map, removeEmptyProcesses_MpiComm_contigMap, NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( Map, removeEmptyProcesses_SerialComm1, NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( Map, removeEmptyProcesses_SerialComm2, NT )
-#endif
 
 TPETRA_ETI_MANGLING_TYPEDEFS()
 
 TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+#else
+#define UNIT_TEST_GROUP(NT ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( Map, removeEmptyProcesses_MpiComm_noncontigMap, NT ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( Map, removeEmptyProcesses_MpiComm_contigMap, NT ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( Map, removeEmptyProcesses_SerialComm1, NT ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( Map, removeEmptyProcesses_SerialComm2, NT )
+
+TPETRA_ETI_MANGLING_TYPEDEFS()
+
+TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
+#endif
 
 } // namespace (anonymous)

@@ -69,7 +69,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockMultiVector, BlockWiseMultiply, Scalar, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockMultiVector, BlockWiseMultiply, Scalar, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( BlockMultiVector, BlockWiseMultiply, Scalar, Node )
 #endif
   {
     using Kokkos::view_alloc;
@@ -393,7 +393,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockMultiVector, BlockJacobiUpdate, Scalar, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockMultiVector, BlockJacobiUpdate, Scalar, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( BlockMultiVector, BlockJacobiUpdate, Scalar, Node )
 #endif
   {
     using Kokkos::view_alloc;
@@ -707,8 +707,8 @@ namespace {
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockMultiVector, BlockJacobiUpdate, SCALAR, LO, GO, NODE )
 #else
 #define UNIT_TEST_GROUP( SCALAR, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockMultiVector, BlockWiseMultiply, SCALAR,NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockMultiVector, BlockJacobiUpdate, SCALAR,NODE )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockMultiVector, BlockWiseMultiply, SCALAR,NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockMultiVector, BlockJacobiUpdate, SCALAR,NODE )
 #endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()

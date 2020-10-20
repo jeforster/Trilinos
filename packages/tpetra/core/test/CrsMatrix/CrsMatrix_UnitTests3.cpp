@@ -198,7 +198,11 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
   //
 
   ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, EmptyFillComplete, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, EmptyFillComplete, Scalar, Node )
+#endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef CrsMatrix<Scalar,LO,GO,Node> MAT;
@@ -487,10 +491,7 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( SCALAR, LO, GO, NODE ) \
-#else
-#define UNIT_TEST_GROUP( SCALAR, NODE ) \
-#endif
-      TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, Transpose,      LO, GO, SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, Transpose, LO, GO, SCALAR, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, EmptyFillComplete, LO, GO, SCALAR, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, CopiesAndViews, LO, GO, SCALAR, NODE )
 
@@ -499,3 +500,15 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
   TPETRA_INSTANTIATE_SLGN( UNIT_TEST_GROUP )
 
 }
+#else
+#define UNIT_TEST_GROUP( SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, Transpose, SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, EmptyFillComplete, SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, CopiesAndViews, SCALAR, NODE )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_SLGN( UNIT_TEST_GROUP )
+
+}
+#endif

@@ -598,7 +598,7 @@ testCrsMatrix (Teuchos::FancyOStream& out, const GlobalOrdinalType indexBase)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( OperatorOutput, IndexBase0, ST, LO, GO, NT )
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( OperatorOutput, IndexBase0, ST,NT )
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( OperatorOutput, IndexBase0, ST,NT )
 #endif
 {
   const GO indexBase = 0;
@@ -612,7 +612,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( OperatorOutput, IndexBase0, ST,NT )
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( OperatorOutput, IndexBase1, ST, LO, GO, NT )
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( OperatorOutput, IndexBase1, ST,NT )
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( OperatorOutput, IndexBase1, ST,NT )
 #endif
 {
   const GO indexBase = 1;
@@ -634,8 +634,8 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( OperatorOutput, IndexBase1, ST,NT )
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( OperatorOutput, IndexBase1, double, LO, GO, NODE )
 #else
 #  define UNIT_TEST_GROUP(NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( OperatorOutput, IndexBase0, double,NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( OperatorOutput, IndexBase1, double,NODE )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( OperatorOutput, IndexBase0, double,NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( OperatorOutput, IndexBase1, double,NODE )
 #endif
 
 #elif defined(HAVE_TPETRA_INST_FLOAT)
@@ -645,20 +645,24 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( OperatorOutput, IndexBase1, ST,NT )
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( OperatorOutput, IndexBase1, float, LO, GO, NODE )
 #else
 #  define UNIT_TEST_GROUP(NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( OperatorOutput, IndexBase0, float,NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( OperatorOutput, IndexBase1, float,NODE )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( OperatorOutput, IndexBase0, float,NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( OperatorOutput, IndexBase1, float,NODE )
 #endif
 
 #else
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #  define UNIT_TEST_GROUP( LO, GO, NODE )
-#else
-#  define UNIT_TEST_GROUP(NODE )
-#endif
-#endif
-
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+#else
+#  define UNIT_TEST_GROUP(NODE )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
+#endif
+#endif
+
 

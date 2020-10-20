@@ -205,7 +205,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, deep_copy_from_SDM, ST, LO, GO, NT )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, deep_copy_from_SDM, ST,NT )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, deep_copy_from_SDM, ST,NT )
 #endif
   {
     using Teuchos::RCP;
@@ -305,7 +305,7 @@ namespace { // (anonymous)
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( MultiVector, deep_copy_from_SDM, ST, LO, GO, NT )
 #else
 #define UNIT_TEST_GROUP( ST, NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( MultiVector, deep_copy_from_SDM, ST,NT )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, deep_copy_from_SDM, ST,NT )
 #endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()

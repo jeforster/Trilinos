@@ -3781,28 +3781,13 @@ namespace Tpetra {
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_MATRIXMATRIX_INSTANT(SCALAR,LO,GO,NODE) \
-#else
-#define TPETRA_MATRIXMATRIX_INSTANT(SCALAR,NODE) \
-#endif
   template \
   void MatrixMatrix::Multiply( \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     const CrsMatrix< SCALAR , LO , GO , NODE >& A, \
-#else
-    const CrsMatrix< SCALAR , NODE >& A, \
-#endif
     bool transposeA, \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     const CrsMatrix< SCALAR , LO , GO , NODE >& B, \
-#else
-    const CrsMatrix< SCALAR , NODE >& B, \
-#endif
     bool transposeB, \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     CrsMatrix< SCALAR , LO , GO , NODE >& C, \
-#else
-    CrsMatrix< SCALAR , NODE >& C, \
-#endif
     bool call_FillComplete_on_result, \
     const std::string & label, \
     const Teuchos::RCP<Teuchos::ParameterList>& params); \
@@ -3810,119 +3795,129 @@ namespace Tpetra {
 template \
   void MatrixMatrix::Jacobi( \
     SCALAR omega, \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     const Vector< SCALAR, LO, GO, NODE > & Dinv, \
     const CrsMatrix< SCALAR , LO , GO , NODE >& A, \
     const CrsMatrix< SCALAR , LO , GO , NODE >& B, \
     CrsMatrix< SCALAR , LO , GO , NODE >& C, \
-#else
-    const Vector< SCALAR, NODE > & Dinv, \
-    const CrsMatrix< SCALAR , NODE >& A, \
-    const CrsMatrix< SCALAR , NODE >& B, \
-    CrsMatrix< SCALAR , NODE >& C, \
-#endif
     bool call_FillComplete_on_result, \
     const std::string & label, \
     const Teuchos::RCP<Teuchos::ParameterList>& params); \
 \
   template \
   void MatrixMatrix::Add( \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     const CrsMatrix< SCALAR , LO , GO , NODE >& A, \
-#else
-    const CrsMatrix< SCALAR , NODE >& A, \
-#endif
     bool transposeA, \
     SCALAR scalarA, \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     const CrsMatrix< SCALAR , LO , GO , NODE >& B, \
-#else
-    const CrsMatrix< SCALAR , NODE >& B, \
-#endif
     bool transposeB, \
     SCALAR scalarB, \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     Teuchos::RCP<CrsMatrix< SCALAR , LO , GO , NODE > > C); \
-#else
-    Teuchos::RCP<CrsMatrix< SCALAR , NODE > > C); \
-#endif
 \
   template \
   void MatrixMatrix::Add( \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     const CrsMatrix<SCALAR, LO, GO, NODE>& A, \
-#else
-    const CrsMatrix<SCALAR, NODE>& A, \
-#endif
     bool transposeA, \
     SCALAR scalarA, \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     CrsMatrix<SCALAR, LO, GO, NODE>& B, \
-#else
-    CrsMatrix<SCALAR, NODE>& B, \
-#endif
     SCALAR scalarB ); \
 \
   template \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   Teuchos::RCP<CrsMatrix< SCALAR , LO , GO , NODE > > \
   MatrixMatrix::add<SCALAR, LO, GO, NODE> \
-#else
-  Teuchos::RCP<CrsMatrix< SCALAR , NODE > > \
-  MatrixMatrix::add<SCALAR, NODE> \
-#endif
                     (const SCALAR & alpha, \
                      const bool transposeA, \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                      const CrsMatrix<SCALAR, LO, GO, NODE>& A, \
-#else
-                     const CrsMatrix<SCALAR, NODE>& A, \
-#endif
                      const SCALAR & beta, \
                      const bool transposeB, \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                      const CrsMatrix<SCALAR, LO, GO, NODE>& B, \
                      const Teuchos::RCP<const Map<LO, GO, NODE> >& domainMap, \
                      const Teuchos::RCP<const Map<LO, GO, NODE> >& rangeMap, \
-#else
-                     const CrsMatrix<SCALAR, NODE>& B, \
-                     const Teuchos::RCP<const Map<NODE> >& domainMap, \
-                     const Teuchos::RCP<const Map<NODE> >& rangeMap, \
-#endif
                      const Teuchos::RCP<Teuchos::ParameterList>& params); \
 \
   template \
   void \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   MatrixMatrix::add< SCALAR , LO, GO , NODE > \
-#else
-  MatrixMatrix::add< SCALAR , NODE > \
-#endif
                     (const SCALAR & alpha, \
                      const bool transposeA, \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                      const CrsMatrix< SCALAR , LO, GO , NODE >& A, \
-#else
-                     const CrsMatrix< SCALAR , NODE >& A, \
-#endif
                      const SCALAR& beta, \
                      const bool transposeB, \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                      const CrsMatrix< SCALAR , LO, GO , NODE >& B, \
                      CrsMatrix< SCALAR , LO, GO , NODE >& C, \
                      const Teuchos::RCP<const Map<LO, GO , NODE > >& domainMap, \
                      const Teuchos::RCP<const Map<LO, GO , NODE > >& rangeMap, \
+                     const Teuchos::RCP<Teuchos::ParameterList>& params); \
+\
+  template struct MMdetails::AddKernels<SCALAR, LO, GO, NODE>;
 #else
+#define TPETRA_MATRIXMATRIX_INSTANT(SCALAR,NODE) \
+  template \
+  void MatrixMatrix::Multiply( \
+    const CrsMatrix< SCALAR , NODE >& A, \
+    bool transposeA, \
+    const CrsMatrix< SCALAR , NODE >& B, \
+    bool transposeB, \
+    CrsMatrix< SCALAR , NODE >& C, \
+    bool call_FillComplete_on_result, \
+    const std::string & label, \
+    const Teuchos::RCP<Teuchos::ParameterList>& params); \
+\
+template \
+  void MatrixMatrix::Jacobi( \
+    SCALAR omega, \
+    const Vector< SCALAR, NODE > & Dinv, \
+    const CrsMatrix< SCALAR , NODE >& A, \
+    const CrsMatrix< SCALAR , NODE >& B, \
+    CrsMatrix< SCALAR , NODE >& C, \
+    bool call_FillComplete_on_result, \
+    const std::string & label, \
+    const Teuchos::RCP<Teuchos::ParameterList>& params); \
+\
+  template \
+  void MatrixMatrix::Add( \
+    const CrsMatrix< SCALAR , NODE >& A, \
+    bool transposeA, \
+    SCALAR scalarA, \
+    const CrsMatrix< SCALAR , NODE >& B, \
+    bool transposeB, \
+    SCALAR scalarB, \
+    Teuchos::RCP<CrsMatrix< SCALAR , NODE > > C); \
+\
+  template \
+  void MatrixMatrix::Add( \
+    const CrsMatrix<SCALAR, NODE>& A, \
+    bool transposeA, \
+    SCALAR scalarA, \
+    CrsMatrix<SCALAR, NODE>& B, \
+    SCALAR scalarB ); \
+\
+  template \
+  Teuchos::RCP<CrsMatrix< SCALAR , NODE > > \
+  MatrixMatrix::add<SCALAR, NODE> \
+                    (const SCALAR & alpha, \
+                     const bool transposeA, \
+                     const CrsMatrix<SCALAR, NODE>& A, \
+                     const SCALAR & beta, \
+                     const bool transposeB, \
+                     const CrsMatrix<SCALAR, NODE>& B, \
+                     const Teuchos::RCP<const Map<NODE> >& domainMap, \
+                     const Teuchos::RCP<const Map<NODE> >& rangeMap, \
+                     const Teuchos::RCP<Teuchos::ParameterList>& params); \
+\
+  template \
+  void \
+  MatrixMatrix::add< SCALAR , NODE > \
+                    (const SCALAR & alpha, \
+                     const bool transposeA, \
+                     const CrsMatrix< SCALAR , NODE >& A, \
+                     const SCALAR& beta, \
+                     const bool transposeB, \
                      const CrsMatrix< SCALAR , NODE >& B, \
                      CrsMatrix< SCALAR , NODE >& C, \
                      const Teuchos::RCP<const Map<NODE > >& domainMap, \
                      const Teuchos::RCP<const Map<NODE > >& rangeMap, \
-#endif
                      const Teuchos::RCP<Teuchos::ParameterList>& params); \
 \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
-  template struct MMdetails::AddKernels<SCALAR, LO, GO, NODE>;
-#else
   template struct MMdetails::AddKernels<SCALAR, NODE>;
 #endif
 

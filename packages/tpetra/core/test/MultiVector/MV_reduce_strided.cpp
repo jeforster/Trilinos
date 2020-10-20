@@ -430,7 +430,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, reduce_strided, Scalar, Node )
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( MultiVector, reduce_strided, SCALAR, LO, GO, NODE )
 #else
 #define UNIT_TEST_GROUP( SCALAR, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( MultiVector, reduce_strided, SCALAR,NODE )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, reduce_strided, SCALAR,NODE )
 #endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()

@@ -80,7 +80,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(OneToOne, AlreadyOneToOneContig, LO, GO, NT)
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(OneToOne, AlreadyOneToOneContig, NT)
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(OneToOne, AlreadyOneToOneContig, NT)
 #endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -232,7 +232,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(OneToOne, LargeOverlap, LO, GO, NT)
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(OneToOne, LargeOverlap, NT)
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(OneToOne, LargeOverlap, NT)
 #endif
   {
     //Creates a map with large overlaps
@@ -316,7 +316,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(OneToOne, AllOnOneProc, LO, GO, NT)
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(OneToOne, AllOnOneProc, NT)
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(OneToOne, AllOnOneProc, NT)
 #endif
   {
     //Will create a non-contig map with all of the elements on a single
@@ -355,7 +355,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(OneToOne, NoIDs, LO, GO, NT)
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(OneToOne, NoIDs, NT)
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(OneToOne, NoIDs, NT)
 #endif
   {
     //An empty map.
@@ -383,7 +383,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(OneToOne, AllOwnEvery, LO, GO, NT)
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(OneToOne, AllOwnEvery, NT)
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(OneToOne, AllOwnEvery, NT)
 #endif
   {
     //Every processor starts by owning all of them.
@@ -425,7 +425,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(OneToOne, TieBreak, LO, GO, NT)
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(OneToOne, TieBreak, NT)
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(OneToOne, TieBreak, NT)
 #endif
   {
     //Creates a map with large overlaps
@@ -513,20 +513,24 @@ namespace { // (anonymous)
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(OneToOne, NoIDs, LO, GO, NT) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(OneToOne, AllOwnEvery, LO, GO, NT) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(OneToOne, TieBreak, LO, GO, NT)
-#else
-#define UNIT_TEST_GROUP(NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(OneToOne, AlreadyOneToOneNonContigIndexBaseZero, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(OneToOne, AlreadyOneToOneContig, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(OneToOne, AlreadyOneToOneNonContigIndexBaseOne, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(OneToOne, LargeOverlap, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(OneToOne, AllOnOneProc, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(OneToOne, NoIDs, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(OneToOne, AllOwnEvery, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(OneToOne, TieBreak, NT)
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+#else
+#define UNIT_TEST_GROUP(NT ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(OneToOne, AlreadyOneToOneNonContigIndexBaseZero, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(OneToOne, AlreadyOneToOneContig, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(OneToOne, AlreadyOneToOneNonContigIndexBaseOne, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(OneToOne, LargeOverlap, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(OneToOne, AllOnOneProc, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(OneToOne, NoIDs, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(OneToOne, AllOwnEvery, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(OneToOne, TieBreak, NT)
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
+#endif
 
 } // namespace (anonymous)

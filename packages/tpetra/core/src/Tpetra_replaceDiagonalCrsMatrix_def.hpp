@@ -152,20 +152,21 @@ replaceDiagonalCrsMatrix (CrsMatrix<SC, NT>& matrix,
 //
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
-#define TPETRA_REPLACEDIAGONALCRSMATRIX_INSTANT(SCALAR,LO,GO,NODE)      \
-#else
-#define TPETRA_REPLACEDIAGONALCRSMATRIX_INSTANT(SCALAR,NODE)      \
-#endif
-                                                                        \
-  template                                                              \
-  LO replaceDiagonalCrsMatrix(                                          \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
-                              CrsMatrix<SCALAR, LO, GO, NODE>& matrix, \
+#define TPETRA_REPLACEDIAGONALCRSMATRIX_INSTANT(SCALAR,LO,GO,NODE)          \
+                                                                            \
+  template                                                                  \
+  LO replaceDiagonalCrsMatrix(                                              \
+                              CrsMatrix<SCALAR, LO, GO, NODE>& matrix,      \
                               const Vector<SCALAR, LO, GO, NODE>& newDiag); \
+                              
 #else
-                              CrsMatrix<SCALAR, NODE>& matrix, \
-                              const Vector<SCALAR, NODE>& newDiag); \
+#define TPETRA_REPLACEDIAGONALCRSMATRIX_INSTANT(SCALAR,NODE)                \
+                                                                            \
+  template                                                                  \
+  LO replaceDiagonalCrsMatrix(                                              \
+                              CrsMatrix<SCALAR, NODE>& matrix,              \
+                              const Vector<SCALAR, NODE>& newDiag);         \
+
 #endif
-                                                                        \
 
 #endif // #ifndef TPETRA_REPLACEDIAGONALCRSMATRIX_DEF_HPP

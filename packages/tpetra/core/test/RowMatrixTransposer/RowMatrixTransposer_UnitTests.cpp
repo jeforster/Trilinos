@@ -72,7 +72,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( RowMatrixTransposer, RectangularTranspose, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( RowMatrixTransposer, RectangularTranspose, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( RowMatrixTransposer, RectangularTranspose, Node )
 #endif
   {
     typedef CrsMatrix<>::scalar_type Scalar;
@@ -119,14 +119,18 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( LO, GO, NODE ) \
             TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( RowMatrixTransposer, RectangularTranspose, LO, GO, NODE )
-#else
-#define UNIT_TEST_GROUP(NODE ) \
-            TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( RowMatrixTransposer, RectangularTranspose, NODE )
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+#else
+#define UNIT_TEST_GROUP(NODE ) \
+            TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( RowMatrixTransposer, RectangularTranspose, NODE )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
+#endif
 
 }
 

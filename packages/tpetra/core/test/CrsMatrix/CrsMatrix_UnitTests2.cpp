@@ -206,7 +206,11 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
   //
 
   ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, NonSquare, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, NonSquare, Scalar, Node )
+#endif
   {
     typedef ScalarTraits<Scalar> ST;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -316,7 +320,11 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
 
 
   ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, DomainRange, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, DomainRange, Scalar, Node )
+#endif
   {
     typedef ScalarTraits<Scalar> ST;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -483,7 +491,11 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
 
 
   ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, FullMatrixTriDiag, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, FullMatrixTriDiag, Scalar, Node )
+#endif
   {
     // do a FEM-type communication, then apply to a MultiVector containing the identity
     // this will check non-trivial communication and test multivector apply
@@ -657,9 +669,6 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( SCALAR, LO, GO, NODE ) \
-#else
-#define UNIT_TEST_GROUP( SCALAR, NODE ) \
-#endif
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, BadGID,         LO, GO, SCALAR, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, FullMatrixTriDiag, LO, GO, SCALAR, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, DomainRange,    LO, GO, SCALAR, NODE ) \
@@ -670,3 +679,16 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
   TPETRA_INSTANTIATE_SLGN( UNIT_TEST_GROUP )
 
 }
+#else
+#define UNIT_TEST_GROUP( SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, BadGID,         SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, FullMatrixTriDiag, SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, DomainRange,    SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, NonSquare,      SCALAR, NODE )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_SLGN( UNIT_TEST_GROUP )
+
+}
+#endif

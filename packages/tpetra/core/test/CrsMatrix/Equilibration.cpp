@@ -2181,7 +2181,7 @@ makeMatrixTestWithExplicitInfAndNan (Teuchos::FancyOStream& out,
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Equilibration, Test0, SC, LO, GO, NT)
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Equilibration, Test0, SC, NT)
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Equilibration, Test0, SC, NT)
 #endif
 {
   // We are now in a class method declared by the above macro.
@@ -2269,7 +2269,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Equilibration, Test0, SC, NT)
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( Equilibration, Test0, SC, LO, GO, NT )
 #else
 #define UNIT_TEST_GROUP( SC, NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( Equilibration, Test0, SC, NT )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( Equilibration, Test0, SC, NT )
 #endif
 
 #include "TpetraCore_ETIHelperMacros.h"

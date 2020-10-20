@@ -171,7 +171,7 @@ shuffle_crs_entries(std::vector<ordinal_type>& colind_rand,
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( Import_Util, SortCrsEntries, Scalar, LO, GO)
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( Import_Util, SortCrsEntries, Scalar)
+TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( Import_Util, SortCrsEntries, Scalar)
 #endif
 {
 
@@ -322,7 +322,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( Import_Util, SortCrsEntries, Scalar)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( Import_Util, SortCrsEntriesKokkos, Scalar, LO, GO, NT)
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( Import_Util, SortCrsEntriesKokkos, Scalar, NT)
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( Import_Util, SortCrsEntriesKokkos, Scalar, NT)
 #endif
 {
   using Tpetra::Import_Util::sortCrsEntries;
@@ -441,21 +441,17 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( Import_Util, SortCrsEntriesKokkos, Scalar, NT
   //
   // INSTANTIATIONS
   //
-
-#define UNIT_TEST_GROUP_SC_LO_GO( SC, LO, GO )                   \
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+#define UNIT_TEST_GROUP_SC_LO_GO( SC, LO, GO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( Import_Util, SortCrsEntries, SC, LO, GO )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( Import_Util, SortCrsEntries, SC )
+#define UNIT_TEST_GROUP_SC( SC ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( Import_Util, SortCrsEntries, SC )
 #endif
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP_SC_LO_GO_NO( SC, LO, GO, NT) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( Import_Util, SortCrsEntriesKokkos, SC, LO, GO, NT )
-#else
-#define UNIT_TEST_GROUP_SC_LO_GO_NO( SC, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( Import_Util, SortCrsEntriesKokkos, SC, NT )
-#endif
 
   // Note: This test fails.  Should fix later.
   //      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( ReverseImportExport, doImport, ORDINAL, SCALAR )
@@ -467,5 +463,18 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( Import_Util, SortCrsEntriesKokkos, Scalar, NT
   TPETRA_INSTANTIATE_SLG_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP_SC_LO_GO )
 
   TPETRA_INSTANTIATE_SLGN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP_SC_LO_GO_NO )
+#else
+#define UNIT_TEST_GROUP_SC_NO( SC, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( Import_Util, SortCrsEntriesKokkos, SC, NT )
+
+  // Note: This test fails.  Should fix later.
+  //      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( ReverseImportExport, doImport, ORDINAL, SCALAR )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_S_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP_SC)
+
+  TPETRA_INSTANTIATE_SN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP_SC_NO )
+#endif
 
 }

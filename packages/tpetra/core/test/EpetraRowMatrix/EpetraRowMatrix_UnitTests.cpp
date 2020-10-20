@@ -96,7 +96,11 @@ namespace {
   //
 
   ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( EpetraRowMatrix, BasicFunctionality, LO, GO )
+#else
+  TEUCHOS_UNIT_TEST( EpetraRowMatrix, BasicFunctionality )
+#endif
   {
     using Teuchos::RCP;
     using Teuchos::tuple;
@@ -195,11 +199,20 @@ namespace {
 
 TPETRA_ETI_MANGLING_TYPEDEFS()
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( LO, GO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( EpetraRowMatrix, BasicFunctionality, LO, GO )
 
 TPETRA_INSTANTIATE_LG( UNIT_TEST_GROUP )
 
 }
+#else
+#define UNIT_TEST_GROUP( ) \
+  TEUCHOS_UNIT_TEST( EpetraRowMatrix, BasicFunctionality )
+
+TPETRA_INSTANTIATE_LG( UNIT_TEST_GROUP )
+
+}
+#endif
 
 #endif // HAVE_TPETRA_EPETRA

@@ -109,7 +109,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( ImportExport, basic, LO, GO, NT ) {
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( ImportExport, basic, NT ) {
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( ImportExport, basic, NT ) {
 #endif
     const Tpetra::global_size_t INVALID =
       Teuchos::OrdinalTraits<Tpetra::global_size_t>::invalid ();
@@ -149,7 +149,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( ImportExport, GetNeighborsForward, Scalar, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( ImportExport, GetNeighborsForward, Scalar, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( ImportExport, GetNeighborsForward, Scalar, Node )
 #endif
   {
     // import with the importer to duplicate
@@ -278,7 +278,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( ImportExport, GetNeighborsBackward, Scalar, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( ImportExport, GetNeighborsBackward, Scalar, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( ImportExport, GetNeighborsBackward, Scalar, Node )
 #endif
   {
     // import with the exporter to duplicate
@@ -401,7 +401,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( ImportExport, AbsMax, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( ImportExport, AbsMax, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( ImportExport, AbsMax, Node )
 #endif
   {
     using Tpetra::createContigMapWithNode;
@@ -458,7 +458,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( ImportExport, ExportReverse, LO, GO, Node )
 #else
- TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( ImportExport, ExportReverse, Node )
+ TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( ImportExport, ExportReverse, Node )
 #endif
   {
     // This test reproduces an issue seen in Github Issue #114.
@@ -578,16 +578,6 @@ namespace {
   #define UNIT_TEST_4( SCALAR, LO, GO, NODE )  \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( ImportExport, GetNeighborsForward,  SCALAR, LO, GO, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( ImportExport, GetNeighborsBackward, SCALAR, LO, GO, NODE )
-#else
-#define UNIT_TEST_3(NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( ImportExport, basic, NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( ImportExport, AbsMax, NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( ImportExport, ExportReverse, NT)
-
-  #define UNIT_TEST_4( SCALAR, NODE )  \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( ImportExport, GetNeighborsForward,  SCALAR,NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( ImportExport, GetNeighborsBackward, SCALAR,NODE )
-#endif
 
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
@@ -595,6 +585,23 @@ namespace {
   TPETRA_INSTANTIATE_LGN( UNIT_TEST_3 )
 
   TPETRA_INSTANTIATE_SLGN( UNIT_TEST_4 )
+#else
+#define UNIT_TEST_3(NT ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( ImportExport, basic, NT ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( ImportExport, AbsMax, NT ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( ImportExport, ExportReverse, NT)
+
+  #define UNIT_TEST_4( SCALAR, NODE )  \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( ImportExport, GetNeighborsForward,  SCALAR,NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( ImportExport, GetNeighborsBackward, SCALAR,NODE )
+
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_N( UNIT_TEST_1 )
+
+  TPETRA_INSTANTIATE_SN( UNIT_TEST_2 )
+#endif
 
 } // namespace (anonymous)
 

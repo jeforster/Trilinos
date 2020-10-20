@@ -702,7 +702,7 @@ crsMatrixInstancesEqual (const Tpetra::CrsMatrix<SC, NT>& A,
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, createDeepCopy, SC, LO, GO, NT )
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, createDeepCopy, SC, NT )
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, createDeepCopy, SC, NT )
 #endif
 {
   using Teuchos::RCP;
@@ -851,7 +851,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, createDeepCopy, SC, NT )
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, createDeepCopy, SC, LO, GO, NT )
 #else
 #define UNIT_TEST_GROUP( SC, NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, createDeepCopy, SC, NT )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, createDeepCopy, SC, NT )
 #endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()

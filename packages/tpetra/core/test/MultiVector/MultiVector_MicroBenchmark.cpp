@@ -63,7 +63,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, MicroBenchmark_Update, SC, LO, GO, NT )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, MicroBenchmark_Update, SC, NT )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, MicroBenchmark_Update, SC, NT )
 #endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -154,7 +154,7 @@ namespace { // (anonymous)
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( MultiVector, MicroBenchmark_Update, SC, LO, GO, NT )
 #else
 #define UNIT_TEST_GROUP( SC, NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( MultiVector, MicroBenchmark_Update, SC, NT )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, MicroBenchmark_Update, SC, NT )
 #endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()

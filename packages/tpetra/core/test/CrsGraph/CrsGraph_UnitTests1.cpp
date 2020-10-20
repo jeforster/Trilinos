@@ -113,7 +113,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, EmptyFillComplete, LO, GO , Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, EmptyFillComplete, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraph, EmptyFillComplete, Node )
 #endif
   {
     using Teuchos::Comm;
@@ -161,7 +161,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, SortingTests, LO, GO , Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, SortingTests, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraph, SortingTests, Node )
 #endif
   {
     using Teuchos::Comm;
@@ -265,7 +265,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, Bug20100622K, LO, GO , Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, Bug20100622K, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraph, Bug20100622K, Node )
 #endif
   {
     using Teuchos::Comm;
@@ -352,7 +352,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, WithColMap, LO, GO , Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, WithColMap, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraph, WithColMap, Node )
 #endif
   {
     using Teuchos::Comm;
@@ -416,7 +416,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, Describable, LO, GO , Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, Describable, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraph, Describable, Node )
 #endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -478,7 +478,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, Typedefs, LO, GO , Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, Typedefs, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraph, Typedefs, Node )
 #endif
   {
     using Teuchos::Comm;
@@ -540,7 +540,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, TwoArraysESFC, LO, GO , Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, TwoArraysESFC, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraph, TwoArraysESFC, Node )
 #endif
   {
     using Teuchos::Comm;
@@ -595,7 +595,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, SetAllIndices, LO, GO , Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, SetAllIndices, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraph, SetAllIndices, Node )
 #endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -639,7 +639,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(CrsGraph, StaticProfileMultiInsert, LO, GO, Node)
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(CrsGraph, StaticProfileMultiInsert, Node)
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(CrsGraph, StaticProfileMultiInsert, Node)
 #endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -685,21 +685,25 @@ namespace { // (anonymous)
       TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, TwoArraysESFC,     LO, GO, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, SetAllIndices,     LO, GO, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, StaticProfileMultiInsert, LO, GO, NODE )
-#else
-#define UNIT_TEST_GROUP_DEBUG_AND_RELEASE(NODE ) \
-      TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, WithColMap, NODE ) \
-      TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, Describable, NODE ) \
-      TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, EmptyFillComplete, NODE ) \
-      TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, Typedefs, NODE ) \
-      TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, Bug20100622K, NODE ) \
-      TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, SortingTests, NODE ) \
-      TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, TwoArraysESFC, NODE ) \
-      TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, SetAllIndices, NODE ) \
-      TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, StaticProfileMultiInsert, NODE )
-#endif
 
     TPETRA_ETI_MANGLING_TYPEDEFS()
 
     TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP_DEBUG_AND_RELEASE )
+#else
+#define UNIT_TEST_GROUP_DEBUG_AND_RELEASE(NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, WithColMap, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, Describable, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, EmptyFillComplete, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, Typedefs, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, Bug20100622K, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, SortingTests, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, TwoArraysESFC, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, SetAllIndices, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, StaticProfileMultiInsert, NODE )
+
+    TPETRA_ETI_MANGLING_TYPEDEFS()
+
+    TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP_DEBUG_AND_RELEASE )
+#endif
 
 } // namespace (anonymous)

@@ -103,7 +103,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( Vector, OffsetViewCtor, ST, LO, GO, NT )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( Vector, OffsetViewCtor, ST,NT )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( Vector, OffsetViewCtor, ST,NT )
 #endif
   {
     using Teuchos::outArg;
@@ -203,7 +203,7 @@ namespace { // (anonymous)
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( Vector, OffsetViewCtor, ST, LO, GO, NT )
 #else
 #define UNIT_TEST_GROUP( SCALAR, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( Vector, OffsetViewCtor, ST,NT )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( Vector, OffsetViewCtor, ST,NT )
 #endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()

@@ -90,7 +90,11 @@ namespace {
   // UNIT TESTS
   //
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( FEMultiVector, doImport, LO, GO, Scalar, NO )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( FEMultiVector, doImport, Scalar, NO )
+#endif
   {
     const GST INVALID = Teuchos::OrdinalTraits<GST>::invalid ();
     const RCP<const Comm<int> > comm = Tpetra::getDefaultComm();
@@ -260,9 +264,6 @@ namespace {
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( SC, LO, GO, NO ) \
-#else
-#define UNIT_TEST_GROUP( SC, NO ) \
-#endif
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( FEMultiVector, doImport, LO, GO, SC, NO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( FEMultiVector, AssemblyHelpers, LO, GO, SC, NO )
 
@@ -270,3 +271,13 @@ namespace {
 
   TPETRA_INSTANTIATE_TESTMV( UNIT_TEST_GROUP )
 }
+#else
+#define UNIT_TEST_GROUP( SC, NO ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( FEMultiVector, doImport, SC, NO ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( FEMultiVector, AssemblyHelpers, SC, NO )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_TESTMV( UNIT_TEST_GROUP )
+}
+#endif

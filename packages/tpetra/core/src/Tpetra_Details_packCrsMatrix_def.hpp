@@ -1145,46 +1145,52 @@ packCrsMatrixWithOwningPIDs (const CrsMatrix<ST, NT>& sourceMatrix,
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_DETAILS_PACKCRSMATRIX_INSTANT( ST, LO, GO, NT ) \
-#else
-#define TPETRA_DETAILS_PACKCRSMATRIX_INSTANT( ST, NT ) \
-#endif
   template void \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   Details::packCrsMatrix<ST, LO, GO, NT> (const CrsMatrix<ST, LO, GO, NT>&, \
-#else
-  Details::packCrsMatrix<ST, NT> (const CrsMatrix<ST, NT>&, \
-#endif
     Teuchos::Array<char>&, \
     const Teuchos::ArrayView<size_t>&, \
     const Teuchos::ArrayView<const LO>&, \
     size_t&, \
     Distributor&); \
   template void \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   Details::packCrsMatrixNew<ST, LO, GO, NT> (const CrsMatrix<ST, LO, GO, NT>&, \
     Kokkos::DualView<char*, DistObject<char, LO, GO, NT>::buffer_device_type>&, \
     const Kokkos::DualView<size_t*, DistObject<char, LO, GO, NT>::buffer_device_type>&, \
     const Kokkos::DualView<const LO*, DistObject<char, LO, GO, NT>::buffer_device_type>&, \
-#else
-  Details::packCrsMatrixNew<ST, NT> (const CrsMatrix<ST, NT>&, \
-    Kokkos::DualView<char*, DistObject<char,NT>::buffer_device_type>&, \
-    const Kokkos::DualView<size_t*, DistObject<char,NT>::buffer_device_type>&, \
-    const Kokkos::DualView<const LO*, DistObject<char,NT>::buffer_device_type>&, \
-#endif
     size_t&, \
     Distributor&); \
   template void \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   Details::packCrsMatrixWithOwningPIDs<ST, LO, GO, NT> (const CrsMatrix<ST, LO, GO, NT>&, \
     Kokkos::DualView<char*, DistObject<char, LO, GO, NT>::buffer_device_type>&, \
-#else
-  Details::packCrsMatrixWithOwningPIDs<ST, NT> (const CrsMatrix<ST, NT>&, \
-    Kokkos::DualView<char*, DistObject<char,NT>::buffer_device_type>&, \
-#endif
     const Teuchos::ArrayView<size_t>&, \
     const Teuchos::ArrayView<const LO>&, \
     const Teuchos::ArrayView<const int>&, \
     size_t&, \
     Distributor&);
+#else
+#define TPETRA_DETAILS_PACKCRSMATRIX_INSTANT( ST, NT ) \
+  template void \
+  Details::packCrsMatrix<ST, NT> (const CrsMatrix<ST, NT>&, \
+    Teuchos::Array<char>&, \
+    const Teuchos::ArrayView<size_t>&, \
+    const Teuchos::ArrayView<const LO>&, \
+    size_t&, \
+    Distributor&); \
+  template void \
+  Details::packCrsMatrixNew<ST, NT> (const CrsMatrix<ST, NT>&, \
+    Kokkos::DualView<char*, DistObject<char,NT>::buffer_device_type>&, \
+    const Kokkos::DualView<size_t*, DistObject<char,NT>::buffer_device_type>&, \
+    const Kokkos::DualView<const LO*, DistObject<char,NT>::buffer_device_type>&, \
+    size_t&, \
+    Distributor&); \
+  template void \
+  Details::packCrsMatrixWithOwningPIDs<ST, NT> (const CrsMatrix<ST, NT>&, \
+    Kokkos::DualView<char*, DistObject<char,NT>::buffer_device_type>&, \
+    const Teuchos::ArrayView<size_t>&, \
+    const Teuchos::ArrayView<const LO>&, \
+    const Teuchos::ArrayView<const int>&, \
+    size_t&, \
+    Distributor&);
+#endif
 
 #endif // TPETRA_DETAILS_PACKCRSMATRIX_DEF_HPP

@@ -66,7 +66,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, getNumDiags, LO, GO, NT )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, getNumDiags, NT )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraph, getNumDiags, NT )
 #endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -239,13 +239,17 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( LO, GO, NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, getNumDiags, LO, GO, NT )
-#else
-#define UNIT_TEST_GROUP(NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, getNumDiags, NT )
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+#else
+#define UNIT_TEST_GROUP(NT ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, getNumDiags, NT )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
+#endif
 
 } // namespace (anonymous)

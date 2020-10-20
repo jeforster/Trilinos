@@ -74,7 +74,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrixReindexColumns, ColMapOnlySortingOn, Scalar, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrixReindexColumns, ColMapOnlySortingOn, Scalar, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrixReindexColumns, ColMapOnlySortingOn, Scalar, Node )
 #endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -621,7 +621,7 @@ namespace {
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrixReindexColumns, ColMapOnlySortingOn, SCALAR, LO, GO, NODE )
 #else
 #define UNIT_TEST_GROUP( SCALAR, NODE )                          \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrixReindexColumns, ColMapOnlySortingOn, SCALAR,NODE )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrixReindexColumns, ColMapOnlySortingOn, SCALAR,NODE )
 #endif
 
 

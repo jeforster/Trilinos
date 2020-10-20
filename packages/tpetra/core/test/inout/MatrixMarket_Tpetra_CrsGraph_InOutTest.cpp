@@ -505,7 +505,7 @@ testCrsGraph (Teuchos::FancyOStream& out, const GlobalOrdinalType indexBase)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraphOutputInput, IndexBase0, LO, GO, NT )
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraphOutputInput, IndexBase0, NT )
+TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraphOutputInput, IndexBase0, NT )
 #endif
 {
   const GO indexBase = 0;
@@ -519,7 +519,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraphOutputInput, IndexBase0, NT )
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraphOutputInput, IndexBase1, LO, GO, NT )
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraphOutputInput, IndexBase1, NT )
+TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraphOutputInput, IndexBase1, NT )
 #endif
 {
   const GO indexBase = 1;
@@ -538,13 +538,17 @@ TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraphOutputInput, IndexBase1, NT )
 #  define UNIT_TEST_GROUP( LO, GO, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraphOutputInput, IndexBase0, LO, GO, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraphOutputInput, IndexBase1, LO, GO, NODE )
-#else
-#  define UNIT_TEST_GROUP(NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraphOutputInput, IndexBase0, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraphOutputInput, IndexBase1, NODE )
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+#else
+#  define UNIT_TEST_GROUP(NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraphOutputInput, IndexBase0, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraphOutputInput, IndexBase1, NODE )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
+#endif
 

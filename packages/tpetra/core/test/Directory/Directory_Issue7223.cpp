@@ -96,7 +96,11 @@ static int checkNotFound(GO gid, int proc) {
 }
 
 /////////////////////////////////////////////////////////////////////////////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( Directory, Uniform, LO, GO )
+#else
+TEUCHOS_UNIT_TEST( Directory, Uniform )
+#endif
 {
   // Test -- three IDs on every processor
   using map_t = Tpetra::Map<LO, GO>;
@@ -140,7 +144,11 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( Directory, Uniform, LO, GO )
 }
 
 /////////////////////////////////////////////////////////////////////////////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( Directory, Replicate7223, LO, GO )
+#else
+TEUCHOS_UNIT_TEST( Directory, Replicate7223 )
+#endif
 {
   // Test -- two IDs on every even-numbered processor
   // When run on seven processors, this test exhibits the same behavior
@@ -189,7 +197,11 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( Directory, Replicate7223, LO, GO )
 }
 
 /////////////////////////////////////////////////////////////////////////////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( Directory, EvenProcs, LO, GO )
+#else
+TEUCHOS_UNIT_TEST( Directory, EvenProcs)
+#endif
 {
   // Test -- two IDs on every even-numbered processor
   using map_t = Tpetra::Map<LO, GO>;
@@ -235,7 +247,11 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( Directory, EvenProcs, LO, GO )
 }
 
 /////////////////////////////////////////////////////////////////////////////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( Directory, EvenProcsOffset, LO, GO )
+#else
+TEUCHOS_UNIT_TEST( Directory, EvenProcsOffset )
+#endif
 {
   // Test -- two IDs on every even-numbered processor, starting with GID 72
   using map_t = Tpetra::Map<LO, GO>;
@@ -283,7 +299,11 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( Directory, EvenProcsOffset, LO, GO )
   TEST_EQUALITY_CONST(ierr, 0);
 }
 /////////////////////////////////////////////////////////////////////////////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( Directory, OddProcsOffset, LO, GO )
+#else
+TEUCHOS_UNIT_TEST( Directory, OddProcsOffset )
+#endif
 {
   // Test -- two IDs on every odd-numbered processor, starting with GID 72
   using map_t = Tpetra::Map<LO, GO>;
@@ -332,6 +352,9 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( Directory, OddProcsOffset, LO, GO )
 }
   
 /////////////////////////////////////////////////////////////////////////////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+#else
+#endif
 TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( Directory, OneProcOnly, LO, GO )
 {
   // Test -- only one processor has IDs; cycle among the processors
@@ -381,7 +404,11 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( Directory, OneProcOnly, LO, GO )
 }
   
 /////////////////////////////////////////////////////////////////////////////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( Directory, EmptyMap, LO, GO )
+#else
+TEUCHOS_UNIT_TEST( Directory, EmptyMap )
+#endif
 {
   // Test -- Empty directory:  no IDs on any processors
   int ierr = 0;
@@ -399,7 +426,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( Directory, EmptyMap, LO, GO )
 //
 // INSTANTIATIONS
 //
-
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( LO, GO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( Directory, Uniform, LO, GO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( Directory, Replicate7223, LO, GO ) \
@@ -414,3 +441,19 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( Directory, EmptyMap, LO, GO )
   TPETRA_INSTANTIATE_LG(UNIT_TEST_GROUP)
 
 }
+#else
+#define UNIT_TEST_GROUP( ) \
+  TEUCHOS_UNIT_TEST( Directory, Uniform0 ) \
+  TEUCHOS_UNIT_TEST( Directory, Replicate72230 ) \
+  TEUCHOS_UNIT_TEST( Directory, EvenProcs0 ) \
+  TEUCHOS_UNIT_TEST( Directory, EvenProcsOffset0 ) \
+  TEUCHOS_UNIT_TEST( Directory, OddProcsOffset0 ) \
+  TEUCHOS_UNIT_TEST( Directory, OneProcOnly0 ) \
+  TEUCHOS_UNIT_TEST( Directory, EmptyMap0 )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  //TPETRA_INSTANTIATE(UNIT_TEST_GROUP)
+
+}
+#endif

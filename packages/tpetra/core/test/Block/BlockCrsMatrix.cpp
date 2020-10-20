@@ -71,7 +71,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockCrsMatrix, ctor, Scalar, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockCrsMatrix, ctor, Scalar, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( BlockCrsMatrix, ctor, Scalar, Node )
 #endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -163,7 +163,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockCrsMatrix, basic, Scalar, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockCrsMatrix, basic, Scalar, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( BlockCrsMatrix, basic, Scalar, Node )
 #endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -1297,7 +1297,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockCrsMatrix, SetAllToScalar, Scalar, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockCrsMatrix, SetAllToScalar, Scalar, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( BlockCrsMatrix, SetAllToScalar, Scalar, Node )
 #endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -1429,7 +1429,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockCrsMatrix, ImportCopy, Scalar, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockCrsMatrix, ImportCopy, Scalar, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( BlockCrsMatrix, ImportCopy, Scalar, Node )
 #endif
   {
     using Tpetra::Details::gathervPrint;
@@ -1601,7 +1601,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockCrsMatrix, ExportDiffRowMaps, Scalar, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockCrsMatrix, ExportDiffRowMaps, Scalar, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( BlockCrsMatrix, ExportDiffRowMaps, Scalar, Node )
 #endif
   {
     // typedef Tpetra::BlockMultiVector<Scalar, LO, GO, Node> BMV;
@@ -1859,7 +1859,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockCrsMatrix, localGSDiagonalMatrix, Scalar, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockCrsMatrix, localGSDiagonalMatrix, Scalar, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( BlockCrsMatrix, localGSDiagonalMatrix, Scalar, Node )
 #endif
   {
     using Kokkos::ALL;
@@ -2061,7 +2061,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockCrsMatrix, localGSTriangularMatrices, ST, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockCrsMatrix, localGSTriangularMatrices, ST,Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( BlockCrsMatrix, localGSTriangularMatrices, ST,Node )
 #endif
   {
     using Kokkos::ALL;
@@ -2332,7 +2332,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockCrsMatrix, point2block, ST, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockCrsMatrix, point2block, ST,Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( BlockCrsMatrix, point2block, ST,Node )
 #endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -2618,16 +2618,16 @@ namespace {
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockCrsMatrix, point2block, SCALAR, LO, GO, NODE )
 #else
 #define UNIT_TEST_GROUP( SCALAR, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockCrsMatrix, ctor, SCALAR,NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockCrsMatrix, basic, SCALAR,NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockCrsMatrix, write, SCALAR,NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockCrsMatrix, getLocalDiagCopy, SCALAR,NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockCrsMatrix, SetAllToScalar, SCALAR,NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockCrsMatrix, ImportCopy, SCALAR,NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockCrsMatrix, ExportDiffRowMaps, SCALAR,NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockCrsMatrix, localGSDiagonalMatrix, SCALAR,NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockCrsMatrix, localGSTriangularMatrices, SCALAR,NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockCrsMatrix, point2block, SCALAR,NODE )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockCrsMatrix, ctor, SCALAR,NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockCrsMatrix, basic, SCALAR,NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockCrsMatrix, write, SCALAR,NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockCrsMatrix, getLocalDiagCopy, SCALAR,NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockCrsMatrix, SetAllToScalar, SCALAR,NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockCrsMatrix, ImportCopy, SCALAR,NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockCrsMatrix, ExportDiffRowMaps, SCALAR,NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockCrsMatrix, localGSDiagonalMatrix, SCALAR,NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockCrsMatrix, localGSTriangularMatrices, SCALAR,NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockCrsMatrix, point2block, SCALAR,NODE )
 #endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()

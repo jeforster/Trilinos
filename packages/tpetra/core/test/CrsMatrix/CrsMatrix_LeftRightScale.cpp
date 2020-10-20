@@ -158,12 +158,14 @@ namespace {
   // Construct two tridiagonal matrices and scale them by a vector,
   // one on the left and the other on the right.  Then compare the
   // result to the known correct matrix.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, LeftRightScale, LO, GO, Scalar, Node )
   {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Vector<Scalar,LO,GO,Node> VEC;
     typedef CrsMatrix<Scalar,LO,GO,Node> MAT;
 #else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, LeftRightScale, Scalar, Node )
+  {
     typedef Vector<Scalar,Node> VEC;
     typedef CrsMatrix<Scalar,Node> MAT;
 #endif
@@ -245,9 +247,6 @@ namespace {
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( SCALAR, LO, GO, NODE ) \
-#else
-#define UNIT_TEST_GROUP( SCALAR, NODE ) \
-#endif
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, LeftRightScale, LO, GO, SCALAR, NODE )
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
@@ -255,3 +254,13 @@ namespace {
   TPETRA_INSTANTIATE_SLGN( UNIT_TEST_GROUP )
 
 }
+#else
+#define UNIT_TEST_GROUP( SCALAR, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, LeftRightScale, SCALAR, NODE )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_SLGN( UNIT_TEST_GROUP )
+
+}
+#endif

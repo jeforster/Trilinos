@@ -52,7 +52,11 @@ namespace {
   // UNIT TESTS
   //
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, MultipleFillCompletes, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, MultipleFillCompletes, Scalar, Node )
+#endif
   {
     using Teuchos::ArrayView;
     using Teuchos::Comm;
@@ -197,9 +201,6 @@ namespace {
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( SCALAR, LO, GO, NODE ) \
-#else
-#define UNIT_TEST_GROUP( SCALAR, NODE ) \
-#endif
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, MultipleFillCompletes, LO, GO, SCALAR, NODE )
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
@@ -207,3 +208,13 @@ namespace {
   TPETRA_INSTANTIATE_SLGN( UNIT_TEST_GROUP )
 
 }
+#else
+#define UNIT_TEST_GROUP( SCALAR, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, MultipleFillCompletes, SCALAR, NODE )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_SLGN( UNIT_TEST_GROUP )
+
+}
+#endif

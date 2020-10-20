@@ -84,7 +84,7 @@ trueOnAllProcesses (const Teuchos::Comm<int>& comm, const bool in)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( ImportExport, IsLocallyComplete, LO, GO, NT )
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( ImportExport, IsLocallyComplete, NT )
+TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( ImportExport, IsLocallyComplete, NT )
 #endif
 {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -398,13 +398,17 @@ TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( ImportExport, IsLocallyComplete, NT )
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( LO, GO, NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( ImportExport, IsLocallyComplete, LO, GO, NT )
-#else
-#define UNIT_TEST_GROUP(NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( ImportExport, IsLocallyComplete, NT )
-#endif
 
 TPETRA_ETI_MANGLING_TYPEDEFS()
 
 TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+#else
+#define UNIT_TEST_GROUP(NT ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( ImportExport, IsLocallyComplete, NT )
+
+TPETRA_ETI_MANGLING_TYPEDEFS()
+
+TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
+#endif
 
 } // namespace (anonymous)

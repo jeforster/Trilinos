@@ -57,7 +57,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, GetGlobalRowCopy, Scalar, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, GetGlobalRowCopy, Scalar, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, GetGlobalRowCopy, Scalar, Node )
 #endif
   {
     using Tpetra::TestingUtilities::getDefaultComm;
@@ -163,7 +163,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, GetLocalRowCopy, Scalar, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, GetLocalRowCopy, Scalar, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, GetLocalRowCopy, Scalar, Node )
 #endif
   {
     using Tpetra::TestingUtilities::getDefaultComm;
@@ -278,8 +278,8 @@ namespace {
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, GetLocalRowCopy, SCALAR, LO, GO, NODE )
 #else
 #define UNIT_TEST_GROUP( SCALAR, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, GetGlobalRowCopy, SCALAR,NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, GetLocalRowCopy, SCALAR,NODE )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, GetGlobalRowCopy, SCALAR,NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, GetLocalRowCopy, SCALAR,NODE )
 #endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()

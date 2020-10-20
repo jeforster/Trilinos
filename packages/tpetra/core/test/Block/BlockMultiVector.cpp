@@ -110,7 +110,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockMultiVector, ctor, Scalar, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockMultiVector, ctor, Scalar, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( BlockMultiVector, ctor, Scalar, Node )
 #endif
   {
     using Teuchos::Comm;
@@ -259,7 +259,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockMultiVector, MVView, Scalar, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockMultiVector, MVView, Scalar, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( BlockMultiVector, MVView, Scalar, Node )
 #endif
   {
     using Teuchos::Comm;
@@ -398,7 +398,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockMultiVector, Import, Scalar, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockMultiVector, Import, Scalar, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( BlockMultiVector, Import, Scalar, Node )
 #endif
   {
     using Teuchos::Comm;
@@ -531,7 +531,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockMultiVector, OffsetView, Scalar, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockMultiVector, OffsetView, Scalar, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( BlockMultiVector, OffsetView, Scalar, Node )
 #endif
   {
     using Teuchos::Comm;
@@ -685,10 +685,10 @@ namespace {
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockMultiVector, OffsetView, SCALAR, LO, GO, NODE )
 #else
 #define UNIT_TEST_GROUP( SCALAR, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockMultiVector, ctor, SCALAR,NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockMultiVector, MVView, SCALAR,NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockMultiVector, Import, SCALAR,NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockMultiVector, OffsetView, SCALAR,NODE )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockMultiVector, ctor, SCALAR,NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockMultiVector, MVView, SCALAR,NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockMultiVector, Import, SCALAR,NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockMultiVector, OffsetView, SCALAR,NODE )
 #endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()

@@ -78,7 +78,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, ApplyDirichlet, SC, LO, GO, NT )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, ApplyDirichlet, SC, NT )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, ApplyDirichlet, SC, NT )
 #endif
   {
     using Tpetra::createContigMapWithNode;
@@ -232,7 +232,7 @@ namespace { // (anonymous)
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, ApplyDirichlet, SCALAR, LO, GO, NODE )
 #else
 #define UNIT_TEST_GROUP( SCALAR, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, ApplyDirichlet, SCALAR,NODE )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, ApplyDirichlet, SCALAR,NODE )
 #endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()

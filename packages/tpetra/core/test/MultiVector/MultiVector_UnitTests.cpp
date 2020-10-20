@@ -163,13 +163,15 @@ namespace {
   //
 
   ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, NonMemberConstructors, LO, GO, Scalar , Node )
   {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::Map<LO, GO, Node> map_type;
     typedef Tpetra::MultiVector<Scalar,LO,GO,Node> MV;
     typedef Tpetra::Vector<Scalar,LO,GO,Node> V;
 #else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, NonMemberConstructors, Scalar , Node )
+  {
     typedef Tpetra::Map<Node> map_type;
     typedef Tpetra::MultiVector<Scalar,Node> MV;
     typedef Tpetra::Vector<Scalar,Node> V;
@@ -212,13 +214,15 @@ namespace {
 
 
   ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, basic, LO, GO, Scalar , Node )
   {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     using map_type = Tpetra::Map<LO, GO, Node>;
     using MV = Tpetra::MultiVector<Scalar, LO, GO, Node>;
     using vec_type = Tpetra::Vector<Scalar, LO, GO, Node>;
 #else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, basic, Scalar , Node )
+  {
     using map_type = Tpetra::Map<Node>;
     using MV = Tpetra::MultiVector<Scalar, Node>;
     using vec_type = Tpetra::Vector<Scalar, Node>;
@@ -295,13 +299,15 @@ namespace {
 
 
   ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, large, LO, GO, Scalar , Node )
   {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     using map_type = Tpetra::Map<LO, GO, Node>;
     using MV = Tpetra::MultiVector<Scalar, LO, GO, Node>;
     using vec_type = Tpetra::Vector<Scalar, LO, GO, Node>;
 #else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, large, Scalar , Node )
+  {
     using map_type = Tpetra::Map<Node>;
     using MV = Tpetra::MultiVector<Scalar, Node>;
     using vec_type = Tpetra::Vector<Scalar, Node>;
@@ -378,14 +384,16 @@ namespace {
 
 
   ////
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, BadConstLDA, LO, GO, Scalar , Node )
-  {
     // numlocal > LDA
     // ergo, the arrayview doesn't contain enough data to specify the entries
     // also, if bounds checking is enabled, check that bad bounds are caught
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, BadConstLDA, LO, GO, Scalar , Node )
+  {
     typedef Tpetra::MultiVector<Scalar,LO,GO,Node> MV;
 #else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, BadConstLDA, Scalar , Node )
+  {
     typedef Tpetra::MultiVector<Scalar,Node> MV;
 #endif
 
@@ -430,12 +438,14 @@ namespace {
 
 
   ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, NonContigView, LO, GO, Scalar , Node )
   {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::MultiVector<Scalar,LO,GO,Node> MV;
     typedef Tpetra::Vector<Scalar,LO,GO,Node> V;
 #else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, NonContigView, Scalar , Node )
+  {
     typedef Tpetra::MultiVector<Scalar,Node> MV;
     typedef Tpetra::Vector<Scalar,Node> V;
 #endif
@@ -3984,7 +3994,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, ComplexDotOneColumn, RealType, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, ComplexDotOneColumn, RealType,Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, ComplexDotOneColumn, RealType,Node )
 #endif
   {
     using Teuchos::rcp_implicit_cast;
@@ -4125,7 +4135,11 @@ namespace {
 
 
   // Test MultiVector::replaceMap.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, ReplaceMap, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, ReplaceMap, Scalar, Node )
+#endif
   {
     using Teuchos::Comm;
     using Teuchos::RCP;
@@ -4292,12 +4306,14 @@ namespace {
   // Make sure that deep_copy compiles, and actually does a deep copy.
   //
   // NOTE: This test only exercises deep_copy for MVs of the same type.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, DeepCopy, LO, GO, Scalar, Node )
   {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::Map<LO, GO, Node> map_type;
     typedef Tpetra::MultiVector<Scalar,LO,GO,Node> MV;
 #else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, DeepCopy, Scalar, Node )
+  {
     typedef Tpetra::Map<Node> map_type;
     typedef Tpetra::MultiVector<Scalar,Node> MV;
 #endif
@@ -4360,7 +4376,11 @@ namespace {
   //
   // This tests ensures that getLocalView() actually returns a view of
   // the data, NOT a deep copy.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, DualViewSemantics, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, DualViewSemantics, Scalar, Node )
+#endif
   {
     typedef Tpetra::global_size_t GST;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -4517,7 +4537,11 @@ namespace {
   // This tests whether the Tpetra::MultiVector constructor that takes
   // a Kokkos::DualView actually views the DualView.  (It must NOT
   // make a deep copy.)
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, DualViewCtor, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, DualViewCtor, Scalar, Node )
+#endif
   {
     typedef Tpetra::global_size_t GST;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -4641,7 +4665,11 @@ namespace {
   // respecting Tpetra::MultiVector's DualView semantics.  That is,
   // they need to use modify() and sync() correctly for the
   // Tpetra::MultiVector (or the underlying Kokkos::DualView).
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, ViewCtor, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, ViewCtor, Scalar, Node )
+#endif
   {
     typedef Tpetra::global_size_t GST;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -4893,13 +4921,15 @@ namespace {
 
   // Exercise getVector, subView(Range1D) and subCopy(Range1D) where
   // some processes have zero rows.  Contributed by Andrew Bradley.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, SubViewSomeZeroRows, LO, GO, ST, Node )
   {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::Map<LO, GO, Node> map_type;
     typedef Tpetra::Vector<ST, LO, GO, Node> V;
     typedef Tpetra::MultiVector<ST, LO, GO, Node> MV;
 #else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, SubViewSomeZeroRows, ST, Node )
+  {
     typedef Tpetra::Map<Node> map_type;
     typedef Tpetra::Vector<ST, Node> V;
     typedef Tpetra::MultiVector<ST, Node> MV;
@@ -5259,12 +5289,14 @@ namespace {
   // Create a MultiVector with zero rows on some processes, but a
   // nonzero number of columns.  Make sure that getLocalLength(),
   // getGlobalLength(), and getNumVectors() return the correct values.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, DimsWithSomeZeroRows, LO, GO, ST, Node )
   {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::Map<LO, GO, Node> map_type;
     typedef Tpetra::MultiVector<ST, LO, GO, Node> MV;
 #else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, DimsWithSomeZeroRows, ST, Node )
+  {
     typedef Tpetra::Map<Node> map_type;
     typedef Tpetra::MultiVector<ST, Node> MV;
 #endif
@@ -5345,7 +5377,11 @@ namespace {
   // nonzero number of columns.  Make sure that getLocalLength(),
   // getGlobalLength(), and getNumVectors() return the correct values.
   // Then, do the same thing with a globally 0 x 0 multivector.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, DimsWithAllZeroRows, LO, GO, ST, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, DimsWithAllZeroRows, ST, Node )
+#endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::Map<LO, GO, Node> map_type;
@@ -5472,11 +5508,12 @@ namespace {
   }
 
   // Swap test
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, Swap, LO , GO , Scalar , Node ) {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( MultiVector, Swap, LO , GO , Scalar , Node ) {
     typedef Tpetra::Map<LO, GO, Node> map_type;
     typedef Tpetra::MultiVector<Scalar,LO, GO, Node> MV;
 #else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, Swap , Scalar , Node ) {
     typedef Tpetra::Map<Node> map_type;
     typedef Tpetra::MultiVector<Scalar, Node> MV;
 #endif
@@ -5517,9 +5554,6 @@ namespace {
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP_BASE( SCALAR, LO, GO, NODE ) \
-#else
-#define UNIT_TEST_GROUP_BASE( SCALAR, NODE ) \
-#endif
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( MultiVector, basic             , LO, GO, SCALAR, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( MultiVector, large             , LO, GO, SCALAR, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( MultiVector, NonMemberConstructors, LO, GO, SCALAR, NODE ) \
@@ -5557,6 +5591,46 @@ namespace {
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( MultiVector, DimsWithSomeZeroRows, LO, GO, SCALAR, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( MultiVector, DimsWithAllZeroRows, LO, GO, SCALAR, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( MultiVector, Swap, LO, GO, SCALAR, NODE )
+#else
+#define UNIT_TEST_GROUP_BASE( SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, basic             , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, large             , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, NonMemberConstructors, SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, BadConstLDA       , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, BadConstAA        , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, CopyConst         , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(      Vector, CopyConst         , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(      Vector, Indexing          , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, OrthoDot          , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, CountDot          , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, CountDotNonTrivLDA, SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, BadDot            , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, CountNorm1        , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, CountNormInf      , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, Norm2             , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, CopyView          , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, OffsetView        , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, ZeroScaleUpdate   , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(      Vector, ZeroScaleUpdate   , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, ScaleAndAssign    , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, BadMultiply       , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, SingleVecNormalize, SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, Multiply          , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, ElementWiseMultiply,LO, GO, SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, ElementWiseMultiplyLg,LO, GO, SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, NonContigView     , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, Describable       , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, Typedefs          , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, ReplaceMap        , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, DeepCopy          , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, DualViewSemantics , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, DualViewCtor      , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, ViewCtor          , SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, SubViewSomeZeroRows, SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, DimsWithSomeZeroRows, SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, DimsWithAllZeroRows, SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, Swap, SCALAR, NODE )
+#endif
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   #define UNIT_TEST_GROUP( SCALAR, LO, GO, NODE ) \

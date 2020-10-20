@@ -57,7 +57,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( ExpNamespaceExists, all, Scalar, LO, GO, Node )
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( ExpNamespaceExists, all, Scalar, Node )
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( ExpNamespaceExists, all, Scalar, Node )
 #endif
 {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -86,7 +86,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( ExpNamespaceExists, all, Scalar, Node )
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( ExpNamespaceExists, all, SCALAR, LO, GO, NODE )
 #else
 #define UNIT_TEST_GROUP( SCALAR, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( ExpNamespaceExists, all, SCALAR,NODE )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( ExpNamespaceExists, all, SCALAR,NODE )
 #endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()

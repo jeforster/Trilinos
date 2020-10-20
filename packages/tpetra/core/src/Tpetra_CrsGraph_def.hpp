@@ -8781,14 +8781,10 @@ namespace Tpetra {
 //
 // Must be expanded from within the Tpetra namespace!
 //
-
+                                                               
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_CRSGRAPH_IMPORT_AND_FILL_COMPLETE_INSTANT(LO,GO,NODE) \
-#else
-#define TPETRA_CRSGRAPH_IMPORT_AND_FILL_COMPLETE_INSTANT(NODE) \
-#endif
-  template<>                                                                        \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  template<>       \
   Teuchos::RCP<CrsGraph<LO,GO,NODE> >                        \
   importAndFillCompleteCrsGraph(const Teuchos::RCP<const CrsGraph<LO,GO,NODE> >& sourceGraph, \
                                   const Import<CrsGraph<LO,GO,NODE>::local_ordinal_type,  \
@@ -8800,7 +8796,10 @@ namespace Tpetra {
                                   const Teuchos::RCP<const Map<CrsGraph<LO,GO,NODE>::local_ordinal_type,      \
                                                                CrsGraph<LO,GO,NODE>::global_ordinal_type,     \
                                                                CrsGraph<LO,GO,NODE>::node_type> >& rangeMap,  \
+                                                               const Teuchos::RCP<Teuchos::ParameterList>& params);
 #else
+#define TPETRA_CRSGRAPH_IMPORT_AND_FILL_COMPLETE_INSTANT(NODE) \
+  template<>      \
   Teuchos::RCP<CrsGraph<NODE> >                        \
   importAndFillCompleteCrsGraph(const Teuchos::RCP<const CrsGraph<NODE> >& sourceGraph, \
                                   const Import<CrsGraph<NODE>::local_ordinal_type,  \
@@ -8812,16 +8811,12 @@ namespace Tpetra {
                                   const Teuchos::RCP<const Map<CrsGraph<NODE>::local_ordinal_type,      \
                                                                CrsGraph<NODE>::global_ordinal_type,     \
                                                                CrsGraph<NODE>::node_type> >& rangeMap,  \
-#endif
                                                                const Teuchos::RCP<Teuchos::ParameterList>& params);
-
+#endif
+                                                                 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_CRSGRAPH_IMPORT_AND_FILL_COMPLETE_INSTANT_TWO(LO,GO,NODE) \
-#else
-#define TPETRA_CRSGRAPH_IMPORT_AND_FILL_COMPLETE_INSTANT_TWO(NODE) \
-#endif
-  template<>                                                                        \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  template<> \
   Teuchos::RCP<CrsGraph<LO,GO,NODE> >                        \
   importAndFillCompleteCrsGraph(const Teuchos::RCP<const CrsGraph<LO,GO,NODE> >& sourceGraph, \
                                   const Import<CrsGraph<LO,GO,NODE>::local_ordinal_type,  \
@@ -8836,7 +8831,10 @@ namespace Tpetra {
                                   const Teuchos::RCP<const Map<CrsGraph<LO,GO,NODE>::local_ordinal_type,      \
                                                                CrsGraph<LO,GO,NODE>::global_ordinal_type,     \
                                                                CrsGraph<LO,GO,NODE>::node_type> >& rangeMap,  \
+                                                               const Teuchos::RCP<Teuchos::ParameterList>& params);
 #else
+#define TPETRA_CRSGRAPH_IMPORT_AND_FILL_COMPLETE_INSTANT_TWO(NODE) \
+  template<> \
   Teuchos::RCP<CrsGraph<NODE> >                        \
   importAndFillCompleteCrsGraph(const Teuchos::RCP<const CrsGraph<NODE> >& sourceGraph, \
                                   const Import<CrsGraph<NODE>::local_ordinal_type,  \
@@ -8851,17 +8849,13 @@ namespace Tpetra {
                                   const Teuchos::RCP<const Map<CrsGraph<NODE>::local_ordinal_type,      \
                                                                CrsGraph<NODE>::global_ordinal_type,     \
                                                                CrsGraph<NODE>::node_type> >& rangeMap,  \
-#endif
                                                                const Teuchos::RCP<Teuchos::ParameterList>& params);
+#endif
 
-
+                                                                   
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_CRSGRAPH_EXPORT_AND_FILL_COMPLETE_INSTANT(LO,GO,NODE) \
-#else
-#define TPETRA_CRSGRAPH_EXPORT_AND_FILL_COMPLETE_INSTANT(NODE) \
-#endif
-  template<>                                                                        \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  template<>  \
   Teuchos::RCP<CrsGraph<LO,GO,NODE> >                        \
   exportAndFillCompleteCrsGraph(const Teuchos::RCP<const CrsGraph<LO,GO,NODE> >& sourceGraph, \
                                   const Export<CrsGraph<LO,GO,NODE>::local_ordinal_type,  \
@@ -8873,7 +8867,10 @@ namespace Tpetra {
                                   const Teuchos::RCP<const Map<CrsGraph<LO,GO,NODE>::local_ordinal_type,      \
                                                                CrsGraph<LO,GO,NODE>::global_ordinal_type,     \
                                                                CrsGraph<LO,GO,NODE>::node_type> >& rangeMap,  \
+                                                               const Teuchos::RCP<Teuchos::ParameterList>& params);
 #else
+#define TPETRA_CRSGRAPH_EXPORT_AND_FILL_COMPLETE_INSTANT(NODE) \
+  template<>  \
   Teuchos::RCP<CrsGraph<NODE> >                        \
   exportAndFillCompleteCrsGraph(const Teuchos::RCP<const CrsGraph<NODE> >& sourceGraph, \
                                   const Export<CrsGraph<NODE>::local_ordinal_type,  \
@@ -8885,16 +8882,12 @@ namespace Tpetra {
                                   const Teuchos::RCP<const Map<CrsGraph<NODE>::local_ordinal_type,      \
                                                                CrsGraph<NODE>::global_ordinal_type,     \
                                                                CrsGraph<NODE>::node_type> >& rangeMap,  \
-#endif
                                                                const Teuchos::RCP<Teuchos::ParameterList>& params);
-
+#endif
+                                         
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_CRSGRAPH_EXPORT_AND_FILL_COMPLETE_INSTANT_TWO(LO,GO,NODE) \
-#else
-#define TPETRA_CRSGRAPH_EXPORT_AND_FILL_COMPLETE_INSTANT_TWO(NODE) \
-#endif
-  template<>                                                                        \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  template<>     \
   Teuchos::RCP<CrsGraph<LO,GO,NODE> >                        \
   exportAndFillCompleteCrsGraph(const Teuchos::RCP<const CrsGraph<LO,GO,NODE> >& sourceGraph, \
                                   const Export<CrsGraph<LO,GO,NODE>::local_ordinal_type,  \
@@ -8909,7 +8902,10 @@ namespace Tpetra {
                                   const Teuchos::RCP<const Map<CrsGraph<LO,GO,NODE>::local_ordinal_type,      \
                                                                CrsGraph<LO,GO,NODE>::global_ordinal_type,     \
                                                                CrsGraph<LO,GO,NODE>::node_type> >& rangeMap,  \
+                                                               const Teuchos::RCP<Teuchos::ParameterList>& params);
 #else
+#define TPETRA_CRSGRAPH_EXPORT_AND_FILL_COMPLETE_INSTANT_TWO(NODE) \
+  template<>     \
   Teuchos::RCP<CrsGraph<NODE> >                        \
   exportAndFillCompleteCrsGraph(const Teuchos::RCP<const CrsGraph<NODE> >& sourceGraph, \
                                   const Export<CrsGraph<NODE>::local_ordinal_type,  \
@@ -8924,8 +8920,8 @@ namespace Tpetra {
                                   const Teuchos::RCP<const Map<CrsGraph<NODE>::local_ordinal_type,      \
                                                                CrsGraph<NODE>::global_ordinal_type,     \
                                                                CrsGraph<NODE>::node_type> >& rangeMap,  \
-#endif
                                                                const Teuchos::RCP<Teuchos::ParameterList>& params);
+#endif
 
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS

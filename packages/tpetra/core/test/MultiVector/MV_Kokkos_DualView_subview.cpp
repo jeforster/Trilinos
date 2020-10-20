@@ -66,7 +66,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Kokkos_DualView, DegenerateSubview, S, LO, GO, NODE)
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Kokkos_DualView, DegenerateSubview, S,NODE)
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Kokkos_DualView, DegenerateSubview, S,NODE)
 #endif
   {
     using Kokkos::ALL;
@@ -208,7 +208,7 @@ namespace { // (anonymous)
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( Kokkos_DualView, DegenerateSubview, SCALAR, LO, GO, NODE)
 #else
 #define UNIT_TEST_GROUP( SCALAR, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( Kokkos_DualView, DegenerateSubview, SCALAR,NODE)
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( Kokkos_DualView, DegenerateSubview, SCALAR,NODE)
 #endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()

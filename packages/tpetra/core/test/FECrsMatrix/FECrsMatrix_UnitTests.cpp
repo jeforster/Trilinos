@@ -299,7 +299,11 @@ Kokkos::View<ImplScalarType[2][2], Kokkos::LayoutLeft, typename Node::device_typ
 
 
 ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( FECrsMatrix, Assemble1D, LO, GO, Scalar, Node )
+#else
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( FECrsMatrix, Assemble1D, Scalar, Node )
+#endif
 {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   using FEMAT = typename Tpetra::FECrsMatrix<Scalar,LO,GO,Node>;
@@ -371,7 +375,11 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( FECrsMatrix, Assemble1D, LO, GO, Scalar, Node
 }
 
 ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( FECrsMatrix, Assemble1D_Kokkos, LO, GO, Scalar, Node )
+#else
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( FECrsMatrix, Assemble1D_Kokkos, Scalar, Node )
+#endif
 {
   using exec_space = typename Node::execution_space;
   using range_type = Kokkos::RangePolicy<exec_space, LO>;
@@ -465,7 +473,11 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( FECrsMatrix, Assemble1D_Kokkos, LO, GO, Scala
 }
 
 ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( FECrsMatrix, Assemble1D_LocalIndex, LO, GO, Scalar, Node )
+#else
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( FECrsMatrix, Assemble1D_LocalIndex, Scalar, Node )
+#endif
 {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   using FEMAT = typename Tpetra::FECrsMatrix<Scalar,LO,GO,Node>;
@@ -539,7 +551,11 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( FECrsMatrix, Assemble1D_LocalIndex, LO, GO, S
 }
 
 ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( FECrsMatrix, Assemble1D_LocalIndex_Kokkos, LO, GO, Scalar, Node )
+#else
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( FECrsMatrix, Assemble1D_LocalIndex_Kokkos, Scalar, Node )
+#endif
 {
   using exec_space = typename Node::execution_space;
   using range_type = Kokkos::RangePolicy<exec_space, LO>;
@@ -632,7 +648,11 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( FECrsMatrix, Assemble1D_LocalIndex_Kokkos, LO
 
 
 ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( FECrsMatrix, Assemble1D_LocalIndex_Kokkos_Multiple, LO, GO, Scalar, Node )
+#else
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( FECrsMatrix, Assemble1D_LocalIndex_Kokkos_Multiple, Scalar, Node )
+#endif
 {
   using exec_space = typename Node::execution_space;
   using range_type = Kokkos::RangePolicy<exec_space, LO>;
@@ -737,9 +757,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( FECrsMatrix, Assemble1D_LocalIndex_Kokkos_Mul
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( SCALAR, LO, GO, NODE ) \
-#else
-#define UNIT_TEST_GROUP( SCALAR, NODE ) \
-#endif
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( FECrsMatrix, Assemble1D_Kokkos, LO, GO, SCALAR, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( FECrsMatrix, Assemble1D, LO, GO, SCALAR, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( FECrsMatrix, Assemble1D_LocalIndex, LO, GO, SCALAR, NODE ) \
@@ -752,3 +769,18 @@ TPETRA_ETI_MANGLING_TYPEDEFS()
   TPETRA_INSTANTIATE_SLGN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP )
 
 } // end namespace (anonymous)
+#else
+#define UNIT_TEST_GROUP( SCALAR, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( FECrsMatrix, Assemble1D_Kokkos, SCALAR, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( FECrsMatrix, Assemble1D, SCALAR, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( FECrsMatrix, Assemble1D_LocalIndex, SCALAR, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( FECrsMatrix, Assemble1D_LocalIndex_Kokkos, SCALAR, NODE )  \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( FECrsMatrix, Assemble1D_LocalIndex_Kokkos_Multiple, SCALAR, NODE ) 
+
+
+TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_SLGN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP )
+
+} // end namespace (anonymous)
+#endif

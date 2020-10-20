@@ -62,7 +62,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( Map, LocallyFitted, LO, GO, NT )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( Map, LocallyFitted, NT )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( Map, LocallyFitted, NT )
 #endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -351,14 +351,18 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( LO, GO, NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( Map, LocallyFitted, LO, GO, NT )
-#else
-#define UNIT_TEST_GROUP(NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( Map, LocallyFitted, NT )
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_LGN(UNIT_TEST_GROUP)
+#else
+#define UNIT_TEST_GROUP(NT ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( Map, LocallyFitted, NT )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_N(UNIT_TEST_GROUP)
+#endif
 
 } // namespace (anonymous)
 

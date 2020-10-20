@@ -142,7 +142,7 @@ generate_test_graph(const Teuchos::RCP<const Teuchos::Comm<int> >& comm)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(CrsGraph, PackThenUnpackAndCombine, LO, GO, NT)
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(CrsGraph, PackThenUnpackAndCombine, NT)
+TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(CrsGraph, PackThenUnpackAndCombine, NT)
 #endif
 {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -319,7 +319,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(CrsGraph, PackThenUnpackAndCombine, NT)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(CrsGraph, PackWithError, LO, GO, NT)
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(CrsGraph, PackWithError, NT)
+TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(CrsGraph, PackWithError, NT)
 #endif
 {
 
@@ -441,14 +441,18 @@ TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(CrsGraph, PackWithError, NT)
 #define UNIT_TEST_GROUP( LO, GO, NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(CrsGraph, PackThenUnpackAndCombine, LO, GO, NT) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(CrsGraph, PackWithError, LO, GO, NT)
-#else
-#define UNIT_TEST_GROUP(NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(CrsGraph, PackThenUnpackAndCombine, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(CrsGraph, PackWithError, NT)
-#endif
 
 TPETRA_ETI_MANGLING_TYPEDEFS()
 
 TPETRA_INSTANTIATE_LGN(UNIT_TEST_GROUP)
+#else
+#define UNIT_TEST_GROUP(NT ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(CrsGraph, PackThenUnpackAndCombine, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(CrsGraph, PackWithError, NT)
+
+TPETRA_ETI_MANGLING_TYPEDEFS()
+
+TPETRA_INSTANTIATE_N(UNIT_TEST_GROUP)
+#endif
 
 } // namespace (anonymous)

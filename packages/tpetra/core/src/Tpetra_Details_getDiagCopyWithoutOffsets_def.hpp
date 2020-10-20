@@ -297,19 +297,18 @@ getLocalDiagCopyWithoutOffsetsNotFillComplete ( ::Tpetra::Vector<SC, NT>& diag,
 // Must be used inside the Tpetra namespace.
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_DETAILS_GETDIAGCOPYWITHOUTOFFSETS_INSTANT( SCALAR, LO, GO, NODE ) \
-#else
-#define TPETRA_DETAILS_GETDIAGCOPYWITHOUTOFFSETS_INSTANT( SCALAR, NODE ) \
-#endif
   template LO \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   Details::getLocalDiagCopyWithoutOffsetsNotFillComplete< SCALAR, LO, GO, NODE > \
     ( ::Tpetra::Vector< SCALAR, LO, GO, NODE >& diag, \
       const ::Tpetra::RowMatrix< SCALAR, LO, GO, NODE >& A, \
+      const bool debug);
 #else
+#define TPETRA_DETAILS_GETDIAGCOPYWITHOUTOFFSETS_INSTANT( SCALAR, NODE ) \
+  template LO \
   Details::getLocalDiagCopyWithoutOffsetsNotFillComplete< SCALAR, NODE > \
     ( ::Tpetra::Vector< SCALAR, NODE >& diag, \
       const ::Tpetra::RowMatrix< SCALAR, NODE >& A, \
-#endif
       const bool debug);
+#endif
 
 #endif // TPETRA_DETAILS_GETDIAGCOPYWITHOUTOFFSETS_DEF_HPP

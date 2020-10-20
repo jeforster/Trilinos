@@ -394,7 +394,7 @@ testSubsetMap (int& gblSuccess, // output argument; 0 means false
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( Map, replaceCommWithSubset, LO, GO, NT )
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( Map, replaceCommWithSubset, NT )
+TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( Map, replaceCommWithSubset, NT )
 #endif
 {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -546,14 +546,18 @@ TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( Map, replaceCommWithSubset, NT )
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( LO, GO, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( Map, replaceCommWithSubset, LO, GO, NODE )
-#else
-#define UNIT_TEST_GROUP(NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( Map, replaceCommWithSubset, NODE )
-#endif
 
 TPETRA_ETI_MANGLING_TYPEDEFS()
 
 TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+#else
+#define UNIT_TEST_GROUP(NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( Map, replaceCommWithSubset, NODE )
+
+TPETRA_ETI_MANGLING_TYPEDEFS()
+
+TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
+#endif
 
 } // namespace (anonymous)
 

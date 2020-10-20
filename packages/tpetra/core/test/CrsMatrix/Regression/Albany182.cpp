@@ -1179,7 +1179,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsMatrix, Albany182, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsMatrix, Albany182, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsMatrix, Albany182, Node )
 #endif
   {
     using Teuchos::Comm;
@@ -1207,7 +1207,7 @@ namespace { // (anonymous)
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsMatrix, Albany182, LO, GO, NODE )
 #else
 #define UNIT_TEST_GROUP(NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsMatrix, Albany182, NODE )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsMatrix, Albany182, NODE )
 #endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()

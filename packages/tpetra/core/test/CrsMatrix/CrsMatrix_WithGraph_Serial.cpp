@@ -61,17 +61,23 @@ TPETRA_ETI_MANGLING_TYPEDEFS()
 // Declare a colon- and comma-free typedef, to avoid macro issues.
 typedef Kokkos::Compat::KokkosSerialWrapperNode serial_node_type;
 
-#define UNIT_TEST_GROUP_SERIAL( SCALAR, LO, GO ) \
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+#define UNIT_TEST_GROUP_SERIAL( SCALAR, LO, GO ) \
   UNIT_TEST_GROUP( SCALAR, LO, GO, serial_node_type )
-#else
-  UNIT_TEST_GROUP( SCALAR, serial_node_type )
-#endif
 
 TPETRA_INSTANTIATE_SLG_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP_SERIAL )
 
 } // namespace Test
 } // namespace Tpetra
+#else
+#define UNIT_TEST_GROUP_SERIAL( SCALAR ) \
+  UNIT_TEST_GROUP( SCALAR, serial_node_type )
+
+TPETRA_INSTANTIATE_SLG_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP_SERIAL )
+
+} // namespace Test
+} // namespace Tpetra
+#endif
 
 #endif // defined(HAVE_TPETRA_SERIAL)
 

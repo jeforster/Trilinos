@@ -96,7 +96,11 @@ namespace { // (anonymous)
   //
 
   ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, BadCalls, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, BadCalls, Scalar, Node )
+#endif
   {
     typedef Teuchos::ScalarTraits<Scalar> ST;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -182,7 +186,11 @@ namespace { // (anonymous)
 
 
   ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, TheEyeOfTruth, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, TheEyeOfTruth, Scalar, Node )
+#endif
   {
     typedef Teuchos::ScalarTraits<Scalar> ST;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -255,7 +263,11 @@ namespace { // (anonymous)
   }
 
   ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, SimpleEigTest, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, SimpleEigTest, Scalar, Node )
+#endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::CrsMatrix<Scalar,LO,GO,Node> MAT;
@@ -349,7 +361,11 @@ namespace { // (anonymous)
   }
 
   ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, ZeroMatrix, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, ZeroMatrix, Scalar, Node )
+#endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::CrsMatrix<Scalar,LO,GO,Node> MAT;
@@ -394,7 +410,11 @@ namespace { // (anonymous)
     }
   }
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, ImbalancedRowMatrix, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, ImbalancedRowMatrix, Scalar, Node )
+#endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::CrsMatrix<Scalar,LO,GO,Node> MAT;
@@ -503,9 +523,6 @@ namespace { // (anonymous)
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( SCALAR, LO, GO, NODE ) \
-#else
-#define UNIT_TEST_GROUP( SCALAR, NODE ) \
-#endif
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, TheEyeOfTruth,  LO, GO, SCALAR, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, ZeroMatrix,     LO, GO, SCALAR, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, ImbalancedRowMatrix, LO, GO, SCALAR, NODE ) \
@@ -517,3 +534,17 @@ namespace { // (anonymous)
   TPETRA_INSTANTIATE_SLGN( UNIT_TEST_GROUP )
 
 }
+#else
+#define UNIT_TEST_GROUP( SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, TheEyeOfTruth,  SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, ZeroMatrix,     SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, ImbalancedRowMatrix, SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, BadCalls,       SCALAR, NODE ) \
+      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, SimpleEigTest,  SCALAR, NODE )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_SLGN( UNIT_TEST_GROUP )
+
+}
+#endif

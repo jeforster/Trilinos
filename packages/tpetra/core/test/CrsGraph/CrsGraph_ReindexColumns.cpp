@@ -74,7 +74,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraphReindexColumns, ColMapOnlySortingOn, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraphReindexColumns, ColMapOnlySortingOn, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraphReindexColumns, ColMapOnlySortingOn, Node )
 #endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -542,7 +542,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraphReindexColumns, ColMapAndImportSortingOff, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraphReindexColumns, ColMapAndImportSortingOff, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraphReindexColumns, ColMapAndImportSortingOff, Node )
 #endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -1019,16 +1019,19 @@ namespace {
 #define UNIT_TEST_GROUP( LO, GO, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraphReindexColumns, ColMapOnlySortingOn, LO, GO, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraphReindexColumns, ColMapAndImportSortingOff, LO, GO, NODE )
-#else
-#define UNIT_TEST_GROUP(NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraphReindexColumns, ColMapOnlySortingOn, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraphReindexColumns, ColMapAndImportSortingOff, NODE )
-#endif
-
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+#else
+#define UNIT_TEST_GROUP(NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraphReindexColumns, ColMapOnlySortingOn, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraphReindexColumns, ColMapAndImportSortingOff, NODE )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
+#endif
 
 }
 

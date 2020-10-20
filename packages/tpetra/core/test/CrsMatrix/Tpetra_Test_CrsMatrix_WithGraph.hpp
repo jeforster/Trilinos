@@ -170,7 +170,11 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
   //
 
   ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, AdvancedGraphUsage, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, AdvancedGraphUsage, Scalar, Node )
+#endif
   {
     // generate a tridiagonal matrix
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -233,7 +237,11 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
   // Test that CrsMatrix operations (setAllToScalar, apply, and local
   // triangular solve) work when the matrix was constructed with a
   // const CrsGraph.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, WithGraph, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, WithGraph, Scalar, Node )
+#endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::CrsMatrix<Scalar,LO,GO,Node>  MAT;
@@ -487,7 +495,11 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
   }
 
   ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, WithColMap, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, WithColMap, Scalar, Node )
+#endif
   {
     // generate a tridiagonal matrix
     typedef ScalarTraits<Scalar> ST;
@@ -617,7 +629,11 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
   }
 
   ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, WithGraph_replaceLocal, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, WithGraph_replaceLocal, Scalar, Node )
+#endif
   {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::CrsMatrix<Scalar,LO,GO,Node> MAT;
@@ -868,7 +884,11 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
 
 
   ////
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( CrsMatrix, ExceedStaticAlloc, LO, GO, Scalar, Node )
+#else
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, ExceedStaticAlloc, Scalar, Node )
+#endif
   {
     // test that an exception is thrown when we exceed statically allocated memory
     typedef ScalarTraits<Scalar> ST;
@@ -911,9 +931,6 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( SCALAR, LO, GO, NODE ) \
-#else
-#define UNIT_TEST_GROUP( SCALAR, NODE ) \
-#endif
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, WithGraph, LO, GO, SCALAR, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, WithColMap, LO, GO, SCALAR, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, AdvancedGraphUsage, LO, GO, SCALAR, NODE ) \
@@ -922,5 +939,16 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
 
 } // namespace Test
 } // namespace Tpetra
+#else
+#define UNIT_TEST_GROUP( SCALAR, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, WithGraph, SCALAR, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, WithColMap, SCALAR, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, AdvancedGraphUsage, SCALAR, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, WithGraph_replaceLocal, SCALAR, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, ExceedStaticAlloc, SCALAR, NODE ) \
+
+} // namespace Test
+} // namespace Tpetra
+#endif
 
 #endif // TPETRA_TEST_CRSMATRIX_WITHGRAPH_HPP

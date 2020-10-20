@@ -1331,7 +1331,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMat, operations_test,SC, NT)  {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMat, range_row_test, SC, LO, GO, NT)  {
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMat, range_row_test, SC, NT)  {
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Tpetra_MatMat, range_row_test, SC, NT)  {
 #endif
   RCP<const Comm<int> > comm = Tpetra::getDefaultComm();
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -1595,7 +1595,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMat, range_row_test, SC, NT)  {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMat, ATI_range_row_test, SC, LO, GO, NT)  {
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMat, ATI_range_row_test, SC, NT)  {
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Tpetra_MatMat, ATI_range_row_test, SC, NT)  {
 #endif
   RCP<const Comm<int> > comm = Tpetra::getDefaultComm();
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -1744,7 +1744,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMat, ATI_range_row_test, SC, NT)  {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMat, threaded_add_sorted, SC, LO, GO, NT)
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMat, threaded_add_sorted, SC, NT)
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Tpetra_MatMat, threaded_add_sorted, SC, NT)
 #endif
 {
   Teuchos::RCP<const Teuchos::Comm<int> > comm = Tpetra::getDefaultComm();
@@ -1878,7 +1878,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMat, threaded_add_sorted, SC, NT)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMat, add_zero_rows, SC, LO, GO, NT)
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMat, add_zero_rows, SC, NT)
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Tpetra_MatMat, add_zero_rows, SC, NT)
 #endif
 {
   Teuchos::RCP<const Teuchos::Comm<int> > comm = Tpetra::getDefaultComm();
@@ -1910,7 +1910,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMat, add_zero_rows, SC, NT)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMat, threaded_add_unsorted, SC, LO, GO, NT)
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMat, threaded_add_unsorted, SC, NT)
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Tpetra_MatMat, threaded_add_unsorted, SC, NT)
 #endif
 {
   Teuchos::RCP<const Teuchos::Comm<int> > comm = Tpetra::getDefaultComm();
@@ -2297,7 +2297,7 @@ RCP<Tpetra::CrsMatrix<SC, NT>> getUnsortedTestMatrix(
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMatAdd, same_colmap, SC, LO, GO, NT)
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMatAdd, same_colmap, SC, NT)
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Tpetra_MatMatAdd, same_colmap, SC, NT)
 #endif
 {
   using namespace AddTestUtils;
@@ -2343,7 +2343,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMatAdd, same_colmap, SC, NT)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMatAdd, different_col_maps, SC, LO, GO, NT)
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMatAdd, different_col_maps, SC, NT)
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Tpetra_MatMatAdd, different_col_maps, SC, NT)
 #endif
 {
   using namespace AddTestUtils;
@@ -2390,7 +2390,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMatAdd, different_col_maps, SC, NT)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMatAdd, different_index_base, SC, LO, GO, NT)
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMatAdd, different_index_base, SC, NT)
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Tpetra_MatMatAdd, different_index_base, SC, NT)
 #endif
 {
   using namespace AddTestUtils;
@@ -2442,7 +2442,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMatAdd, different_index_base, SC, NT
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMatAdd, transposed_b, SC, LO, GO, NT)
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMatAdd, transposed_b, SC, NT)
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Tpetra_MatMatAdd, transposed_b, SC, NT)
 #endif
 {
   using namespace AddTestUtils;
@@ -2486,7 +2486,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMatAdd, transposed_b, SC, NT)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMatAdd, locally_unsorted, SC, LO, GO, NT)
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMatAdd, locally_unsorted, SC, NT)
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Tpetra_MatMatAdd, locally_unsorted, SC, NT)
 #endif
 {
   using namespace AddTestUtils;
@@ -2581,24 +2581,28 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(Tpetra_MatMatAdd, locally_unsorted, SC, NT)
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Tpetra_MatMatAdd, locally_unsorted, SC, LO, GO, NT) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Tpetra_MatMatAdd, different_col_maps, SC, LO, GO, NT) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Tpetra_MatMatAdd, different_index_base, SC, LO, GO, NT)
-#else
-#define UNIT_TEST_GROUP_SC_LO_GO_NO( SC, NT )                   \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Tpetra_MatMat, operations_test,SC, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Tpetra_MatMat, range_row_test, SC, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Tpetra_MatMat, ATI_range_row_test, SC, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Tpetra_MatMat, threaded_add_sorted, SC, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Tpetra_MatMat, threaded_add_unsorted, SC, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Tpetra_MatMat, add_zero_rows, SC, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Tpetra_MatMatAdd, same_colmap, SC, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Tpetra_MatMatAdd, transposed_b, SC, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Tpetra_MatMatAdd, locally_unsorted, SC, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Tpetra_MatMatAdd, different_col_maps, SC, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Tpetra_MatMatAdd, different_index_base, SC, NT)
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_SLGN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP_SC_LO_GO_NO )
+#else
+#define UNIT_TEST_GROUP_SC_NO( SC, NT )                   \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Tpetra_MatMat, operations_test,SC, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Tpetra_MatMat, range_row_test, SC, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Tpetra_MatMat, ATI_range_row_test, SC, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Tpetra_MatMat, threaded_add_sorted, SC, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Tpetra_MatMat, threaded_add_unsorted, SC, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Tpetra_MatMat, add_zero_rows, SC, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Tpetra_MatMatAdd, same_colmap, SC, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Tpetra_MatMatAdd, transposed_b, SC, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Tpetra_MatMatAdd, locally_unsorted, SC, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Tpetra_MatMatAdd, different_col_maps, SC, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Tpetra_MatMatAdd, different_index_base, SC, NT)
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_SN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP_SC_NO )
+#endif
 
 
   } //namespace Tpetra

@@ -11088,15 +11088,11 @@ namespace Tpetra {
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_CRSMATRIX_MATRIX_INSTANT(SCALAR,LO,GO,NODE) \
-#else
-#define TPETRA_CRSMATRIX_MATRIX_INSTANT(SCALAR,NODE) \
-#endif
-  \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   template class CrsMatrix< SCALAR , LO , GO , NODE >; \
   template Teuchos::RCP< CrsMatrix< SCALAR , LO , GO , NODE > >   \
                 CrsMatrix< SCALAR , LO , GO , NODE >::convert< SCALAR > () const;
 #else
+#define TPETRA_CRSMATRIX_MATRIX_INSTANT(SCALAR,NODE) \
   template class CrsMatrix< SCALAR , NODE >; \
   template Teuchos::RCP< CrsMatrix< SCALAR , NODE > >   \
                 CrsMatrix< SCALAR , NODE >::convert< SCALAR > () const;
@@ -11104,25 +11100,20 @@ namespace Tpetra {
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_CRSMATRIX_CONVERT_INSTANT(SO,SI,LO,GO,NODE) \
-#else
-#define TPETRA_CRSMATRIX_CONVERT_INSTANT(SO,SI,NODE) \
-#endif
   \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   template Teuchos::RCP< CrsMatrix< SO , LO , GO , NODE > >   \
                 CrsMatrix< SI , LO , GO , NODE >::convert< SO > () const;
 #else
+#define TPETRA_CRSMATRIX_CONVERT_INSTANT(SO,SI,NODE) \
+  \
   template Teuchos::RCP< CrsMatrix< SO ,NODE > >   \
                 CrsMatrix< SI ,NODE >::convert< SO > () const;
 #endif
 
+
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_CRSMATRIX_IMPORT_AND_FILL_COMPLETE_INSTANT(SCALAR, LO, GO, NODE) \
-#else
-#define TPETRA_CRSMATRIX_IMPORT_AND_FILL_COMPLETE_INSTANT(SCALAR, NODE) \
-#endif
-  template<>                                                                        \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  template<>      \
   Teuchos::RCP<CrsMatrix<SCALAR, LO, GO, NODE> >                        \
   importAndFillCompleteCrsMatrix (const Teuchos::RCP<const CrsMatrix<SCALAR, LO, GO, NODE> >& sourceMatrix, \
                                   const Import<CrsMatrix<SCALAR, LO, GO, NODE>::local_ordinal_type,  \
@@ -11134,7 +11125,10 @@ namespace Tpetra {
                                   const Teuchos::RCP<const Map<CrsMatrix<SCALAR, LO, GO, NODE>::local_ordinal_type,      \
                                                                CrsMatrix<SCALAR, LO, GO, NODE>::global_ordinal_type,     \
                                                                CrsMatrix<SCALAR, LO, GO, NODE>::node_type> >& rangeMap,  \
+                                                               const Teuchos::RCP<Teuchos::ParameterList>& params);
 #else
+#define TPETRA_CRSMATRIX_IMPORT_AND_FILL_COMPLETE_INSTANT(SCALAR, NODE) \
+  template<>      \
   Teuchos::RCP<CrsMatrix<SCALAR, NODE> >                        \
   importAndFillCompleteCrsMatrix (const Teuchos::RCP<const CrsMatrix<SCALAR, NODE> >& sourceMatrix, \
                                   const Import<CrsMatrix<SCALAR, NODE>::local_ordinal_type,  \
@@ -11146,16 +11140,12 @@ namespace Tpetra {
                                   const Teuchos::RCP<const Map<CrsMatrix<SCALAR, NODE>::local_ordinal_type,      \
                                                                CrsMatrix<SCALAR, NODE>::global_ordinal_type,     \
                                                                CrsMatrix<SCALAR, NODE>::node_type> >& rangeMap,  \
-#endif
                                                                const Teuchos::RCP<Teuchos::ParameterList>& params);
+#endif                                                                 
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_CRSMATRIX_IMPORT_AND_FILL_COMPLETE_INSTANT_TWO(SCALAR, LO, GO, NODE) \
-#else
-#define TPETRA_CRSMATRIX_IMPORT_AND_FILL_COMPLETE_INSTANT_TWO(SCALAR, NODE) \
-#endif
-  template<>                                                                        \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  template<>   \
   Teuchos::RCP<CrsMatrix<SCALAR, LO, GO, NODE> >                        \
   importAndFillCompleteCrsMatrix (const Teuchos::RCP<const CrsMatrix<SCALAR, LO, GO, NODE> >& sourceMatrix, \
                                   const Import<CrsMatrix<SCALAR, LO, GO, NODE>::local_ordinal_type,  \
@@ -11170,7 +11160,10 @@ namespace Tpetra {
                                   const Teuchos::RCP<const Map<CrsMatrix<SCALAR, LO, GO, NODE>::local_ordinal_type,      \
                                                                CrsMatrix<SCALAR, LO, GO, NODE>::global_ordinal_type,     \
                                                                CrsMatrix<SCALAR, LO, GO, NODE>::node_type> >& rangeMap,  \
+                                                               const Teuchos::RCP<Teuchos::ParameterList>& params);
 #else
+#define TPETRA_CRSMATRIX_IMPORT_AND_FILL_COMPLETE_INSTANT_TWO(SCALAR, NODE) \
+  template<>  \
   Teuchos::RCP<CrsMatrix<SCALAR, NODE> >                        \
   importAndFillCompleteCrsMatrix (const Teuchos::RCP<const CrsMatrix<SCALAR, NODE> >& sourceMatrix, \
                                   const Import<CrsMatrix<SCALAR, NODE>::local_ordinal_type,  \
@@ -11185,17 +11178,12 @@ namespace Tpetra {
                                   const Teuchos::RCP<const Map<CrsMatrix<SCALAR, NODE>::local_ordinal_type,      \
                                                                CrsMatrix<SCALAR, NODE>::global_ordinal_type,     \
                                                                CrsMatrix<SCALAR, NODE>::node_type> >& rangeMap,  \
-#endif
                                                                const Teuchos::RCP<Teuchos::ParameterList>& params);
-
+#endif
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_CRSMATRIX_EXPORT_AND_FILL_COMPLETE_INSTANT(SCALAR, LO, GO, NODE) \
-#else
-#define TPETRA_CRSMATRIX_EXPORT_AND_FILL_COMPLETE_INSTANT(SCALAR, NODE) \
-#endif
-  template<>                                                                        \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  template<>  \
   Teuchos::RCP<CrsMatrix<SCALAR, LO, GO, NODE> >                        \
   exportAndFillCompleteCrsMatrix (const Teuchos::RCP<const CrsMatrix<SCALAR, LO, GO, NODE> >& sourceMatrix, \
                                   const Export<CrsMatrix<SCALAR, LO, GO, NODE>::local_ordinal_type,  \
@@ -11207,7 +11195,10 @@ namespace Tpetra {
                                   const Teuchos::RCP<const Map<CrsMatrix<SCALAR, LO, GO, NODE>::local_ordinal_type,      \
                                                                CrsMatrix<SCALAR, LO, GO, NODE>::global_ordinal_type,     \
                                                                CrsMatrix<SCALAR, LO, GO, NODE>::node_type> >& rangeMap,  \
+                                                               const Teuchos::RCP<Teuchos::ParameterList>& params);
 #else
+#define TPETRA_CRSMATRIX_EXPORT_AND_FILL_COMPLETE_INSTANT(SCALAR, NODE) \
+  template<>  \
   Teuchos::RCP<CrsMatrix<SCALAR, NODE> >                        \
   exportAndFillCompleteCrsMatrix (const Teuchos::RCP<const CrsMatrix<SCALAR, NODE> >& sourceMatrix, \
                                   const Export<CrsMatrix<SCALAR, NODE>::local_ordinal_type,  \
@@ -11219,16 +11210,12 @@ namespace Tpetra {
                                   const Teuchos::RCP<const Map<CrsMatrix<SCALAR, NODE>::local_ordinal_type,      \
                                                                CrsMatrix<SCALAR, NODE>::global_ordinal_type,     \
                                                                CrsMatrix<SCALAR, NODE>::node_type> >& rangeMap,  \
-#endif
                                                                const Teuchos::RCP<Teuchos::ParameterList>& params);
-
+#endif
+                                                                
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_CRSMATRIX_EXPORT_AND_FILL_COMPLETE_INSTANT_TWO(SCALAR, LO, GO, NODE) \
-#else
-#define TPETRA_CRSMATRIX_EXPORT_AND_FILL_COMPLETE_INSTANT_TWO(SCALAR, NODE) \
-#endif
-  template<>                                                                        \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  template<>   \
   Teuchos::RCP<CrsMatrix<SCALAR, LO, GO, NODE> >                        \
   exportAndFillCompleteCrsMatrix (const Teuchos::RCP<const CrsMatrix<SCALAR, LO, GO, NODE> >& sourceMatrix, \
                                   const Export<CrsMatrix<SCALAR, LO, GO, NODE>::local_ordinal_type,  \
@@ -11243,7 +11230,10 @@ namespace Tpetra {
                                   const Teuchos::RCP<const Map<CrsMatrix<SCALAR, LO, GO, NODE>::local_ordinal_type,      \
                                                                CrsMatrix<SCALAR, LO, GO, NODE>::global_ordinal_type,     \
                                                                CrsMatrix<SCALAR, LO, GO, NODE>::node_type> >& rangeMap,  \
+                                                               const Teuchos::RCP<Teuchos::ParameterList>& params);
 #else
+#define TPETRA_CRSMATRIX_EXPORT_AND_FILL_COMPLETE_INSTANT_TWO(SCALAR, NODE) \
+  template<>   \
   Teuchos::RCP<CrsMatrix<SCALAR, NODE> >                        \
   exportAndFillCompleteCrsMatrix (const Teuchos::RCP<const CrsMatrix<SCALAR, NODE> >& sourceMatrix, \
                                   const Export<CrsMatrix<SCALAR, NODE>::local_ordinal_type,  \
@@ -11258,8 +11248,8 @@ namespace Tpetra {
                                   const Teuchos::RCP<const Map<CrsMatrix<SCALAR, NODE>::local_ordinal_type,      \
                                                                CrsMatrix<SCALAR, NODE>::global_ordinal_type,     \
                                                                CrsMatrix<SCALAR, NODE>::node_type> >& rangeMap,  \
-#endif
                                                                const Teuchos::RCP<Teuchos::ParameterList>& params);
+#endif
 
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS

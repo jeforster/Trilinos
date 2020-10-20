@@ -57,7 +57,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockMap, HilbertsHotel, Scalar, LO, GO, Node )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL( BlockMap, HilbertsHotel, Scalar, Node )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( BlockMap, HilbertsHotel, Scalar, Node )
 #endif
   {
     using Teuchos::Array;
@@ -202,7 +202,7 @@ namespace {
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockMap, HilbertsHotel, SCALAR, LO, GO, NODE )
 #else
 #define UNIT_TEST_GROUP( SCALAR, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockMap, HilbertsHotel, SCALAR,NODE )
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockMap, HilbertsHotel, SCALAR,NODE )
 #endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()

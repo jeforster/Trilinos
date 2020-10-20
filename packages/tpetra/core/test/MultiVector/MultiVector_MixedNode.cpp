@@ -207,7 +207,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( MultiVector, mixed_node_basic, Scalar, LO, GO)
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( MultiVector, mixed_node_basic, Scalar)
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( MultiVector, mixed_node_basic, Scalar)
 #endif
   {
     // Here we use CudaNode on Rank 0 and SerialNode on everything else
@@ -259,7 +259,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( MultiVector, mixed_node_basic, SCALAR, LO, GO ) 
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( MultiVector, mixed_node_basic, SCALAR ) 
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( MultiVector, mixed_node_basic, SCALAR ) 
 #endif
 
 

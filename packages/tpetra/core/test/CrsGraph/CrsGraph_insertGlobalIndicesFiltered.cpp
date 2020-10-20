@@ -62,7 +62,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, insertGlobalIndicesFiltered, LO, GO, NODE_TYPE )
 #else
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( CrsGraph, insertGlobalIndicesFiltered, NODE_TYPE )
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( CrsGraph, insertGlobalIndicesFiltered, NODE_TYPE )
 #endif
   {
     static_assert (std::is_integral<LO>::value,
@@ -195,13 +195,17 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( LO, GO, NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, insertGlobalIndicesFiltered, LO, GO, NT )
-#else
-#define UNIT_TEST_GROUP(NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, insertGlobalIndicesFiltered, NT )
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+#else
+#define UNIT_TEST_GROUP(NT ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, insertGlobalIndicesFiltered, NT )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
+#endif
 
 } // namespace (anonymous)

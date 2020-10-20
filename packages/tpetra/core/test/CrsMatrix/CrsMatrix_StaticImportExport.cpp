@@ -118,7 +118,7 @@ generate_crs_matrix(const RCP<const Tpetra::Map<NT>>& map)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(CrsMatrix, ImportToStaticMatrix, SC, LO, GO, NT)
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(CrsMatrix, ImportToStaticMatrix, SC, NT)
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(CrsMatrix, ImportToStaticMatrix, SC, NT)
 #endif
 {
   // Set up Tpetra typedefs.
@@ -242,7 +242,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(CrsMatrix, ImportToStaticMatrix, SC, NT)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(CrsMatrix, ImportToStaticMatrixLocal, SC, LO, GO, NT)
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(CrsMatrix, ImportToStaticMatrixLocal, SC, NT)
+TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(CrsMatrix, ImportToStaticMatrixLocal, SC, NT)
 #endif
 {
   // Set up Tpetra typedefs.
@@ -390,8 +390,8 @@ TEUCHOS_UNIT_TEST_TEMPLATE_4_DECL(CrsMatrix, ImportToStaticMatrixLocal, SC, NT)
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(CrsMatrix, ImportToStaticMatrixLocal, SC, LO, GO, NT)
 #else
 #define UNIT_TEST_GROUP( SC, NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(CrsMatrix, ImportToStaticMatrix, SC, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(CrsMatrix, ImportToStaticMatrixLocal, SC, NT)
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(CrsMatrix, ImportToStaticMatrix, SC, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(CrsMatrix, ImportToStaticMatrixLocal, SC, NT)
 #endif
 
 TPETRA_ETI_MANGLING_TYPEDEFS()

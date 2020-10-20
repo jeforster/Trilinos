@@ -114,7 +114,7 @@ generate_crs_graph(const RCP<const Tpetra::Map<NT>>& map)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(CrsGraph, ImportToStaticGraph, LO, GO, NT)
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(CrsGraph, ImportToStaticGraph, NT)
+TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(CrsGraph, ImportToStaticGraph, NT)
 #endif
 {
   // Set up Tpetra typedefs.
@@ -238,7 +238,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(CrsGraph, ImportToStaticGraph, NT)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(CrsGraph, ImportToStaticGraphLocal, LO, GO, NT)
 #else
-TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(CrsGraph, ImportToStaticGraphLocal, NT)
+TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(CrsGraph, ImportToStaticGraphLocal, NT)
 #endif
 {
   // Set up Tpetra typedefs.
@@ -376,15 +376,19 @@ TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL(CrsGraph, ImportToStaticGraphLocal, NT)
 #define UNIT_TEST_GROUP( LO, GO, NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(CrsGraph, ImportToStaticGraph, LO, GO, NT) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(CrsGraph, ImportToStaticGraphLocal, LO, GO, NT)
-#else
-#define UNIT_TEST_GROUP(NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(CrsGraph, ImportToStaticGraph, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(CrsGraph, ImportToStaticGraphLocal, NT)
-#endif
 
 TPETRA_ETI_MANGLING_TYPEDEFS()
 
 TPETRA_INSTANTIATE_LGN(UNIT_TEST_GROUP)
+#else
+#define UNIT_TEST_GROUP(NT ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(CrsGraph, ImportToStaticGraph, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(CrsGraph, ImportToStaticGraphLocal, NT)
+
+TPETRA_ETI_MANGLING_TYPEDEFS()
+
+TPETRA_INSTANTIATE_N(UNIT_TEST_GROUP)
+#endif
 
 } // namespace (anonymous)
 
