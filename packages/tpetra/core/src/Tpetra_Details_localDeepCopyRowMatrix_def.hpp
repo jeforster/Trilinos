@@ -160,21 +160,24 @@ localDeepCopyLocallyIndexedRowMatrix
 //
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_DETAILS_LOCALDEEPCOPYROWMATRIX_INSTANT(SC, LO, GO, NT) \
-#else
-#define TPETRA_DETAILS_LOCALDEEPCOPYROWMATRIX_INSTANT(SC, NT) \
-#endif
 namespace Details { \
   template KokkosSparse::CrsMatrix< \
     Kokkos::ArithTraits<SC>::val_type, \
     LO, NT::device_type, void, size_t> \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   localDeepCopyLocallyIndexedRowMatrix<SC, LO, GO, NT> \
     (const RowMatrix<SC, LO, GO, NT>& A, \
-#else
-  localDeepCopyLocallyIndexedRowMatrix<SC, NT> \
-    (const RowMatrix<SC, NT>& A, \
-#endif
      const char label[]); \
 }
+#else
+#define TPETRA_DETAILS_LOCALDEEPCOPYROWMATRIX_INSTANT(SC, NT) \
+namespace Details { \
+  template KokkosSparse::CrsMatrix< \
+    Kokkos::ArithTraits<SC>::val_type, \
+    LO, NT::execution_space, void, size_t> \
+  localDeepCopyLocallyIndexedRowMatrix<SC, NT> \
+    (const RowMatrix<SC, NT>& A, \
+     const char label[]); \
+}
+#endif
 
 #endif // TPETRA_DETAILS_LOCALDEEPCOPYROWMATRIX_DEF_HPP

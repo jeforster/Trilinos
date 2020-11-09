@@ -1244,22 +1244,21 @@ computeRowAndColumnOneNorms (const Tpetra::RowMatrix<SC, NT>& A,
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_COMPUTEROWANDCOLUMNONENORMS_INSTANT(SC,LO,GO,NT) \
-#else
-#define TPETRA_COMPUTEROWANDCOLUMNONENORMS_INSTANT(SC,NT) \
-#endif
   template Details::EquilibrationInfo<Kokkos::ArithTraits<SC>::val_type, NT::device_type> \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   computeRowOneNorms (const Tpetra::RowMatrix<SC, LO, GO, NT>& A); \
-#else
-  computeRowOneNorms (const Tpetra::RowMatrix<SC, NT>& A); \
-#endif
   \
   template Details::EquilibrationInfo<Kokkos::ArithTraits<SC>::val_type, NT::device_type> \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   computeRowAndColumnOneNorms (const Tpetra::RowMatrix<SC, LO, GO, NT>& A, \
-#else
-  computeRowAndColumnOneNorms (const Tpetra::RowMatrix<SC, NT>& A, \
-#endif
                                const bool assumeSymmetric);
+
+#else
+#define TPETRA_COMPUTEROWANDCOLUMNONENORMS_INSTANT(SC,NT) \
+  template Details::EquilibrationInfo<Kokkos::ArithTraits<SC>::val_type, NT::device_type> \
+  computeRowOneNorms (const Tpetra::RowMatrix<SC, NT>& A); \
+  \
+  template Details::EquilibrationInfo<Kokkos::ArithTraits<SC>::val_type, NT::device_type> \
+  computeRowAndColumnOneNorms (const Tpetra::RowMatrix<SC, NT>& A, \
+                               const bool assumeSymmetric);
+#endif
 
 #endif // TPETRA_COMPUTEROWANDCOLUMNONENORMS_DEF_HPP

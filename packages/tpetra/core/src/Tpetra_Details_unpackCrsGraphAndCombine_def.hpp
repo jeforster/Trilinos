@@ -1107,23 +1107,11 @@ unpackAndCombineIntoCrsArrays(
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_DETAILS_UNPACKCRSGRAPHANDCOMBINE_INSTANT( LO, GO, NT ) \
-#else
-#define TPETRA_DETAILS_UNPACKCRSGRAPHANDCOMBINE_INSTANT(NT ) \
-#endif
   template void \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   Details::unpackAndCombineIntoCrsArrays<LO, GO, NT>( \
     const CrsGraph<LO, GO, NT> &, \
-#else
-  Details::unpackAndCombineIntoCrsArrays<NT>( \
-    const CrsGraph<NT> &, \
-#endif
     const Teuchos::ArrayView<const LO>&, \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     const Teuchos::ArrayView<const typename CrsGraph<LO,GO,NT>::packet_type>&, \
-#else
-    const Teuchos::ArrayView<const typename CrsGraph<NT>::packet_type>&, \
-#endif
     const Teuchos::ArrayView<const size_t>&, \
     const size_t, \
     Distributor&, \
@@ -1139,19 +1127,10 @@ unpackAndCombineIntoCrsArrays(
     const Teuchos::ArrayView<const int>&, \
     Teuchos::Array<int>&); \
   template size_t \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   Details::unpackAndCombineWithOwningPIDsCount<LO, GO, NT>( \
     const CrsGraph<LO, GO, NT> &, \
-#else
-  Details::unpackAndCombineWithOwningPIDsCount<NT>( \
-    const CrsGraph<NT> &, \
-#endif
     const Teuchos::ArrayView<const LO> &, \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     const Teuchos::ArrayView<const typename CrsGraph<LO,GO,NT>::packet_type> &, \
-#else
-    const Teuchos::ArrayView<const typename CrsGraph<NT>::packet_type> &, \
-#endif
     const Teuchos::ArrayView<const size_t>&, \
     size_t, \
     Distributor &, \
@@ -1159,5 +1138,39 @@ unpackAndCombineIntoCrsArrays(
     size_t, \
     const Teuchos::ArrayView<const LO>&, \
     const Teuchos::ArrayView<const LO>&);
+#else
+#define TPETRA_DETAILS_UNPACKCRSGRAPHANDCOMBINE_INSTANT(NT ) \
+  template void \
+  Details::unpackAndCombineIntoCrsArrays<NT>( \
+    const CrsGraph<NT> &, \
+    const Teuchos::ArrayView<const LO>&, \
+    const Teuchos::ArrayView<const typename CrsGraph<NT>::packet_type>&, \
+    const Teuchos::ArrayView<const size_t>&, \
+    const size_t, \
+    Distributor&, \
+    const CombineMode, \
+    const size_t, \
+    const Teuchos::ArrayView<const LO>&, \
+    const Teuchos::ArrayView<const LO>&, \
+    size_t, \
+    size_t, \
+    const int, \
+    const Teuchos::ArrayView<size_t>&, \
+    const Teuchos::ArrayView<GO>&, \
+    const Teuchos::ArrayView<const int>&, \
+    Teuchos::Array<int>&); \
+  template size_t \
+  Details::unpackAndCombineWithOwningPIDsCount<NT>( \
+    const CrsGraph<NT> &, \
+    const Teuchos::ArrayView<const LO> &, \
+    const Teuchos::ArrayView<const typename CrsGraph<NT>::packet_type> &, \
+    const Teuchos::ArrayView<const size_t>&, \
+    size_t, \
+    Distributor &, \
+    CombineMode, \
+    size_t, \
+    const Teuchos::ArrayView<const LO>&, \
+    const Teuchos::ArrayView<const LO>&);
+#endif
 
 #endif // TPETRA_DETAILS_UNPACKCRSGRAPHANDCOMBINE_DEF_HPP

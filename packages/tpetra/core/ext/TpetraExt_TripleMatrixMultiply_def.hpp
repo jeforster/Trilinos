@@ -1953,39 +1953,34 @@ namespace Tpetra {
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_TRIPLEMATRIXMULTIPLY_INSTANT(SCALAR,LO,GO,NODE)                  \
-#else
-#define TPETRA_TRIPLEMATRIXMULTIPLY_INSTANT(SCALAR,NODE)                  \
-#endif
                                                                         \
   template                                                              \
   void TripleMatrixMultiply::MultiplyRAP(                               \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                                          const CrsMatrix< SCALAR , LO , GO , NODE >& R, \
-#else
-                                         const CrsMatrix< SCALAR , NODE >& R, \
-#endif
                                          bool transposeR,               \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                                          const CrsMatrix< SCALAR , LO , GO , NODE >& A, \
-#else
-                                         const CrsMatrix< SCALAR , NODE >& A, \
-#endif
                                          bool transposeA,               \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                                          const CrsMatrix< SCALAR , LO , GO , NODE >& P, \
-#else
-                                         const CrsMatrix< SCALAR , NODE >& P, \
-#endif
                                          bool transposeP,               \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                                          CrsMatrix< SCALAR , LO , GO , NODE >& Ac, \
-#else
-                                         CrsMatrix< SCALAR , NODE >& Ac, \
-#endif
                                          bool call_FillComplete_on_result, \
                                          const std::string & label,     \
-                                         const Teuchos::RCP<Teuchos::ParameterList>& params); \
+                                         const Teuchos::RCP<Teuchos::ParameterList>& params); 
+#else
+#define TPETRA_TRIPLEMATRIXMULTIPLY_INSTANT(SCALAR,NODE)                  \
                                                                         \
-
+  template                                                              \
+  void TripleMatrixMultiply::MultiplyRAP(                               \
+                                         const CrsMatrix< SCALAR , NODE >& R, \
+                                         bool transposeR,               \
+                                         const CrsMatrix< SCALAR , NODE >& A, \
+                                         bool transposeA,               \
+                                         const CrsMatrix< SCALAR , NODE >& P, \
+                                         bool transposeP,               \
+                                         CrsMatrix< SCALAR , NODE >& Ac, \
+                                         bool call_FillComplete_on_result, \
+                                         const std::string & label,     \
+                                         const Teuchos::RCP<Teuchos::ParameterList>& params);
+#endif
 
 #endif // TPETRA_TRIPLEMATRIXMULTIPLY_DEF_HPP

@@ -353,49 +353,33 @@ insert_matrix_locations (CrsWrapper_GraphBuilder<Scalar, Node>& graphbuilder,
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_CRSMATRIXSTRUCT_INSTANT(SCALAR,LO,GO,NODE) \
-#else
-#define TPETRA_CRSMATRIXSTRUCT_INSTANT(SCALAR,NODE) \
-#endif
-  \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   template class CrsMatrixStruct< SCALAR , LO , GO , NODE >;
 #else
+#define TPETRA_CRSMATRIXSTRUCT_INSTANT(SCALAR,NODE) \
   template class CrsMatrixStruct< SCALAR , NODE >;
 #endif
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_CRSWRAPPER_INSTANT(SCALAR,LO,GO,NODE) \
-#else
-#define TPETRA_CRSWRAPPER_INSTANT(SCALAR,NODE) \
-#endif
-  \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   template class CrsWrapper< SCALAR , LO , GO , NODE >;
 #else
+#define TPETRA_CRSWRAPPER_INSTANT(SCALAR,NODE) \
   template class CrsWrapper< SCALAR , NODE >;
 #endif
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_CRSWRAPPER_CRSMATRIX_INSTANT(SCALAR,LO,GO,NODE) \
-#else
-#define TPETRA_CRSWRAPPER_CRSMATRIX_INSTANT(SCALAR,NODE) \
-#endif
-  \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   template class CrsWrapper_CrsMatrix< SCALAR , LO , GO , NODE >;
 #else
+#define TPETRA_CRSWRAPPER_CRSMATRIX_INSTANT(SCALAR,NODE) \
   template class CrsWrapper_CrsMatrix< SCALAR , NODE >;
 #endif
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_CRSWRAPPER_GRAPHBUILDER_INSTANT(SCALAR,LO,GO,NODE) \
-#else
-#define TPETRA_CRSWRAPPER_GRAPHBUILDER_INSTANT(SCALAR,NODE) \
-#endif
-  \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   template class CrsWrapper_GraphBuilder< SCALAR , LO , GO , NODE >;
 #else
+#define TPETRA_CRSWRAPPER_GRAPHBUILDER_INSTANT(SCALAR,NODE) \
   template class CrsWrapper_GraphBuilder< SCALAR , NODE >;
 #endif
 

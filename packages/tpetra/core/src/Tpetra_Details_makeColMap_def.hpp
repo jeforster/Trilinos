@@ -736,36 +736,36 @@ makeColMap (Teuchos::RCP<const Tpetra::Map<NT>>& colMap,
 //
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_DETAILS_MAKECOLMAP_INSTANT(LO,GO,NT) \
-#else
-#define TPETRA_DETAILS_MAKECOLMAP_INSTANT(NT) \
-#endif
   namespace Details { \
     template int \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     makeColMap (Teuchos::RCP<const Tpetra::Map<LO, GO, NT> >&, \
-#else
-    makeColMap (Teuchos::RCP<const Tpetra::Map<NT> >&, \
-#endif
                 Teuchos::Array<int>&, \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                 const Teuchos::RCP<const Tpetra::Map<LO, GO, NT> >&, \
                 const RowGraph<LO, GO, NT>&, \
-#else
-                const Teuchos::RCP<const Tpetra::Map<NT> >&, \
-                const RowGraph<NT>&, \
-#endif
                 const bool, \
                 std::ostream*); \
     template int \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     makeColMap (Teuchos::RCP<const Tpetra::Map<LO, GO, NT> >&, \
                 const Teuchos::RCP<const Tpetra::Map<LO, GO, NT> >&, \
-#else
-    makeColMap (Teuchos::RCP<const Tpetra::Map<NT> >&, \
-                const Teuchos::RCP<const Tpetra::Map<NT> >&, \
-#endif
                 Kokkos::View<GO*, typename NT::memory_space>, \
                 std::ostream*); \
   }
+#else
+#define TPETRA_DETAILS_MAKECOLMAP_INSTANT(NT) \
+  namespace Details { \
+    template int \
+    makeColMap (Teuchos::RCP<const Tpetra::Map<NT> >&, \
+                Teuchos::Array<int>&, \
+                const Teuchos::RCP<const Tpetra::Map<NT> >&, \
+                const RowGraph<NT>&, \
+                const bool, \
+                std::ostream*); \
+    template int \
+    makeColMap (Teuchos::RCP<const Tpetra::Map<NT> >&, \
+                const Teuchos::RCP<const Tpetra::Map<NT> >&, \
+                Kokkos::View<GO*, typename NT::memory_space>, \
+                std::ostream*); \
+  }
+#endif
 
 #endif // TPETRA_DETAILS_MAKECOLMAP_DEF_HPP

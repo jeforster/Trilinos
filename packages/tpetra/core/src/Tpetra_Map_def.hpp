@@ -3097,68 +3097,48 @@ Tpetra::createOneToOne (const Teuchos::RCP<const Tpetra::Map<Node> > &M,
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_MAP_INSTANT(LO,GO,NODE) \
-#else
-#define TPETRA_MAP_INSTANT(NODE) \
-#endif
-  \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   template class Map< LO , GO , NODE >; \
-#else
-  template class Map<NODE >; \
-#endif
-  \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   template Teuchos::RCP< const Map<LO,GO,NODE> > \
   createLocalMapWithNode<LO,GO,NODE> (const size_t numElements, \
-#else
-  template Teuchos::RCP< const Map<NODE> > \
-  createLocalMapWithNode<NODE> (const size_t numElements, \
-#endif
                                       const Teuchos::RCP< const Teuchos::Comm< int > >& comm); \
-  \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   template Teuchos::RCP< const Map<LO,GO,NODE> > \
   createContigMapWithNode<LO,GO,NODE> (const global_size_t numElements, \
-#else
-  template Teuchos::RCP< const Map<NODE> > \
-  createContigMapWithNode<NODE> (const global_size_t numElements, \
-#endif
                                        const size_t localNumElements,   \
                                        const Teuchos::RCP< const Teuchos::Comm< int > >& comm); \
-  \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   template Teuchos::RCP< const Map<LO,GO,NODE> > \
-#else
-  template Teuchos::RCP< const Map<NODE> > \
-#endif
   createNonContigMapWithNode(const Teuchos::ArrayView<const GO> &elementList, \
                              const Teuchos::RCP<const Teuchos::Comm<int> > &comm); \
-  \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   template Teuchos::RCP< const Map<LO,GO,NODE> > \
   createUniformContigMapWithNode<LO,GO,NODE> (const global_size_t numElements, \
-#else
-  template Teuchos::RCP< const Map<NODE> > \
-  createUniformContigMapWithNode<NODE> (const global_size_t numElements, \
-#endif
                                               const Teuchos::RCP< const Teuchos::Comm< int > >& comm); \
-  \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   template Teuchos::RCP<const Map<LO,GO,NODE> > \
   createOneToOne (const Teuchos::RCP<const Map<LO,GO,NODE> >& M); \
-#else
-  template Teuchos::RCP<const Map<NODE> > \
-  createOneToOne (const Teuchos::RCP<const Map<NODE> >& M); \
-#endif
-  \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   template Teuchos::RCP<const Map<LO,GO,NODE> > \
   createOneToOne (const Teuchos::RCP<const Map<LO,GO,NODE> >& M, \
                   const Tpetra::Details::TieBreak<LO,GO>& tie_break); \
+                  
 #else
+#define TPETRA_MAP_INSTANT(NODE) \
+  template class Map<NODE >; \
+  template Teuchos::RCP< const Map<NODE> > \
+  createLocalMapWithNode<NODE> (const size_t numElements, \
+                                const Teuchos::RCP< const Teuchos::Comm< int > >& comm); \
+  template Teuchos::RCP< const Map<NODE> > \
+  createContigMapWithNode<NODE> (const global_size_t numElements, \
+                                       const size_t localNumElements,   \
+                                       const Teuchos::RCP< const Teuchos::Comm< int > >& comm); \
+  template Teuchos::RCP< const Map<NODE> > \
+  createNonContigMapWithNode(const Teuchos::ArrayView<const GO> &elementList, \
+                             const Teuchos::RCP<const Teuchos::Comm<int> > &comm); \
+  template Teuchos::RCP< const Map<NODE> > \
+  createUniformContigMapWithNode<NODE> (const global_size_t numElements, \
+                                        const Teuchos::RCP< const Teuchos::Comm< int > >& comm); \
+  template Teuchos::RCP<const Map<NODE> > \
+  createOneToOne (const Teuchos::RCP<const Map<NODE> >& M); \
   template Teuchos::RCP<const Map<NODE> > \
   createOneToOne (const Teuchos::RCP<const Map<NODE> >& M, \
                   const Tpetra::Details::TieBreak<>& tie_break); \
+                  
 #endif
 
 
@@ -3192,10 +3172,13 @@ Tpetra::createOneToOne (const Teuchos::RCP<const Tpetra::Map<Node> > &M,
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   template Teuchos::RCP< const Map<LO,GO> >  \
   createUniformContigMap<LO,GO>( const global_size_t, \
+                                 const Teuchos::RCP< const Teuchos::Comm< int > > &); \
+
 #else
   template Teuchos::RCP< const Map<> >  \
   createUniformContigMap<>( const global_size_t, \
-#endif
                                  const Teuchos::RCP< const Teuchos::Comm< int > > &); \
+                                 
+#endif
 
 #endif // TPETRA_MAP_DEF_HPP

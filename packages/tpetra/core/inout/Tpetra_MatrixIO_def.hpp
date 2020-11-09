@@ -262,25 +262,20 @@ readHBMatrix (const std::string &filename,
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_MATRIXIO_INSTANT(SCALAR,LO,GO,NODE) \
-#else
-#define TPETRA_MATRIXIO_INSTANT(SCALAR,NODE) \
-#endif
   template void \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   readHBMatrix< SCALAR, LO, GO, NODE > (const std::string&, \
-#else
-  readHBMatrix< SCALAR, NODE > (const std::string&, \
-#endif
                                         const Teuchos::RCP<const Teuchos::Comm<int> > &, \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                                         Teuchos::RCP<CrsMatrix< SCALAR, LO, GO, NODE > >&, \
                                         Teuchos::RCP<const Tpetra::Map< LO, GO, NODE> >, \
-#else
-                                        Teuchos::RCP<CrsMatrix< SCALAR, NODE > >&, \
-                                        Teuchos::RCP<const Tpetra::Map<NODE> >, \
-#endif
                                         const Teuchos::RCP<Teuchos::ParameterList>& ); 
-
-
+#else
+#define TPETRA_MATRIXIO_INSTANT(SCALAR,NODE) \
+  template void \
+  readHBMatrix< SCALAR, NODE > (const std::string&, \
+                                const Teuchos::RCP<const Teuchos::Comm<int> > &, \
+                                Teuchos::RCP<CrsMatrix< SCALAR, NODE > >&, \
+                                Teuchos::RCP<const Tpetra::Map<NODE> >, \
+                                const Teuchos::RCP<Teuchos::ParameterList>& ); 
+#endif
 
 #endif

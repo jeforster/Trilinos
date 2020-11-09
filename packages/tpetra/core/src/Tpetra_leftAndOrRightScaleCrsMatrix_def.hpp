@@ -214,16 +214,9 @@ leftAndOrRightScaleCrsMatrix (Tpetra::CrsMatrix<SC, NT>& A,
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define TPETRA_LEFTANDORRIGHTSCALECRSMATRIX_INSTANT(SC,LO,GO,NT) \
-#else
-#define TPETRA_LEFTANDORRIGHTSCALECRSMATRIX_INSTANT(SC,NT) \
-#endif
   template void \
   leftAndOrRightScaleCrsMatrix ( \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     Tpetra::CrsMatrix<SC, LO, GO, NT>& A, \
-#else
-    Tpetra::CrsMatrix<SC, NT>& A, \
-#endif
     const Kokkos::View< \
       const Kokkos::ArithTraits<SC>::mag_type*, \
       NT::device_type>& rowScalingFactors, \
@@ -237,18 +230,38 @@ leftAndOrRightScaleCrsMatrix (Tpetra::CrsMatrix<SC, NT>& A,
   \
   template void \
   leftAndOrRightScaleCrsMatrix ( \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     Tpetra::CrsMatrix<SC, LO, GO, NT>& A, \
     const Tpetra::Vector<Kokkos::ArithTraits<SC>::mag_type, LO, GO, NT>& rowScalingFactors, \
     const Tpetra::Vector<Kokkos::ArithTraits<SC>::mag_type, LO, GO, NT>& colScalingFactors, \
-#else
-    Tpetra::CrsMatrix<SC, NT>& A, \
-    const Tpetra::Vector<Kokkos::ArithTraits<SC>::mag_type,NT>& rowScalingFactors, \
-    const Tpetra::Vector<Kokkos::ArithTraits<SC>::mag_type,NT>& colScalingFactors, \
-#endif
     const bool leftScale, \
     const bool rightScale, \
     const bool assumeSymmetric, \
     const EScaling scaling);
+#else
+#define TPETRA_LEFTANDORRIGHTSCALECRSMATRIX_INSTANT(SC,NT) \
+  template void \
+  leftAndOrRightScaleCrsMatrix ( \
+    Tpetra::CrsMatrix<SC, NT>& A, \
+    const Kokkos::View< \
+      const Kokkos::ArithTraits<SC>::mag_type*, \
+      NT::device_type>& rowScalingFactors, \
+    const Kokkos::View< \
+      const Kokkos::ArithTraits<SC>::mag_type*, \
+      NT::device_type>& colScalingFactors, \
+    const bool leftScale, \
+    const bool rightScale, \
+    const bool assumeSymmetric, \
+    const EScaling scaling); \
+  \
+  template void \
+  leftAndOrRightScaleCrsMatrix ( \
+    Tpetra::CrsMatrix<SC, NT>& A, \
+    const Tpetra::Vector<Kokkos::ArithTraits<SC>::mag_type,NT>& rowScalingFactors, \
+    const Tpetra::Vector<Kokkos::ArithTraits<SC>::mag_type,NT>& colScalingFactors, \
+    const bool leftScale, \
+    const bool rightScale, \
+    const bool assumeSymmetric, \
+    const EScaling scaling);
+#endif
 
 #endif // TPETRA_LEFTANDORRIGHTSCALECRSMATRIX_DEF_HPP
