@@ -66,6 +66,8 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 template<class Scalar, class LO, class GO, class Node>
 #else
+using LO = typename Tpetra::Map<>::local_ordinal_type;
+using GO = typename Tpetra::Map<>::global_ordinal_type;
 template<class Scalar, class Node>
 #endif
 void

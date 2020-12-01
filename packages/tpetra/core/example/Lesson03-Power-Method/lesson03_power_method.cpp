@@ -89,8 +89,12 @@ public:
   typedef typename TpetraOperatorType::node_type node_type;
   // The type of a Tpetra vector with the same template parameters as
   // those of TpetraOperatorType.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   typedef Tpetra::Vector<scalar_type, local_ordinal_type,
                          global_ordinal_type, node_type> vec_type;
+#else
+  typedef Tpetra::Vector<scalar_type, node_type> vec_type;
+#endif
   // The type of the norm of the above Tpetra::Vector specialization.
   typedef typename vec_type::mag_type magnitude_type;
 

@@ -82,15 +82,25 @@ public:
   typedef Tpetra::Operator<>::global_ordinal_type global_ordinal_type;
   typedef Tpetra::Operator<>::node_type node_type;
 
+  // The Map specialization used by this class.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   // The type of the input and output arguments of apply().
   typedef Tpetra::MultiVector<scalar_type, local_ordinal_type,
                               global_ordinal_type, node_type> MV;
-  // The Map specialization used by this class.
   typedef Tpetra::Map<local_ordinal_type, global_ordinal_type, node_type> map_type;
+#else
+  // The type of the input and output arguments of apply().
+  typedef Tpetra::MultiVector<scalar_type, node_type> MV;
+  typedef Tpetra::Map<node_type> map_type;
+#endif
 
 private:
   // This is an implementation detail; users don't need to see it.
-  typedef Tpetra::Import<local_ordinal_type, global_ordinal_type,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  typedef Tpetra::Import<local_ordinal_type, global_ordinal_type, 
+#else
+  typedef Tpetra::Import<
+#endif
                          node_type> import_type;
 
 public:
@@ -336,8 +346,10 @@ main (int argc, char *argv[])
     // Construct a Vector of all ones, using the above Operator's
     // domain Map.
     typedef Tpetra::Vector<MyOp::scalar_type,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 			   MyOp::local_ordinal_type,
 			   MyOp::global_ordinal_type,
+#endif
 			   MyOp::node_type> vec_type;
     vec_type x (K.getDomainMap ());
     x.putScalar (1.0);
