@@ -232,8 +232,10 @@ namespace Tpetra {
   class Map : public Teuchos::Describable {
   public:
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
-    using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
+    // using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
+    // using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
+    using LocalOrdinal = Tpetra::Details::DefaultTypes::local_ordinal_type;
+    using GlobalOrdinal = Tpetra::Details::DefaultTypes::global_ordinal_type;
 #endif
     //! @name Typedefs
     //@{
@@ -283,8 +285,11 @@ namespace Tpetra {
     /// never need MPI communication, no matter what kind of Map this
     /// is.
     using local_map_type =
-      ::Tpetra::Details::LocalMap<local_ordinal_type,
+      ::Tpetra::Details::LocalMap<
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+                                  local_ordinal_type,
                                   global_ordinal_type,
+#endif
                                   device_type>;
 
     //@}
@@ -542,18 +547,34 @@ namespace Tpetra {
     Map ();
 
     //! Copy constructor (shallow copy).
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     Map (const Map<local_ordinal_type, global_ordinal_type, node_type>&) = default;
+#else
+    Map (const Map<node_type>&) = default;
+#endif
 
     //! Move constructor (shallow move).
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     Map (Map<local_ordinal_type, global_ordinal_type, node_type>&&) = default;
+#else
+    Map (Map<node_type>&&) = default;
+#endif
 
     //! Copy assigment (shallow copy).
     Map&
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     operator= (const Map<local_ordinal_type, global_ordinal_type, node_type>&) = default;
+#else
+    operator= (const Map<node_type>&) = default;
+#endif
 
     //! Move assigment (shallow move).
     Map&
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     operator= (Map<local_ordinal_type, global_ordinal_type, node_type>&&) = default;
+#else
+    operator= (Map<node_type>&&) = default;
+#endif
 
     /// \brief Destructor (virtual for memory safety of derived classes).
     ///
@@ -894,7 +915,11 @@ namespace Tpetra {
     /// communicator and this Map's communicator have different
     /// numbers of processes.  This method must be called collectively
     /// over this Map's communicator.
-    bool isCompatible (const Map<local_ordinal_type,global_ordinal_type,Node> &map) const;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+    bool isCompatible (const Map<local_ordinal_type, global_ordinal_type, Node> &map) const;
+#else
+    bool isCompatible (const Map<Node> &map) const;
+#endif
 
     /// \brief True if and only if \c map is identical to this Map.
     ///
@@ -926,13 +951,21 @@ namespace Tpetra {
     /// communicator and this Map's communicator have different
     /// numbers of processes.  This method must be called collectively
     /// over this Map's communicator.
-    bool isSameAs (const Map<local_ordinal_type,global_ordinal_type,Node> &map) const;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+    bool isSameAs (const Map<local_ordinal_type, global_ordinal_type, Node> &map) const;
+#else
+    bool isSameAs (const Map<Node> &map) const;
+#endif
 
     /// \brief Is this Map locally the same as the input Map?
     ///
     /// "Locally the same" means that on the calling process, the two
     /// Maps' global indices are the same and occur in the same order.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     bool locallySameAs (const Map<local_ordinal_type, global_ordinal_type, node_type>& map) const;
+#else
+    bool locallySameAs (const Map<node_type>& map) const;
+#endif
 
     /// \brief True if and only if \c map is locally fitted to this Map.
     ///
@@ -949,7 +982,11 @@ namespace Tpetra {
     /// some Export or Import (communication) operations. Tpetra
     /// could use this, for example, in optimizing its sparse
     /// matrix-vector multiply.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     bool isLocallyFitted (const Map<local_ordinal_type, global_ordinal_type, Node>& map) const;
+#else
+    bool isLocallyFitted (const Map<Node>& map) const;
+#endif
 
     //@}
     //! Accessors for the Teuchos::Comm and Kokkos Node objects.
@@ -1043,7 +1080,11 @@ namespace Tpetra {
     /// intentionally leave some processes with zero rows.  Removing
     /// processes with zero rows makes the all-reduces and other
     /// communication operations cheaper.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     Teuchos::RCP<const Map<local_ordinal_type, global_ordinal_type, Node> >
+#else
+    Teuchos::RCP<const Map<Node> >
+#endif
     removeEmptyProcesses () const;
 
     /// \brief Replace this Map's communicator with a subset communicator.
@@ -1073,7 +1114,11 @@ namespace Tpetra {
     ///   same graph.  For the latter three Maps, one would in general
     ///   use this method instead of removeEmptyProcesses(), giving
     ///   the new row Map's communicator to this method.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     Teuchos::RCP<const Map<local_ordinal_type, global_ordinal_type, Node> >
+#else
+    Teuchos::RCP<const Map<Node> >
+#endif
     replaceCommWithSubset (const Teuchos::RCP<const Teuchos::Comm<int> >& newComm) const;
     //@}
 
@@ -1320,7 +1365,11 @@ namespace Tpetra {
     ///
     mutable Teuchos::RCP<
       Directory<
-        local_ordinal_type, global_ordinal_type, node_type
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+        local_ordinal_type, 
+        global_ordinal_type, 
+#endif
+        node_type
         >
       > directory_;
   }; // Map class
@@ -1342,7 +1391,7 @@ namespace Tpetra {
   template <class LocalOrdinal, class GlobalOrdinal>
   Teuchos::RCP<const Map<LocalOrdinal, GlobalOrdinal> >
 #else
-
+  
   Teuchos::RCP<const Map<> >
 #endif
   createLocalMap (const size_t numElements,
@@ -1384,7 +1433,7 @@ namespace Tpetra {
   template <class LocalOrdinal, class GlobalOrdinal>
   Teuchos::RCP< const Map<LocalOrdinal,GlobalOrdinal> >
 #else
-
+  
   Teuchos::RCP< const Map<> >
 #endif
   createUniformContigMap (const global_size_t numElements,
@@ -1453,11 +1502,13 @@ namespace Tpetra {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   template <class LocalOrdinal, class GlobalOrdinal>
   Teuchos::RCP<const Map<LocalOrdinal,GlobalOrdinal> >
-#else
-
-  Teuchos::RCP<const Map<> >
-#endif
   createNonContigMap (const Teuchos::ArrayView<const GlobalOrdinal>& elementList,
+#else
+  using LocalOrdinal = Tpetra::Details::DefaultTypes::local_ordinal_type;
+  using GlobalOrdinal = Tpetra::Details::DefaultTypes::global_ordinal_type;
+  Teuchos::RCP<const Map<> >
+  createNonContigMap (const Teuchos::ArrayView<const GlobalOrdinal>& elementList,
+#endif
                       const Teuchos::RCP<const Teuchos::Comm<int> >& comm);
 
   /// \brief Nonmember constructor for a noncontiguous Map with a
@@ -1513,7 +1564,7 @@ namespace Tpetra {
   template<class Node>
   Teuchos::RCP< const Map<Node> >
   createOneToOne(const Teuchos::RCP<const Map<Node> > &M,
-                 const ::Tpetra::Details::TieBreak<> & tie_break);
+                 const ::Tpetra::Details::TieBreak & tie_break);
 #endif
 
 } // namespace Tpetra

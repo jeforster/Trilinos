@@ -399,7 +399,7 @@ namespace Tpetra {
       typedef Tpetra::Details::TieBreak<LocalOrdinal, GlobalOrdinal> tie_break_type;
       using base_type = Directory<LocalOrdinal, GlobalOrdinal, NodeType>;
 #else
-      typedef Tpetra::Details::TieBreak<> tie_break_type;
+      typedef Tpetra::Details::TieBreak tie_break_type;
       using base_type = Directory<NodeType>;
 #endif
       using map_type = typename base_type::map_type;

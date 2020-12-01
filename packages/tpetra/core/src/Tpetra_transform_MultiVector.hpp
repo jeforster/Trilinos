@@ -215,7 +215,12 @@ namespace Tpetra {
     // broken out Transform::transform_sameObject into a separate
     // functor and nonmember function.
     template<class ExecutionSpace,
-             class SC, class LO, class GO, class NT,
+             class SC, 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
+             class LO, 
+             class GO, 
+#endif
+             class NT,
              class UnaryFunctionType>
     class UnaryTransformSameMultiVector {
     private:
@@ -241,7 +246,12 @@ namespace Tpetra {
     };
 
     template<class ExecutionSpace,
-             class SC, class LO, class GO, class NT,
+             class SC, 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
+             class LO, 
+             class GO, 
+#endif
+             class NT,
              class UnaryFunctionType>
     void
     unaryTransformSameMultiVector (const char kernelLabel[],

@@ -72,8 +72,12 @@ namespace Impl {
 ///
 /// mfh 12 Mar 2016: Tpetra::CrsGraph::getLocalDiagOffsets returns
 /// offsets as size_t.  However, see Github Issue #213.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 template<class LO,
          class GO,
+#else
+template<
+#endif
          class DeviceType,
          class DiagOffsetType = size_t>
 class GetGraphDiagOffsets {
@@ -87,7 +91,11 @@ public:
                                    ::Kokkos::LayoutLeft,
                                    device_type,
                                    void, size_t> local_graph_type;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   typedef ::Tpetra::Details::LocalMap<LO, GO, device_type> local_map_type;
+#else
+  typedef ::Tpetra::Details::LocalMap<device_type> local_map_type;
+#endif
   typedef ::Kokkos::View<const typename local_graph_type::size_type*,
                          ::Kokkos::LayoutLeft,
                          device_type,
@@ -163,11 +171,17 @@ getGraphDiagOffsets (const DiagOffsetsType& diagOffsets,
   static_assert (std::is_integral<row_offset_type>::value,
                  "The type of each entry of ptr must be an integer.");
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   typedef typename LclMapType::local_ordinal_type LO;
   typedef typename LclMapType::global_ordinal_type GO;
+#endif
   typedef typename LclMapType::device_type DT;
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   typedef Impl::GetGraphDiagOffsets<LO, GO, DT, diag_offset_type> impl_type;
+#else
+  typedef Impl::GetGraphDiagOffsets<DT, diag_offset_type> impl_type;
+#endif
   // The functor's constructor runs the functor.
   impl_type impl (diagOffsets, lclRowMap, lclColMap, ptr, ind, isSorted);
 }

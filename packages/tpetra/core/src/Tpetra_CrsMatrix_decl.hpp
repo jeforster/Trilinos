@@ -922,15 +922,28 @@ namespace Tpetra {
     virtual ~CrsMatrix () = default;
 
     // This friend declaration makes the clone() method work.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     template <class S2, class LO2, class GO2, class N2>
     friend class CrsMatrix;
+#else
+    template <class S2, class N2>
+    friend class CrsMatrix;
+#endif
 
     // This friend declaration allows for fused residual calculation
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     template <class S2, class LO2, class GO2, class N2>
     friend void Details::residual(const Operator<S2,LO2,GO2,N2> &   A,
                                   const MultiVector<S2,LO2,GO2,N2> & X,
                                   const MultiVector<S2,LO2,GO2,N2> & B,
                                   MultiVector<S2,LO2,GO2,N2> & R);
+#else
+    template <class S2, class N2>
+    friend void Details::residual(const Operator<S2,N2> &   A,
+                                  const MultiVector<S2,N2> & X,
+                                  const MultiVector<S2,N2> & B,
+                                  MultiVector<S2,N2> & R);
+#endif
 
     // This friend declaration allows for batching of apply calls
     template <class MatrixArray, class MultiVectorArray> 
@@ -2937,8 +2950,8 @@ namespace Tpetra {
                       const ESweepDirection direction) const
     {
       typedef LocalOrdinal LO;
-      typedef GlobalOrdinal GO;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+      typedef GlobalOrdinal GO;
       typedef Tpetra::MultiVector<DomainScalar, LO, GO, Node> DMV;
       typedef Tpetra::MultiVector<Scalar, LO, GO, Node> MMV;
 #else
@@ -3052,8 +3065,8 @@ namespace Tpetra {
                                const ESweepDirection direction) const
     {
       typedef LocalOrdinal LO;
-      typedef GlobalOrdinal GO;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+      typedef GlobalOrdinal GO;
       typedef Tpetra::MultiVector<DomainScalar, LO, GO, Node> DMV;
       typedef Tpetra::MultiVector<Scalar, LO, GO, Node> MMV;
 #else

@@ -914,7 +914,11 @@ auto getLocalView_1d (const Tpetra::MultiVector<SC, NT>& X,
   }
 }
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 template<class SC, class LO, class GO, class NT, class ViewValueType>
+#else
+template<class SC, class NT, class ViewValueType>
+#endif
 void
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 copy1DViewIntoMultiVectorColumn (Tpetra::MultiVector<SC, LO, GO, NT>& X,
@@ -931,7 +935,11 @@ copy1DViewIntoMultiVectorColumn (Tpetra::MultiVector<SC, NT>& X,
   Tpetra::Details::copyConvert (X_lcl, view);
 }
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 template<class SC, class LO, class GO, class NT, class ViewValueType>
+#else
+template<class SC, class NT, class ViewValueType>
+#endif
 void
 copyMultiVectorColumnInto1DView (const Kokkos::View<ViewValueType*, typename NT::device_type>& view,
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS

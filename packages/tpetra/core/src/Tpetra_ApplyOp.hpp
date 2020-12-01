@@ -139,13 +139,21 @@ namespace Tpetra {
       }
 
       //! The domain Map of this Operator.
-      Teuchos::RCP<const Tpetra::Map<local_ordinal_type,global_ordinal_type,node_type> >
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+      Teuchos::RCP<const Tpetra::Map<local_ordinal_type, global_ordinal_type, node_type> >
+#else
+      Teuchos::RCP<const Tpetra::Map<node_type> >
+#endif
       getDomainMap () const {
         return operator_->getDomainMap ();
       }
 
       //! The range Map of this Operator.
-      Teuchos::RCP<const Tpetra::Map<local_ordinal_type,global_ordinal_type,node_type> >
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+      Teuchos::RCP<const Tpetra::Map<local_ordinal_type, global_ordinal_type, node_type> >
+#else
+      Teuchos::RCP<const Tpetra::Map<node_type> >
+#endif
       getRangeMap () const {
         return operator_->getRangeMap ();
       }

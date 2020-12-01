@@ -361,8 +361,10 @@ namespace Impl {
     static typename MatrixType::local_ordinal_type
     getLocalNumDiags (const MatrixType& A)
     {
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       using LO = typename MatrixType::local_ordinal_type;
       using GO = typename MatrixType::global_ordinal_type;
+#endif
       using NT = typename MatrixType::node_type;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       using row_graph_type = ::Tpetra::RowGraph<LO, GO, NT>;

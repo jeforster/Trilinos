@@ -88,8 +88,10 @@ namespace Tpetra {
   class Operator : virtual public Teuchos::Describable {
   public:
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
-    using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
+    // using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
+    // using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
+    using LocalOrdinal = Tpetra::Details::DefaultTypes::local_ordinal_type;
+    using GlobalOrdinal = Tpetra::Details::DefaultTypes::global_ordinal_type;
 #endif
     /** \name Typedefs that give access to the template parameters. */
     //@{

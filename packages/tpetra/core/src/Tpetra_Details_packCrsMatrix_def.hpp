@@ -723,7 +723,11 @@ do_pack (const LocalMatrix& local_matrix,
 /// \param constant_num_packets [out] Setting this to zero tells the caller
 ///   to expect a possibly /// different ("nonconstant") number of packets per local index
 ///   (i.e., a possibly different number of entries per row).
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 template<typename ST, typename LO, typename GO, typename NT, typename BufferDeviceType>
+#else
+template<typename ST, typename NT, typename BufferDeviceType>
+#endif
 void
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 packCrsMatrix (const CrsMatrix<ST, LO, GO, NT>& sourceMatrix,

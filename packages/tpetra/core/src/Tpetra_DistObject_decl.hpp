@@ -358,7 +358,11 @@ namespace Tpetra {
     using execution_space = typename device_type::execution_space;
 
     //! The type of the Map specialization to use with this class.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     using map_type = Map<local_ordinal_type, global_ordinal_type, node_type>;
+#else
+    using map_type = Map<node_type>;
+#endif
 
     //@}
     //! @name Constructors and destructor
@@ -718,7 +722,11 @@ namespace Tpetra {
     ///   values that map to the same global ID on the same process.
     virtual void
     doTransfer (const SrcDistObject& src,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                 const ::Tpetra::Details::Transfer<local_ordinal_type, global_ordinal_type, node_type>& transfer,
+#else
+                const ::Tpetra::Details::Transfer<node_type>& transfer,
+#endif
                 const char modeString[],
                 const ReverseOption revOp,
                 const CombineMode CM,

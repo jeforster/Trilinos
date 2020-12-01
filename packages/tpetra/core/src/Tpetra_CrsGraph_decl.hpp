@@ -251,7 +251,11 @@ namespace Tpetra {
     template <class S, class N>
 #endif
     friend class CrsMatrix;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     template <class LO2, class GO2, class N2>
+#else
+    template <class N2>
+#endif
     friend class CrsGraph;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     template <class LO, class GO, class N>
@@ -284,7 +288,8 @@ namespace Tpetra {
     using node_type = Node;
 
     //! The type of the part of the sparse graph on each MPI process.
-    using local_graph_type = Kokkos::StaticCrsGraph<local_ordinal_type,
+    using local_graph_type = Kokkos::StaticCrsGraph<
+                                                    local_ordinal_type,
                                                     Kokkos::LayoutLeft,
                                                     device_type,
                                                     void,
@@ -571,16 +576,32 @@ namespace Tpetra {
                 Teuchos::null);
 
     //! Copy constructor (default).
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     CrsGraph (const CrsGraph<local_ordinal_type, global_ordinal_type, node_type>&) = default;
+#else
+    CrsGraph (const CrsGraph<node_type>&) = default;
+#endif
 
     //! Assignment operator (default).
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     CrsGraph& operator= (const CrsGraph<local_ordinal_type, global_ordinal_type, node_type>&) = default;
+#else
+    CrsGraph& operator= (const CrsGraph<node_type>&) = default;
+#endif
 
     //! Move constructor (default).
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     CrsGraph (CrsGraph<local_ordinal_type, global_ordinal_type, node_type>&&) = default;
+#else
+    CrsGraph (CrsGraph<node_type>&&) = default;
+#endif
 
     //! Move assignment (default).
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     CrsGraph& operator= (CrsGraph<local_ordinal_type, global_ordinal_type, node_type>&&) = default;
+#else
+    CrsGraph& operator= (CrsGraph<node_type>&&) = default;
+#endif
 
     /// \brief Destructor (virtual for memory safety of derived classes).
     ///
@@ -1174,8 +1195,12 @@ namespace Tpetra {
        buffer_device_type>& permuteFromLIDs,
      const CombineMode CM) override;
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     using padding_type = Details::CrsPadding<
       local_ordinal_type, global_ordinal_type>;
+#else
+    using padding_type = Details::CrsPadding;
+#endif
 
     void
     applyCrsPadding(const padding_type& padding,
@@ -1183,7 +1208,11 @@ namespace Tpetra {
 
     std::unique_ptr<padding_type>
     computeCrsPadding(
-      const RowGraph<local_ordinal_type, global_ordinal_type,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+      const RowGraph<local_ordinal_type, global_ordinal_type, 
+#else
+      const RowGraph<
+#endif
         node_type>& source,
       const size_t numSameIDs,
       const Kokkos::DualView<const local_ordinal_type*,
@@ -1212,14 +1241,22 @@ namespace Tpetra {
     void
     computeCrsPaddingForSameIDs(
       padding_type& padding,
-      const RowGraph<local_ordinal_type, global_ordinal_type,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+      const RowGraph<local_ordinal_type, global_ordinal_type, 
+#else
+      const RowGraph<
+#endif
         node_type>& source,
       const local_ordinal_type numSameIDs) const;
 
     void
     computeCrsPaddingForPermutedIDs(
       padding_type& padding,
-      const RowGraph<local_ordinal_type, global_ordinal_type,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+      const RowGraph<local_ordinal_type, global_ordinal_type, 
+#else
+      const RowGraph<
+#endif
         node_type>& source,
       const Kokkos::DualView<const local_ordinal_type*,
         buffer_device_type>& permuteToLIDs,
@@ -1627,7 +1664,11 @@ namespace Tpetra {
     /// \warning This method is intended for expert developer use
     ///   only, and should never be called by user code.
     void
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     importAndFillComplete (Teuchos::RCP<CrsGraph<local_ordinal_type, global_ordinal_type, Node> >& destGraph,
+#else
+    importAndFillComplete (Teuchos::RCP<CrsGraph<Node> >& destGraph,
+#endif
                            const import_type& importer,
                            const Teuchos::RCP<const map_type>& domainMap,
                            const Teuchos::RCP<const map_type>& rangeMap,
@@ -1649,7 +1690,11 @@ namespace Tpetra {
     /// \warning This method is intended for expert developer use
     ///   only, and should never be called by user code.
     void
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     importAndFillComplete (Teuchos::RCP<CrsGraph<local_ordinal_type, global_ordinal_type, Node> >& destGraph,
+#else
+    importAndFillComplete (Teuchos::RCP<CrsGraph<Node> >& destGraph,
+#endif
                            const import_type& rowImporter,
                            const import_type& domainImporter,
                            const Teuchos::RCP<const map_type>& domainMap,
@@ -1673,7 +1718,11 @@ namespace Tpetra {
     /// \warning This method is intended for expert developer use
     ///   only, and should never be called by user code.
     void
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     exportAndFillComplete (Teuchos::RCP<CrsGraph<local_ordinal_type, global_ordinal_type, Node> >& destGraph,
+#else
+    exportAndFillComplete (Teuchos::RCP<CrsGraph<Node> >& destGraph,
+#endif
                            const export_type& exporter,
                            const Teuchos::RCP<const map_type>& domainMap = Teuchos::null,
                            const Teuchos::RCP<const map_type>& rangeMap = Teuchos::null,
@@ -1695,7 +1744,11 @@ namespace Tpetra {
     /// \warning This method is intended for expert developer use
     ///   only, and should never be called by user code.
     void
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     exportAndFillComplete (Teuchos::RCP<CrsGraph<local_ordinal_type, global_ordinal_type, Node> >& destGraph,
+#else
+    exportAndFillComplete (Teuchos::RCP<CrsGraph<Node> >& destGraph,
+#endif
                            const export_type& rowExporter,
                            const export_type& domainExporter,
                            const Teuchos::RCP<const map_type>& domainMap,
@@ -1725,9 +1778,21 @@ namespace Tpetra {
     ///
     /// Fusing these tasks can avoid some communication and work.
     void
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     transferAndFillComplete (Teuchos::RCP<CrsGraph<local_ordinal_type, global_ordinal_type, Node> >& destGraph,
+#else
+    transferAndFillComplete (Teuchos::RCP<CrsGraph<Node> >& destGraph,
+#endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                              const ::Tpetra::Details::Transfer<local_ordinal_type, global_ordinal_type, Node>& rowTransfer,
+#else
+                             const ::Tpetra::Details::Transfer<Node>& rowTransfer,
+#endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                              const Teuchos::RCP<const ::Tpetra::Details::Transfer<local_ordinal_type, global_ordinal_type, Node> > & domainTransfer,
+#else
+                             const Teuchos::RCP<const ::Tpetra::Details::Transfer<Node> > & domainTransfer,
+#endif
                              const Teuchos::RCP<const map_type>& domainMap = Teuchos::null,
                              const Teuchos::RCP<const map_type>& rangeMap = Teuchos::null,
                              const Teuchos::RCP<Teuchos::ParameterList>& params = Teuchos::null) const;
@@ -2176,10 +2241,18 @@ namespace Tpetra {
     /// \brief Swaps the data from *this with the data and maps from graph.
     ///
     /// \param graph [in/out] a crsGraph
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     void swap(CrsGraph<local_ordinal_type, global_ordinal_type, Node> & graph);
+#else
+    void swap(CrsGraph<Node> & graph);
+#endif
 
     // Friend the tester for CrsGraph::swap
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     friend class Tpetra::crsGraph_Swap_Tester<local_ordinal_type, global_ordinal_type, Node>;
+#else
+    friend class Tpetra::crsGraph_Swap_Tester<Node>;
+#endif
 
 
     //! The Map describing the distribution of rows of the graph.

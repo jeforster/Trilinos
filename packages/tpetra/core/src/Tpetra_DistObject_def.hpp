@@ -517,7 +517,11 @@ namespace Tpetra {
   DistObject<Packet, Node>::
 #endif
   doTransfer (const SrcDistObject& src,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
               const ::Tpetra::Details::Transfer<local_ordinal_type, global_ordinal_type, node_type>& transfer,
+#else
+              const ::Tpetra::Details::Transfer<node_type>& transfer,
+#endif
               const char modeString[],
               const ReverseOption revOp,
               const CombineMode CM,

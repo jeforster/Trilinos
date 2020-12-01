@@ -102,7 +102,7 @@ namespace UnpackAndCombineCrsMatrixImpl {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 template<class ST, class LO, class GO>
 #else
-template<class ST,>
+template<class ST>
 #endif
 KOKKOS_FUNCTION int
 unpackRow(const typename PackTraits<GO>::output_array_type& gids_out,

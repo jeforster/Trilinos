@@ -879,8 +879,10 @@ namespace Tpetra {
                const size_t numVecs) :
     base_type (map)
   {
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     typedef LocalOrdinal LO;
     typedef GlobalOrdinal GO;
+#endif
     const char tfecfFuncName[] = "MultiVector(map,data,LDA,numVecs): ";
     ::Tpetra::Details::ProfilingRegion region ("Tpetra::MV ctor (map,Teuchos::ArrayView,LDA,numVecs)");
 
@@ -959,8 +961,10 @@ namespace Tpetra {
     base_type (map)
   {
     typedef impl_scalar_type IST;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     typedef LocalOrdinal LO;
     typedef GlobalOrdinal GO;
+#endif
     const char tfecfFuncName[] = "MultiVector(map,ArrayOfPtrs,numVecs): ";
     ::Tpetra::Details::ProfilingRegion region ("Tpetra::MV ctor (map,Teuchos::ArrayView of ArrayView,numVecs)");
 
@@ -2783,8 +2787,10 @@ namespace Tpetra {
     using Teuchos::Comm;
     using Teuchos::RCP;
     using ST = Scalar;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     using LO = LocalOrdinal;
     using GO = GlobalOrdinal;
+#endif
 
     // mfh 28 Mar 2013: This method doesn't forget whichVectors_, so
     // it might work if the MV is a column view of another MV.

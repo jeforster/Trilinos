@@ -94,8 +94,13 @@ namespace Tpetra {
   /// an Import or Export.  Packable exists mainly for syntactic
   /// enforcement of the interface needed for an object to know how to
   /// pack itself for an Import or Export.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   template<class Packet,
            class LocalOrdinal>
+#else
+  using LocalOrdinal = Tpetra::Details::DefaultTypes::local_ordinal_type;
+  template<class Packet>
+#endif
   class Packable {
   public:
     /// \brief Pack the object's data for an Import or Export.

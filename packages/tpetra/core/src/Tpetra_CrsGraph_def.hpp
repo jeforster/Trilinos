@@ -144,13 +144,23 @@ namespace Tpetra {
         return gblColInds;
       }
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
       template<class LO, class GO, class DT, class OffsetType, class NumEntType>
+#else
+      using LO = typename Tpetra::Map<>::local_ordinal_type;
+      using GO = typename Tpetra::Map<>::global_ordinal_type;
+      template<class DT, class OffsetType, class NumEntType>
+#endif
       class ConvertColumnIndicesFromGlobalToLocal {
       public:
         ConvertColumnIndicesFromGlobalToLocal (const ::Kokkos::View<LO*, DT>& lclColInds,
                                                const ::Kokkos::View<const GO*, DT>& gblColInds,
                                                const ::Kokkos::View<const OffsetType*, DT>& ptr,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                                                const ::Tpetra::Details::LocalMap<LO, GO, DT>& lclColMap,
+#else
+                                               const ::Tpetra::Details::LocalMap<DT>& lclColMap,
+#endif
                                                const ::Kokkos::View<const NumEntType*, DT>& numRowEnt) :
           lclColInds_ (lclColInds),
           gblColInds_ (gblColInds),
@@ -181,11 +191,19 @@ namespace Tpetra {
         run (const ::Kokkos::View<LO*, DT>& lclColInds,
              const ::Kokkos::View<const GO*, DT>& gblColInds,
              const ::Kokkos::View<const OffsetType*, DT>& ptr,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
              const ::Tpetra::Details::LocalMap<LO, GO, DT>& lclColMap,
+#else
+             const ::Tpetra::Details::LocalMap<DT>& lclColMap,
+#endif
              const ::Kokkos::View<const NumEntType*, DT>& numRowEnt)
         {
           typedef ::Kokkos::RangePolicy<typename DT::execution_space, LO> range_type;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
           typedef ConvertColumnIndicesFromGlobalToLocal<LO, GO, DT, OffsetType, NumEntType> functor_type;
+#else
+          typedef ConvertColumnIndicesFromGlobalToLocal<DT, OffsetType, NumEntType> functor_type;
+#endif
 
           const LO lclNumRows = ptr.extent (0) == 0 ?
             static_cast<LO> (0) : static_cast<LO> (ptr.extent (0) - 1);
@@ -202,7 +220,11 @@ namespace Tpetra {
         ::Kokkos::View<LO*, DT> lclColInds_;
         ::Kokkos::View<const GO*, DT> gblColInds_;
         ::Kokkos::View<const OffsetType*, DT> ptr_;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
         ::Tpetra::Details::LocalMap<LO, GO, DT> lclColMap_;
+#else
+        ::Tpetra::Details::LocalMap<DT> lclColMap_;
+#endif
         ::Kokkos::View<const NumEntType*, DT> numRowEnt_;
       };
 
@@ -222,16 +244,28 @@ namespace Tpetra {
     ///
     /// \return the number of "bad" global column indices (that don't
     ///   live in the column Map on the calling process).
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     template<class LO, class GO, class DT, class OffsetType, class NumEntType>
+#else
+    template<class DT, class OffsetType, class NumEntType>
+#endif
     OffsetType
     convertColumnIndicesFromGlobalToLocal (const Kokkos::View<LO*, DT>& lclColInds,
                                            const Kokkos::View<const GO*, DT>& gblColInds,
                                            const Kokkos::View<const OffsetType*, DT>& ptr,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                                            const LocalMap<LO, GO, DT>& lclColMap,
+#else
+                                           const LocalMap<DT>& lclColMap,
+#endif
                                            const Kokkos::View<const NumEntType*, DT>& numRowEnt)
     {
       using Impl::ConvertColumnIndicesFromGlobalToLocal;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
       typedef ConvertColumnIndicesFromGlobalToLocal<LO, GO, DT, OffsetType, NumEntType> impl_type;
+#else
+      typedef ConvertColumnIndicesFromGlobalToLocal<DT, OffsetType, NumEntType> impl_type;
+#endif
       return impl_type::run (lclColInds, gblColInds, ptr, lclColMap, numRowEnt);
     }
 
@@ -5235,11 +5269,7 @@ namespace Tpetra {
       // If GO and LO are the same size, we can reuse the existing
       // array of 1-D index storage to convert column indices from
       // GO to LO.  Otherwise, we'll just allocate a new buffer.
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       constexpr bool LO_GO_same = std::is_same<LO, GO>::value;
-#else
-      constexpr bool LO_GO_same = std::is_same<>::value;
-#endif
       if (LO_GO_same) {
         // This prevents a build error (illegal assignment) if
         // LO_GO_same is _not_ true.  Only the first branch
@@ -5306,7 +5336,11 @@ namespace Tpetra {
 
       using ::Tpetra::Details::convertColumnIndicesFromGlobalToLocal;
       lclNumErrs =
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
         convertColumnIndicesFromGlobalToLocal<LO, GO, DT, offset_type, num_ent_type> (k_lclInds1D_,
+#else
+        convertColumnIndicesFromGlobalToLocal<DT, offset_type, num_ent_type> (k_lclInds1D_,
+#endif
                                                                                       k_gblInds1D_,
                                                                                       k_rowPtrs_,
                                                                                       lclColMap,
@@ -6122,7 +6156,11 @@ namespace Tpetra {
 #endif
   computeCrsPaddingForSameIDs(
     padding_type& padding,
-    const RowGraph<local_ordinal_type, global_ordinal_type,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+    const RowGraph<local_ordinal_type, global_ordinal_type, 
+#else
+    const RowGraph<
+#endif
       node_type>& source,
     const local_ordinal_type numSameIDs) const
   {
@@ -6193,7 +6231,11 @@ namespace Tpetra {
 #endif
   computeCrsPaddingForPermutedIDs(
     padding_type& padding,
-    const RowGraph<local_ordinal_type, global_ordinal_type,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+    const RowGraph<local_ordinal_type, global_ordinal_type, 
+#else
+    const RowGraph<
+#endif
       node_type>& source,
     const Kokkos::DualView<const local_ordinal_type*,
       buffer_device_type>& permuteToLIDs,
@@ -6549,9 +6591,17 @@ namespace Tpetra {
     using GO = global_ordinal_type;
     using std::endl;
     using crs_graph_type =
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       CrsGraph<local_ordinal_type, global_ordinal_type, node_type>;
+#else
+      CrsGraph<node_type>;
+#endif
     using row_graph_type =
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       RowGraph<local_ordinal_type, global_ordinal_type, node_type>;
+#else
+      RowGraph<node_type>;
+#endif
     const char tfecfFuncName[] = "packAndPrepare: ";
     ProfilingRegion region_papn ("Tpetra::CrsGraph::packAndPrepare");
 
@@ -6637,7 +6687,9 @@ namespace Tpetra {
       using export_pids_type =
         Kokkos::DualView<const int*, buffer_device_type>;
       export_pids_type exportPIDs; // not filling it; needed for syntax
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
       using LO = local_ordinal_type;
+#endif
       using NT = node_type;
       using Tpetra::Details::packCrsGraphNew;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS

@@ -898,8 +898,10 @@ namespace Tpetra {
     using Teuchos::rcp;
     using Teuchos::rcpFromRef;
     using std::endl;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     typedef LocalOrdinal LO;
     typedef GlobalOrdinal GO;
+#endif
     typedef Node NT;
 
     const bool debug = Behavior::debug ("Import") ||

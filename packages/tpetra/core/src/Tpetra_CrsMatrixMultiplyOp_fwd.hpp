@@ -49,8 +49,10 @@
 namespace Tpetra {
 template<class Scalar,
          class MatScalar = Scalar,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
          class LocalOrdinal = ::Tpetra::Details::DefaultTypes::local_ordinal_type,
          class GlobalOrdinal = ::Tpetra::Details::DefaultTypes::global_ordinal_type,
+#endif
          class Node = ::Tpetra::Details::DefaultTypes::node_type>
 class CrsMatrixMultiplyOp;
 } // namespace Tpetra

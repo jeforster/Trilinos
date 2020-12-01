@@ -161,7 +161,7 @@ namespace Tpetra {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                 const Tpetra::Details::TieBreak<LocalOrdinal, GlobalOrdinal>& tieBreak);
 #else
-                const Tpetra::Details::TieBreak<>& tieBreak);
+                const Tpetra::Details::TieBreak& tieBreak);
 #endif
 
     //! Whether the Directory is initialized.

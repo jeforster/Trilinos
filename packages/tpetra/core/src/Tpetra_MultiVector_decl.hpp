@@ -97,11 +97,21 @@ namespace Tpetra {
   /// is because the method reserves the right to check for
   /// compatibility of the two Maps, at least in debug mode, and throw
   /// if they are not compatible.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   template <class DS, class DL, class DG, class DN,
             class SS, class SL, class SG, class SN>
+#else
+  template <class DS, class DN,
+            class SS, class SN>
+#endif
   void
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   deep_copy (MultiVector<DS, DL, DG, DN>& dst,
              const MultiVector<SS, SL, SG, SN>& src);
+#else
+  deep_copy (MultiVector<DS, DN>& dst,
+             const MultiVector<SS, SN>& src);
+#endif
 
 #ifdef HAVE_TPETRACORE_TEUCHOSNUMERICS
   /// \brief Copy the contents of a Teuchos::SerialDenseMatrix into
@@ -2372,15 +2382,29 @@ namespace Tpetra {
 
   private:
     //! The type of the base class of this class.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     using base_type = DistObject<scalar_type, local_ordinal_type,
                                  global_ordinal_type, node_type>;
+#else
+    using base_type = DistObject<scalar_type, node_type>;
+#endif
 
   protected:
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     template <class DS, class DL, class DG, class DN,
               class SS, class SL, class SG, class SN>
+#else
+    template <class DS, class DN,
+              class SS, class SN>
+#endif
     friend void
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     ::Tpetra::deep_copy (MultiVector<DS, DL, DG, DN>& dst,
                          const MultiVector<SS, SL, SG, SN>& src);
+#else
+    ::Tpetra::deep_copy (MultiVector<DS, DN>& dst,
+                         const MultiVector<SS, SN>& src);
+#endif
 
     /// \brief The Kokkos::DualView containing the MultiVector's data.
     ///
@@ -2511,8 +2535,10 @@ namespace Tpetra {
     /// See #1088 for why this is not just <tt>device_type::device_type</tt>.
     using buffer_device_type =
       typename DistObject<scalar_type,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                           local_ordinal_type,
                           global_ordinal_type,
+#endif
                           node_type>::buffer_device_type;
 
     /// \brief Whether data redistribution between \c sourceObj and this object is legal.
@@ -2604,11 +2630,21 @@ namespace Tpetra {
   }
 
   // Implementation of the most generic version of MultiVector deep_copy.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   template <class DS, class DL, class DG, class DN,
             class SS, class SL, class SG, class SN>
+#else
+  template <class DS, class DN,
+            class SS, class SN>
+#endif
   void
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   deep_copy (MultiVector<DS, DL, DG, DN>& dst,
              const MultiVector<SS, SL, SG, SN>& src)
+#else
+  deep_copy (MultiVector<DS, DN>& dst,
+             const MultiVector<SS, SN>& src)
+#endif
   {
     using ::Tpetra::getMultiVectorWhichVectors;
 

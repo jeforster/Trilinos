@@ -429,13 +429,8 @@ namespace Tpetra {
       Array<Array<Scalar>> blocks(maxBlockEntries);
       for (int i=0; i<maxBlockEntries; ++i)
         blocks[i].reserve(blockSize*blockSize);
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       std::map<int,int> bcol2bentry;             //maps block column index to dense block entries
       std::map<int,int>::iterator iter;
-#else
-      std::map<> bcol2bentry;             //maps block column index to dense block entries
-      std::map<>::iterator iter;
-#endif
       //Fill the block matrix.  We must do this in local index space.
       //TODO: Optimization: We assume the blocks are fully populated in the point matrix.  This means
       //TODO: on the first point row in the block row, we know that we're hitting new block col indices.

@@ -68,16 +68,18 @@ namespace Tpetra {
             class GlobalOrdinal,
             class Node>
 #else
+  using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
+  using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
   template <class Node>
 #endif
   class RowGraph :
     virtual public Teuchos::Describable,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     public Packable<GlobalOrdinal, LocalOrdinal> {
-  public:
-#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
-    using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
+#else
+    public Packable<GlobalOrdinal> {
 #endif
+  public:
     //! \name Typedefs
     //@{
     //! The type of local indices in the graph.

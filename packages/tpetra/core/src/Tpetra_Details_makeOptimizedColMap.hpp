@@ -81,8 +81,13 @@ namespace Details {
     using local_ordinal_type = typename MapType::local_ordinal_type;
     using global_ordinal_type = typename MapType::global_ordinal_type;
     using node_type = typename MapType::node_type;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     using map_type = ::Tpetra::Map<local_ordinal_type, global_ordinal_type, node_type>;
     using import_type = ::Tpetra::Import<local_ordinal_type, global_ordinal_type, node_type>;
+#else
+    using map_type = ::Tpetra::Map<node_type>;
+    using import_type = ::Tpetra::Import<node_type>;
+#endif
 
     static Teuchos::RCP<const map_type>
     makeOptColMap (std::ostream& errStream,
@@ -472,10 +477,16 @@ namespace Details {
                                 const MapType& colMap,
                                 const typename OptColMap<MapType>::import_type* oldImport = nullptr)
   {
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     using local_ordinal_type = typename MapType::local_ordinal_type;
     using global_ordinal_type = typename MapType::global_ordinal_type;
+#endif
     using node_type = typename MapType::node_type;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     using map_type = ::Tpetra::Map<local_ordinal_type, global_ordinal_type, node_type>;
+#else
+    using map_type = ::Tpetra::Map<node_type>;
+#endif
     using impl_type = OptColMap<map_type>;
 
     auto mapAndImp = impl_type::makeOptColMapAndImport (errStream, lclErr, domMap, colMap, oldImport);

@@ -129,7 +129,12 @@ namespace Tpetra {
     /// \brief Implementation of Tpetra::for_each for
     ///   Tpetra::MultiVector.
     template<class ExecutionSpace,
-             class SC, class LO, class GO, class NT,
+             class SC, 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
+             class LO, 
+             class GO, 
+#endif
+             class NT,
              class UserFunctionType>
     struct ForEach<ExecutionSpace,
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -242,7 +247,12 @@ namespace Tpetra {
     /// specializations don't recognize subclasses of their
     /// specialized template arguments.
     template<class ExecutionSpace,
-             class SC, class LO, class GO, class NT,
+             class SC, 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
+             class LO, 
+             class GO, 
+#endif
+             class NT,
              class UserFunctionType>
     struct ForEach<ExecutionSpace,
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS

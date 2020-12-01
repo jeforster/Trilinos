@@ -74,7 +74,11 @@ namespace Details {
 ///   Preconditions:
 ///    - localResult lives in Device::memory_space.
 ///    - X's underlying view is up-to-date in Device::memory_space.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 template<class SC, class LO, class GO, class NT, class ResultView, class memory_space>
+#else
+template<class SC, class NT, class ResultView, class memory_space>
+#endif
 void idotLocal(const ResultView& localResult,
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                const ::Tpetra::MultiVector<SC, LO, GO, NT>& X,
@@ -183,7 +187,11 @@ void idotLocal(const ResultView& localResult,
 //Used only when MPI is not CUDA-aware, and the global result lives on device.
 //It's not allowed to use a CudaSpace or CudaUVMSpace view as a target buffer for MPI
 //unless CUDA-aware.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 template<class SC, class LO, class GO, class NT, class ResultView>
+#else
+template<class SC, class NT, class ResultView>
+#endif
 void blockingDotImpl(
     const ResultView& globalResult,
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -255,7 +263,11 @@ void blockingDotImpl(
 /// However, if the globalResult is in a CUDA device space (CudaSpace
 /// or CudaUVMSpace) and MPI is not CUDA-aware, a synchronous reduction
 /// will be used instead to ensure correct execution.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 template<class SC, class LO, class GO, class NT, class ResultView>
+#else
+template<class SC, class NT, class ResultView>
+#endif
 std::shared_ptr< ::Tpetra::Details::CommRequest>
 idotImpl(const ResultView& globalResult,
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS

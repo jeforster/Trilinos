@@ -61,7 +61,11 @@ template<class Scalar, class Node>
 FEMultiVector<Scalar, Node>::
 #endif
 FEMultiVector (const Teuchos::RCP<const map_type>& map,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                const Teuchos::RCP<const Import<local_ordinal_type, global_ordinal_type, node_type>>& importer,
+#else
+               const Teuchos::RCP<const Import<node_type>>& importer,
+#endif
                const size_t numVecs,
                const bool zeroOut) :
   base_type (importer.is_null () ? map : importer->getTargetMap (),

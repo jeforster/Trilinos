@@ -144,7 +144,11 @@ namespace Tpetra {
     ///   serial, the importer will be null.  This will default to
     ///   importer->getTargetMap() being the active MultiVector.
     FEMultiVector (const Teuchos::RCP<const map_type>& map,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                    const Teuchos::RCP<const Import<local_ordinal_type, global_ordinal_type, node_type>>& importer,
+#else
+                   const Teuchos::RCP<const Import<node_type>>& importer,
+#endif
                    const size_t numVecs,
                    const bool zeroOut = true);
 
@@ -244,7 +248,11 @@ namespace Tpetra {
     Teuchos::RCP<FEWhichActive> activeMultiVector_;
 
     //! Import object used for communication between the two MultiVectors.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     Teuchos::RCP<const Import<local_ordinal_type, global_ordinal_type, node_type>> importer_;
+#else
+    Teuchos::RCP<const Import<node_type>> importer_;
+#endif
   };
 
 } // namespace Tpetra

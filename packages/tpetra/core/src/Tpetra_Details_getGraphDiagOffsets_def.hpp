@@ -70,13 +70,11 @@ namespace Impl {
 ///
 /// mfh 12 Mar 2016: Tpetra::CrsGraph::getLocalDiagOffsets returns
 /// offsets as size_t.  However, see Github Issue #213.
-template<class LO,
-         class GO,
-         class Node,
-         class DiagOffsetType>
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+template<class LO, class GO, class Node, class DiagOffsetType>
 GetGraphDiagOffsets<LO, GO, Node, DiagOffsetType>::
 #else
+template<class Node, class DiagOffsetType>
 GetGraphDiagOffsets<Node, DiagOffsetType>::
 #endif
 GetGraphDiagOffsets (const diag_offsets_type& diagOffsets,
@@ -100,8 +98,12 @@ GetGraphDiagOffsets (const diag_offsets_type& diagOffsets,
   Kokkos::parallel_for (range, *this);
 }
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 template<class LO,
          class GO,
+#else
+template<
+#endif
          class Node,
          class DiagOffsetType>
 KOKKOS_FUNCTION void

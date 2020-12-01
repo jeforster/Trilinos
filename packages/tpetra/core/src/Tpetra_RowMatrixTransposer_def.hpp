@@ -150,8 +150,8 @@ createTransposeLocal (const Teuchos::RCP<Teuchos::ParameterList>& params)
   using Teuchos::rcp;
   using Teuchos::rcp_dynamic_cast;
   using LO = LocalOrdinal;
-  using GO = GlobalOrdinal;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using GO = GlobalOrdinal;
   using IST = typename CrsMatrix<Scalar, LO, GO, Node>::impl_scalar_type;
   using import_type = Tpetra::Import<LO, GO, Node>;
   using export_type = Tpetra::Export<LO, GO, Node>;

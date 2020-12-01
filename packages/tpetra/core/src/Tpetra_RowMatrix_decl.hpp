@@ -91,21 +91,27 @@ namespace Tpetra {
     virtual public Operator<Scalar, Node>,
 #endif
     virtual public SrcDistObject,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     public Packable<char, LocalOrdinal> {
+#else
+    public Packable<char> {
+#endif
   public:
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
-    using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
+    using LocalOrdinal = Tpetra::Details::DefaultTypes::local_ordinal_type;
+    using GlobalOrdinal = Tpetra::Details::DefaultTypes::global_ordinal_type;
 #endif
     //! @name Typedefs
     //@{
 
     //! The type of the entries in the sparse matrix.
     typedef Scalar        scalar_type;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     //! The type of local indices.
     typedef LocalOrdinal  local_ordinal_type;
     //! The type of global indices.
     typedef GlobalOrdinal global_ordinal_type;
+#endif
     //! The Kokkos Node type.
     typedef Node          node_type;
 

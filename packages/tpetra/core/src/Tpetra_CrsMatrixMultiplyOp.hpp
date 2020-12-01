@@ -94,8 +94,10 @@ namespace Tpetra {
   /// including this header file.
   template <class Scalar,
             class MatScalar,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
             class LocalOrdinal,
             class GlobalOrdinal,
+#endif
             class Node>
   class CrsMatrixMultiplyOp :
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -1192,8 +1194,10 @@ namespace Tpetra {
   /// \return The CrsMatrixMultiplyOp wrapper for the given CrsMatrix.
   template <class OpScalar,
             class MatScalar,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
             class LocalOrdinal,
             class GlobalOrdinal,
+#endif
             class Node>
   Teuchos::RCP<
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS

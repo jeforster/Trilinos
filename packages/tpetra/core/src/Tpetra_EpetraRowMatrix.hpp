@@ -183,11 +183,7 @@ int EpetraRowMatrix<TpetraMatrixType>::ExtractMyRowCopy(int MyRow, int Length, i
 {
   static_assert (std::is_same<typename TpetraMatrixType::scalar_type, double>::value,
                  "This code assumes that Tpetra::CrsMatrix's scalar_type is int.");
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   static_assert (std::is_same<typename TpetraMatrixType::local_ordinal_type, int>::value,
-#else
-  static_assert (std::is_same<>::value,
-#endif
                  "This code assumes that Tpetra::CrsMatrix's local_ordinal_type is int.");
   Teuchos::ArrayView<int> inds(Indices, Length);
   Teuchos::ArrayView<double> vals(Values, Length);

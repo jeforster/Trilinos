@@ -2918,7 +2918,7 @@ public:
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     template<class ST, class LO, class GO>
 #else
-    template<class ST,>
+    template<class ST>
 #endif
     size_t
     unpackRowCount (const typename ::Tpetra::Details::PackTraits<LO>::input_buffer_type& imports,
@@ -2956,7 +2956,7 @@ public:
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     template<class ST, class LO, class GO>
 #else
-    template<class ST,>
+    template<class ST>
 #endif
     size_t
     packRowForBlockCrs (const typename ::Tpetra::Details::PackTraits<LO>::output_buffer_type exports,
@@ -3022,7 +3022,7 @@ public:
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     template<class ST, class LO, class GO>
 #else
-    template<class ST,>
+    template<class ST>
 #endif
     size_t
     unpackRowForBlockCrs (const typename ::Tpetra::Details::PackTraits<GO>::output_array_type& gidsOut,
@@ -3244,7 +3244,7 @@ public:
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
             packRowCount<LO, GO> (numEnt, numBytesPerValue, blockSize);
 #else
-            packRowCount<> (numEnt, numBytesPerValue, blockSize);
+            packRowCount (numEnt, numBytesPerValue, blockSize);
 #endif
           numPacketsPerLIDHost(i) = numBytes;
           update += typename reducer_type::value_type(numEnt, numBytes, numEnt);

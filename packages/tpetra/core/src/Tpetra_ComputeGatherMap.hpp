@@ -203,8 +203,10 @@ namespace Tpetra {
       using Teuchos::Comm;
       using Teuchos::RCP;
       using std::endl;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
       typedef typename MapType::local_ordinal_type LO;
       typedef typename MapType::global_ordinal_type GO;
+#endif
       typedef typename MapType::node_type NT;
 
       RCP<const Comm<int> > comm = map->getComm ();

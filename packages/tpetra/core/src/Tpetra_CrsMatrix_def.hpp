@@ -8053,7 +8053,9 @@ namespace Tpetra {
     using Teuchos::reduceAll;
     using std::endl;
     typedef LocalOrdinal LO;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     typedef GlobalOrdinal GO;
+#endif
     const char tfecfFuncName[] = "packAndPrepare: ";
     ProfilingRegion regionPAP ("Tpetra::CrsMatrix::packAndPrepare");
 
