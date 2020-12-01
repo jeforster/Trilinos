@@ -135,11 +135,7 @@ namespace { // (anonymous)
 
     {
       const char countTypeName[] = "int";
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       testComputeOffsetsTmpl<int, int> (success, out,
-#else
-      testComputeOffsetsTmpl<> (success, out,
-#endif
                                         "int",
                                         countTypeName, debug);
       if (! success) {

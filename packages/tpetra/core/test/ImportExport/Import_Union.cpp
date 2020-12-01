@@ -116,6 +116,8 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   template<class LO, class GO, class NT>
 #else
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+  using GO = typename Tpetra::Map<>::global_ordinal_type;
   template<class NT>
 #endif
   void
@@ -296,7 +298,7 @@ namespace {
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LocalOrdinalType = typename Tpetra::Map<>::local_ordinal_type;
+    //using LocalOrdinalType = typename Tpetra::Map<>::local_ordinal_type;
     using GlobalOrdinalType = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     using Teuchos::Array;
@@ -316,7 +318,9 @@ namespace {
     using std::cout;
     using std::endl;
     typedef Tpetra::global_size_t GST;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     typedef LocalOrdinalType LO;
+#endif
     typedef GlobalOrdinalType GO;
     typedef NodeType NT;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -576,12 +580,21 @@ namespace {
   // anonymous namespace as where the tests were defined)
   //
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 #define UNIT_TEST_GROUP(LOCAL_ORDINAL, GLOBAL_ORDINAL, NODE_TYPE) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( ImportUnion, ContigPlusContig, LOCAL_ORDINAL, GLOBAL_ORDINAL, NODE_TYPE )
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+#else
+#define UNIT_TEST_GROUP(NODE_TYPE) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( ImportUnion, ContigPlusContig, NODE_TYPE )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
+#endif
 
 } // namespace (anonymous)
 

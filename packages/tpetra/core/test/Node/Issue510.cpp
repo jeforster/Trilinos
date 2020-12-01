@@ -76,6 +76,7 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::Map<LO, GO, NT> map_type;
 #else
+    using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::Map<NT> map_type;
 #endif
 
@@ -110,8 +111,10 @@ namespace { // (anonymous)
   // Teuchos::FancyOStream& out
   TEUCHOS_UNIT_TEST( Node, Issue510 )
   {
-    typedef typename Tpetra::Map<>::local_ordinal_type LO;
-    typedef typename Tpetra::Map<>::global_ordinal_type GO;
+// #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
+//     typedef typename Tpetra::Map<>::local_ordinal_type LO;
+//     typedef typename Tpetra::Map<>::global_ordinal_type GO;
+// #endif
     typedef typename Tpetra::Map<>::node_type NT;
 
     auto comm = Tpetra::TestingUtilities::getDefaultComm ();

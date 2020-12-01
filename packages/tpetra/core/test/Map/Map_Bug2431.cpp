@@ -63,7 +63,7 @@ class GreedyTieBreak :
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       public Tpetra::Details::TieBreak<LO,GO>
 #else
-      public Tpetra::Details::TieBreak<>
+      public Tpetra::Details::TieBreak
 #endif
 {
 public:
@@ -135,7 +135,7 @@ int runTest(
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     GreedyTieBreak<LO,GO> greedy_tie_break;
 #else
-    GreedyTieBreak<> greedy_tie_break;
+    GreedyTieBreak greedy_tie_break;
 #endif
 
     auto pid = comm->getRank();

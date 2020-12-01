@@ -69,10 +69,11 @@ using std::endl;
 typedef Tpetra::global_size_t GST;
 typedef std::complex<double> scd;
 
-template<class Scalar, class LO, class GO, class Node, class TOLERANCE >
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+template<class Scalar, class LO, class GO, class Node, class TOLERANCE >
 bool compare_final_matrix_structure_impl(Teuchos::FancyOStream &out,Tpetra::CrsMatrix<Scalar,LO,GO,Node> & g1, Tpetra::CrsMatrix<Scalar,LO,GO,Node> & g2, TOLERANCE tol) {
 #else
+template<class Scalar, class Node, class TOLERANCE >
 bool compare_final_matrix_structure_impl(Teuchos::FancyOStream &out,Tpetra::CrsMatrix<Scalar,Node> & g1, Tpetra::CrsMatrix<Scalar,Node> & g2, TOLERANCE tol) {
 #endif
   using std::endl;
@@ -214,6 +215,8 @@ public:
 template<class LO, class GO, class Node>
 void generate_fem1d_graph(size_t numLocalNodes, RCP<const Comm<int> > comm , GraphPack<LO,GO,Node> & pack) {
 #else
+using LO = typename Tpetra::Map<>::local_ordinal_type;
+using GO = typename Tpetra::Map<>::global_ordinal_type;
 template<class Node>
 void generate_fem1d_graph(size_t numLocalNodes, RCP<const Comm<int> > comm , GraphPack<Node> & pack) {
 #endif
@@ -778,6 +781,10 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( FECrsMatrix, Assemble1D_LocalIndex_Kokkos_Mul
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( FECrsMatrix, Assemble1D_LocalIndex, LO, GO, SCALAR, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( FECrsMatrix, Assemble1D_LocalIndex_Kokkos, LO, GO, SCALAR, NODE )  \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( FECrsMatrix, Assemble1D_LocalIndex_Kokkos_Multiple, LO, GO, SCALAR, NODE ) 
+
+TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_SLGN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP )
 #else
 #define UNIT_TEST_GROUP( SCALAR, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( FECrsMatrix, Assemble1D_Kokkos, SCALAR, NODE ) \
@@ -785,11 +792,11 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( FECrsMatrix, Assemble1D_LocalIndex_Kokkos_Mul
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( FECrsMatrix, Assemble1D_LocalIndex, SCALAR, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( FECrsMatrix, Assemble1D_LocalIndex_Kokkos, SCALAR, NODE )  \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( FECrsMatrix, Assemble1D_LocalIndex_Kokkos_Multiple, SCALAR, NODE ) 
-#endif
-
 
 TPETRA_ETI_MANGLING_TYPEDEFS()
 
-  TPETRA_INSTANTIATE_SLGN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP )
+  TPETRA_INSTANTIATE_SN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP )
+#endif
+
 
 } // end namespace (anonymous)

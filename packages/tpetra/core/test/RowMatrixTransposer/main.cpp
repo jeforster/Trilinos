@@ -109,7 +109,7 @@ main (int argc, char* argv[])
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     Tpetra::createUniformContigMap<LO, GO> (numGlobalElements, comm);
 #else
-    Tpetra::createUniformContigMap<> (numGlobalElements, comm);
+    Tpetra::createUniformContigMap (numGlobalElements, comm);
 #endif
 
   // Get update list and number of local equations from newly created map.

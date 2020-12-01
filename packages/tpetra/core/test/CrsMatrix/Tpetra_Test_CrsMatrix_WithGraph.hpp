@@ -952,6 +952,7 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, AdvancedGraphUsage, LO, GO, SCALAR, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, WithGraph_replaceLocal, LO, GO, SCALAR, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, ExceedStaticAlloc, LO, GO, SCALAR, NODE ) \
+
 #else
 #define UNIT_TEST_GROUP( SCALAR, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, WithGraph, SCALAR, NODE ) \
@@ -959,6 +960,7 @@ inline void tupleToArray(Array<T> &arr, const tuple &tup)
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, AdvancedGraphUsage, SCALAR, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, WithGraph_replaceLocal, SCALAR, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, ExceedStaticAlloc, SCALAR, NODE ) \
+  
 #endif
 
 } // namespace Test

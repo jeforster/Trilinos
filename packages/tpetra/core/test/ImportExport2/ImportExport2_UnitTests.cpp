@@ -258,9 +258,9 @@ namespace {
         createContigMap<LO, GO> (INVALID, tgt_num_local_elements, comm);
 #else
       RCP<const Map<> > src_map =
-        createContigMap<> (INVALID, src_num_local_elements, comm);
+        createContigMap (INVALID, src_num_local_elements, comm);
       RCP<const Map<> > tgt_map =
-        createContigMap<> (INVALID, tgt_num_local_elements, comm);
+        createContigMap (INVALID, tgt_num_local_elements, comm);
 #endif
 
       // create CrsGraph objects
@@ -355,9 +355,9 @@ namespace {
           createContigMap<LO, GO> (INVALID, tgt_num_local, comm);
 #else
         RCP<const Map<> > src_map =
-          createContigMap<> (INVALID, src_num_local, comm);
+          createContigMap (INVALID, src_num_local, comm);
         RCP<const Map<> > tgt_map =
-          createContigMap<> (INVALID, tgt_num_local, comm);
+          createContigMap (INVALID, tgt_num_local, comm);
 #endif
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -682,13 +682,13 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
           createContigMap<LO, GO> (INVALID, src_num_local, comm);
 #else
-          createContigMap<> (INVALID, src_num_local, comm);
+          createContigMap (INVALID, src_num_local, comm);
 #endif
         RCP<const map_type> tgt_map =
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
           createContigMap<LO, GO> (INVALID, tgt_num_local, comm);
 #else
-          createContigMap<> (INVALID, tgt_num_local, comm);
+          createContigMap (INVALID, tgt_num_local, comm);
 #endif
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -3160,8 +3160,8 @@ TEUCHOS_UNIT_TEST( Import_Util,GetTwoTransferOwnershipVector )  {
   // INSTANTIATIONS
   //
 
-#define UNIT_TEST_GROUP_LO_GO( LO, GO ) \
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+#define UNIT_TEST_GROUP_LO_GO( LO, GO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( Import_Util, PackAndPrepareWithOwningPIDs, LO, GO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( Import, AdvancedConstructors, LO, GO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( RemoteOnlyImport, Basic, LO, GO ) \
@@ -3172,18 +3172,12 @@ TEUCHOS_UNIT_TEST( Import_Util,GetTwoTransferOwnershipVector )  {
 #else
 #endif
 
-#define UNIT_TEST_GROUP_SC_LO_GO( SC, LO, GO )                   \
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+#define UNIT_TEST_GROUP_SC_LO_GO( SC, LO, GO )                   \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsMatrixImportExport, doImport, LO, GO, SC ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( FusedImportExport, doImport, LO, GO, SC ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( Import_Util, UnpackAndCombineWithOwningPIDs, LO, GO, SC ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( FusedImportExport, MueLuStyle, LO, GO, SC )
-#else
-  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsMatrixImportExport, doImport, SC ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( FusedImportExport, doImport, SC ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( Import_Util, UnpackAndCombineWithOwningPIDs, SC ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( FusedImportExport, MueLuStyle, SC )
-#endif
 
   // Note: This test fails.  Should fix later.
   //      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( ReverseImportExport, doImport, ORDINAL, SCALAR )
@@ -3197,5 +3191,21 @@ TEUCHOS_UNIT_TEST( Import_Util,GetTwoTransferOwnershipVector )  {
   // Test CrsMatrix for all Scalar, LO, GO template parameter
   // combinations, and the default Node type.
   TPETRA_INSTANTIATE_SLG_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP_SC_LO_GO )
+#else
+#define UNIT_TEST_GROUP_SC( SC )                   \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsMatrixImportExport, doImport, SC ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( FusedImportExport, doImport, SC ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( Import_Util, UnpackAndCombineWithOwningPIDs, SC ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( FusedImportExport, MueLuStyle, SC )
+
+  // Note: This test fails.  Should fix later.
+  //      TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( ReverseImportExport, doImport, ORDINAL, SCALAR )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  // Test CrsMatrix for all Scalar, LO, GO template parameter
+  // combinations, and the default Node type.
+  TPETRA_INSTANTIATE_S_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP_SC )
+#endif
 
 }

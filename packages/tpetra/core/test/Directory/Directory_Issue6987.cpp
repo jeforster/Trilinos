@@ -127,7 +127,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(Directory, AllMinGIDs, SC)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       map2 = Tpetra::createLocalMap<LO,GO>(num_non_zero, comm);
 #else
-      map2 = Tpetra::createLocalMap<>(num_non_zero, comm);
+      map2 = Tpetra::createLocalMap(num_non_zero, comm);
 #endif
       vec2 = Teuchos::rcp(new vector_type(map2, num_vecs, true));
     }
@@ -162,15 +162,19 @@ TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(Directory, AllMinGIDs, SC)
 // INSTANTIATIONS
 //
 
-#define THIS_TEST_GROUP(SC, LO, GO) \
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+#define THIS_TEST_GROUP(SC, LO, GO) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(Directory, AllMinGIDs, SC, LO, GO)
-#else
-  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(Directory, AllMinGIDs, SC)
-#endif
 
 TPETRA_ETI_MANGLING_TYPEDEFS()
 TPETRA_INSTANTIATE_SLG(THIS_TEST_GROUP)
+#else
+#define THIS_TEST_GROUP(SC) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(Directory, AllMinGIDs, SC)
+
+TPETRA_ETI_MANGLING_TYPEDEFS()
+TPETRA_INSTANTIATE_S(THIS_TEST_GROUP)
+#endif
 
 } // namespace (anonymous)
 

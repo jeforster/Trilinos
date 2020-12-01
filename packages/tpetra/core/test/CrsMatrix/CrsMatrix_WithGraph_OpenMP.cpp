@@ -61,14 +61,17 @@ TPETRA_ETI_MANGLING_TYPEDEFS()
 // Declare a colon- and comma-free typedef, to avoid macro issues.
 typedef Kokkos::Compat::KokkosOpenMPWrapperNode openmp_node_type;
 
-#define UNIT_TEST_GROUP_OPENMP( SCALAR, LO, GO ) \
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+#define UNIT_TEST_GROUP_OPENMP( SCALAR, LO, GO ) \
   UNIT_TEST_GROUP( SCALAR, LO, GO, openmp_node_type )
-#else
-  UNIT_TEST_GROUP( SCALAR, openmp_node_type )
-#endif
 
 TPETRA_INSTANTIATE_SLG_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP_OPENMP )
+#else
+#define UNIT_TEST_GROUP_OPENMP( SCALAR ) \
+  UNIT_TEST_GROUP( SCALAR, openmp_node_type )
+
+TPETRA_INSTANTIATE_S_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP_OPENMP )
+#endif
 
 } // namespace Test
 } // namespace Tpetra

@@ -85,7 +85,9 @@ computeGatherMap (Teuchos::RCP<const MapType> map,
   using Teuchos::gatherv;
   using Teuchos::RCP;
   using std::endl;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   typedef typename MapType::local_ordinal_type LO;
+#endif
   typedef typename MapType::global_ordinal_type GO;
   typedef typename MapType::node_type NT;
 
@@ -441,6 +443,8 @@ template<class ScalarType, class LocalOrdinalType, class GlobalOrdinalType, clas
 Teuchos::RCP<Tpetra::CrsMatrix<ScalarType, LocalOrdinalType, GlobalOrdinalType, NodeType> >
 createSymRealSmall (const Teuchos::RCP<const Tpetra::Map<LocalOrdinalType, GlobalOrdinalType, NodeType> >& rowMap,
 #else
+using LocalOrdinalType = typename Tpetra::Map<>::local_ordinal_type;
+using GlobalOrdinalType = typename Tpetra::Map<>::global_ordinal_type;
 template<class ScalarType, class NodeType>
 Teuchos::RCP<Tpetra::CrsMatrix<ScalarType, NodeType> >
 createSymRealSmall (const Teuchos::RCP<const Tpetra::Map<NodeType> >& rowMap,
@@ -454,7 +458,9 @@ createSymRealSmall (const Teuchos::RCP<const Tpetra::Map<NodeType> >& rowMap,
   using Teuchos::rcp;
   using Teuchos::rcpFromRef;
   typedef ScalarType ST;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   typedef LocalOrdinalType LO;
+#endif
   typedef GlobalOrdinalType GO;
   typedef NodeType NT;
   typedef Tpetra::global_size_t GST;
@@ -529,8 +535,10 @@ testCrsMatrix (Teuchos::FancyOStream& out, const GlobalOrdinalType indexBase)
 {
   typedef Tpetra::global_size_t GST;
   typedef ScalarType ST;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   typedef LocalOrdinalType LO;
   typedef GlobalOrdinalType GO;
+#endif
   typedef NodeType NT;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   typedef Tpetra::Map<LO, GO, NT> map_type;
@@ -610,7 +618,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( OperatorOutput, IndexBase0, ST, NT )
 #endif
 {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
   const GO indexBase = 0;
@@ -628,7 +635,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( OperatorOutput, IndexBase1, ST, NT )
 #endif
 {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
   const GO indexBase = 1;
@@ -668,13 +674,17 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( OperatorOutput, IndexBase1, ST, NT )
 #else
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #  define UNIT_TEST_GROUP( LO, GO, NODE )
-#else
-#  define UNIT_TEST_GROUP(NODE )
-#endif
-#endif
-
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+#else
+#  define UNIT_TEST_GROUP( NODE )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
+#endif
+#endif
+
 

@@ -174,7 +174,6 @@ namespace {
     typedef Tpetra::MultiVector<Scalar,LO,GO,Node> MV;
     typedef Tpetra::Vector<Scalar,LO,GO,Node> V;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::Map<Node> map_type;
     typedef Tpetra::MultiVector<Scalar,Node> MV;
@@ -229,7 +228,6 @@ namespace {
     using MV = Tpetra::MultiVector<Scalar, LO, GO, Node>;
     using vec_type = Tpetra::Vector<Scalar, LO, GO, Node>;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
     using map_type = Tpetra::Map<Node>;
     using MV = Tpetra::MultiVector<Scalar, Node>;
@@ -318,7 +316,6 @@ namespace {
     using MV = Tpetra::MultiVector<Scalar, LO, GO, Node>;
     using vec_type = Tpetra::Vector<Scalar, LO, GO, Node>;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
     using map_type = Tpetra::Map<Node>;
     using MV = Tpetra::MultiVector<Scalar, Node>;
@@ -402,10 +399,6 @@ namespace {
   TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, BadConstLDA, Scalar , Node )
 #endif
   {
-#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
-#endif
     // numlocal > LDA
     // ergo, the arrayview doesn't contain enough data to specify the entries
     // also, if bounds checking is enabled, check that bad bounds are caught
@@ -466,8 +459,6 @@ namespace {
     typedef Tpetra::MultiVector<Scalar,LO,GO,Node> MV;
     typedef Tpetra::Vector<Scalar,LO,GO,Node> V;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::MultiVector<Scalar,Node> MV;
     typedef Tpetra::Vector<Scalar,Node> V;
 #endif
@@ -733,8 +724,6 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::MultiVector<Scalar,LO,GO,Node> MV;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::MultiVector<Scalar,Node> MV;
 #endif
 
@@ -797,10 +786,6 @@ namespace {
   TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, BadMultiply , Scalar , Node )
 #endif
   {
-#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
-#endif
     // mfh 05 May 2016: Tpetra::MultiVector::multiply only checks
     // local dimensions in a debug build.
 #ifdef HAVE_TPETRA_DEBUG
@@ -911,10 +896,6 @@ namespace {
   TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, Multiply , Scalar , Node )
 #endif
   {
-#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
-#endif
     using Teuchos::View;
     typedef typename ScalarTraits<Scalar>::magnitudeType Mag;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -1124,7 +1105,6 @@ namespace {
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     using Teuchos::View;
@@ -1463,7 +1443,6 @@ namespace {
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     using Teuchos::View;
@@ -1794,10 +1773,6 @@ namespace {
   TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, BadConstAA , Scalar , Node )
 #endif
   {
-#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
-#endif
     // constructor takes ArrayView<ArrayView<Scalar> A, NumVectors
     // A.size() == NumVectors
     // A[i].size() >= MyLength
@@ -1854,8 +1829,6 @@ namespace {
     typedef Tpetra::MultiVector<Scalar,LO,GO,Node> MV;
     typedef Tpetra::Vector<Scalar,LO,GO,Node>       V;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::MultiVector<Scalar,Node> MV;
     typedef Tpetra::Vector<Scalar,Node>       V;
 #endif
@@ -1917,10 +1890,6 @@ namespace {
   TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, OrthoDot , Scalar , Node )
 #endif
   {
-#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
-#endif
     typedef typename ScalarTraits<Scalar>::magnitudeType Mag;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::MultiVector<Scalar,LO,GO,Node> MV;
@@ -2014,10 +1983,6 @@ namespace {
   TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, CopyView , Scalar , Node )
 #endif
   {
-#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
-#endif
     using std::endl;
     typedef typename ScalarTraits<Scalar>::magnitudeType Mag;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -2259,10 +2224,6 @@ namespace {
   TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, OffsetView , Scalar , Node )
 #endif
   {
-#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
-#endif
     typedef typename ScalarTraits<Scalar>::magnitudeType Mag;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::MultiVector<Scalar,LO,GO,Node> MV;
@@ -2594,7 +2555,6 @@ namespace {
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     typedef Tpetra::global_size_t GST;
@@ -2865,10 +2825,6 @@ namespace {
   TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, ZeroScaleUpdate , Scalar , Node )
 #endif
   {
-#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
-#endif
     typedef Teuchos::ScalarTraits<Scalar> STS;
     typedef typename ScalarTraits<Scalar>::magnitudeType Mag;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -2985,10 +2941,6 @@ namespace {
   TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, ScaleAndAssign , Scalar , Node )
 #endif
   {
-#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
-#endif
     typedef typename ScalarTraits<Scalar>::magnitudeType Mag;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::MultiVector<Scalar,LO,GO,Node> MV;
@@ -3220,10 +3172,6 @@ namespace {
   TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( Vector, ZeroScaleUpdate , Scalar , Node )
 #endif
   {
-#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
-#endif
     typedef typename ScalarTraits<Scalar>::magnitudeType Mag;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::Vector<Scalar,LO,GO,Node>       V;
@@ -3330,7 +3278,6 @@ namespace {
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     using std::endl;
@@ -3528,8 +3475,6 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::Vector<Scalar,LO,GO,Node>       V;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::Vector<Scalar,Node>       V;
 #endif
     typedef typename ScalarTraits<Scalar>::magnitudeType Magnitude;
@@ -3590,8 +3535,6 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::Vector<Scalar,LO,GO,Node>       V;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::Vector<Scalar,Node>       V;
 #endif
     typedef ScalarTraits<Scalar>              SCT;
@@ -3649,7 +3592,6 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Map<LO, GO, Node> map_type;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Map<Node> map_type;
 #endif
@@ -3729,8 +3671,6 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::MultiVector<Scalar,LO,GO,Node> MV;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::MultiVector<Scalar,Node> MV;
 #endif
     typedef typename ScalarTraits<Scalar>::magnitudeType Magnitude;
@@ -3804,10 +3744,6 @@ namespace {
   TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, CountDotNonTrivLDA , Scalar , Node )
 #endif
   {
-#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
-#endif
     out << "Test dot products of MultiVectors created from an input "
       "Teuchos::ArrayView with nontrivial LDA." << endl;
     Teuchos::OSTab tab1 (out);
@@ -3885,10 +3821,6 @@ namespace {
   TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, CountNorm1 , Scalar , Node )
 #endif
   {
-#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
-#endif
     typedef Tpetra::global_size_t GST;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::MultiVector<Scalar,LO,GO,Node> MV;
@@ -3985,8 +3917,6 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::MultiVector<Scalar,LO,GO,Node> MV;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::MultiVector<Scalar,Node> MV;
 #endif
     typedef typename ScalarTraits<Scalar>::magnitudeType MT;
@@ -4045,8 +3975,6 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::MultiVector<Scalar,LO,GO,Node> MV;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::MultiVector<Scalar,Node> MV;
 #endif
     typedef typename ScalarTraits<Scalar>::magnitudeType MT;
@@ -4102,8 +4030,6 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::MultiVector<Scalar,LO,GO,Node> MV;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::MultiVector<Scalar,Node> MV;
 #endif
     typedef typename ScalarTraits<Scalar>::magnitudeType Mag;
@@ -4348,7 +4274,6 @@ namespace {
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     using Teuchos::Comm;
@@ -4526,7 +4451,6 @@ namespace {
     typedef Tpetra::Map<LO, GO, Node> map_type;
     typedef Tpetra::MultiVector<Scalar,LO,GO,Node> MV;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::Map<Node> map_type;
     typedef Tpetra::MultiVector<Scalar,Node> MV;
@@ -4597,7 +4521,6 @@ namespace {
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     typedef Tpetra::global_size_t GST;
@@ -4762,7 +4685,6 @@ namespace {
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     typedef Tpetra::global_size_t GST;
@@ -4894,7 +4816,6 @@ namespace {
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     typedef Tpetra::global_size_t GST;
@@ -5158,7 +5079,6 @@ namespace {
     typedef Tpetra::Vector<ST, LO, GO, Node> V;
     typedef Tpetra::MultiVector<ST, LO, GO, Node> MV;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::Map<Node> map_type;
     typedef Tpetra::Vector<ST, Node> V;
@@ -5529,7 +5449,6 @@ namespace {
     typedef Tpetra::Map<LO, GO, Node> map_type;
     typedef Tpetra::MultiVector<ST, LO, GO, Node> MV;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::Map<Node> map_type;
     typedef Tpetra::MultiVector<ST, Node> MV;
@@ -5621,7 +5540,6 @@ namespace {
     typedef Tpetra::Map<LO, GO, Node> map_type;
     typedef Tpetra::MultiVector<ST, LO, GO, Node> MV;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::Map<Node> map_type;
     typedef Tpetra::MultiVector<ST, Node> MV;
@@ -5750,7 +5668,6 @@ namespace {
     typedef Tpetra::MultiVector<Scalar,LO, GO, Node> MV;
 #else
   TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( MultiVector, Swap , Scalar , Node ) {
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::Map<Node> map_type;
     typedef Tpetra::MultiVector<Scalar, Node> MV;
@@ -5904,6 +5821,10 @@ namespace {
 
   TPETRA_INSTANTIATE_N( TPETRA_MULTIVECTOR_COMPLEX_DOUBLE_DOT_TEST )
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   TPETRA_INSTANTIATE_TESTMV( UNIT_TEST_GROUP )
+#else
+  TPETRA_INSTANTIATE_SN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP ) 
+#endif
 
 }

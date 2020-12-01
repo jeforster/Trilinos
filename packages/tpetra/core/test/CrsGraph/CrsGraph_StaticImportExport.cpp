@@ -118,7 +118,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(CrsGraph, ImportToStaticGraph, NT)
 #endif
 {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
   // Set up Tpetra typedefs.
@@ -246,7 +245,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(CrsGraph, ImportToStaticGraphLocal, NT)
 #endif
 {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
   // Set up Tpetra typedefs.
@@ -384,15 +382,19 @@ TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(CrsGraph, ImportToStaticGraphLocal, NT)
 #define UNIT_TEST_GROUP( LO, GO, NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(CrsGraph, ImportToStaticGraph, LO, GO, NT) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(CrsGraph, ImportToStaticGraphLocal, LO, GO, NT)
-#else
-#define UNIT_TEST_GROUP(NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(CrsGraph, ImportToStaticGraph, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(CrsGraph, ImportToStaticGraphLocal, NT)
-#endif
 
 TPETRA_ETI_MANGLING_TYPEDEFS()
 
 TPETRA_INSTANTIATE_LGN(UNIT_TEST_GROUP)
+#else
+#define UNIT_TEST_GROUP(NT ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(CrsGraph, ImportToStaticGraph, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(CrsGraph, ImportToStaticGraphLocal, NT)
+
+TPETRA_ETI_MANGLING_TYPEDEFS()
+
+TPETRA_INSTANTIATE_N(UNIT_TEST_GROUP)
+#endif
 
 } // namespace (anonymous)
 

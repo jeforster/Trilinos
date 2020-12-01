@@ -69,10 +69,10 @@ namespace { // (anonymous)
   TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Kokkos_DualView, DegenerateSubview, S, NODE)
 #endif
   {
-#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
-#endif
+// #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+//     using LO = typename Tpetra::Map<>::local_ordinal_type;
+//     using GO = typename Tpetra::Map<>::global_ordinal_type;
+// #endif
     using Kokkos::ALL;
     using Kokkos::subview;
     using std::endl;
@@ -217,7 +217,11 @@ namespace { // (anonymous)
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   TPETRA_INSTANTIATE_TESTMV( UNIT_TEST_GROUP )
+#else
+  TPETRA_INSTANTIATE_SN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP )
+#endif
 
 } // namespace (anonymous)
 

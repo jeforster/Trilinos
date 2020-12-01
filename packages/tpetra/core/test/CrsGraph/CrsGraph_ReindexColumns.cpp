@@ -1023,16 +1023,20 @@ namespace {
 #define UNIT_TEST_GROUP( LO, GO, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraphReindexColumns, ColMapOnlySortingOn, LO, GO, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraphReindexColumns, ColMapAndImportSortingOff, LO, GO, NODE )
-#else
-#define UNIT_TEST_GROUP(NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraphReindexColumns, ColMapOnlySortingOn, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraphReindexColumns, ColMapAndImportSortingOff, NODE )
-#endif
-
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+#else
+#define UNIT_TEST_GROUP(NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraphReindexColumns, ColMapOnlySortingOn, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraphReindexColumns, ColMapAndImportSortingOff, NODE )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
+#endif
+
 
 }
 

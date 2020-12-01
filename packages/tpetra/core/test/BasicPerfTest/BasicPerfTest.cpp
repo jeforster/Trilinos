@@ -494,10 +494,11 @@ void runMatrixTests(RCP<CrsMatrix<Scalar> > A,  RCP<MultiVector<Scalar> > b, RCP
   // it back again before checking in so that we can test all the types.
   // #define FAST_DEVELOPMENT_UNIT_TEST_BUILD
 
-#define UNIT_TEST_GROUP_ORDINAL_SCALAR( LO, GO, SCALAR ) \
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+#define UNIT_TEST_GROUP_ORDINAL_SCALAR( LO, GO, SCALAR ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( BasicPerfTest, MatrixAndMultiVector, LO, GO, SCALAR )
 #else
+#define UNIT_TEST_GROUP_ORDINAL_SCALAR( SCALAR ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( BasicPerfTest, MatrixAndMultiVector, SCALAR )
 #endif
 

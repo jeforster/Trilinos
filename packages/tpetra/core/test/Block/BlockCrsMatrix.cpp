@@ -2643,6 +2643,13 @@ namespace {
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockCrsMatrix, localGSDiagonalMatrix, SCALAR, LO, GO, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockCrsMatrix, localGSTriangularMatrices, SCALAR, LO, GO, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( BlockCrsMatrix, point2block, SCALAR, LO, GO, NODE )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  // NOTE (mfh 24 Sep 2015) It only makes sense to test over Scalar
+  // types which have a Teuchos::LAPACK implementation.
+
+  TPETRA_INSTANTIATE_SLGN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP )
 #else
 #define UNIT_TEST_GROUP( SCALAR, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockCrsMatrix, ctor, SCALAR, NODE ) \
@@ -2655,14 +2662,14 @@ namespace {
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockCrsMatrix, localGSDiagonalMatrix, SCALAR, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockCrsMatrix, localGSTriangularMatrices, SCALAR, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( BlockCrsMatrix, point2block, SCALAR, NODE )
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   // NOTE (mfh 24 Sep 2015) It only makes sense to test over Scalar
   // types which have a Teuchos::LAPACK implementation.
 
-  TPETRA_INSTANTIATE_SLGN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP )
+  TPETRA_INSTANTIATE_SN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP )
+#endif
 
 } // namespace (anonymous)
 

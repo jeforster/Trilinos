@@ -1148,8 +1148,8 @@ namespace { // (anonymous)
   // template parameters.  We use this macro below to instantiate for
   // only the Kokkos execution spaces (DEVICE) that are actually
   // enabled.
-#define UNIT_TEST_GROUP_3( LO, GO, DEVICE ) \
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+#define UNIT_TEST_GROUP_3( LO, GO, DEVICE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( FixedHashTable, Empty, LO, GO, DEVICE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( FixedHashTable_T, ContigKeysStartingValue, LO, GO, DEVICE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( FixedHashTable_K, ContigKeysStartingValue, LO, GO, DEVICE ) \
@@ -1160,6 +1160,7 @@ namespace { // (anonymous)
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( FixedHashTable_T, CopyCtorNoDupKeys, LO, GO, DEVICE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( FixedHashTable_T, CopyCtorDupKeys, LO, GO, DEVICE )
 #else
+#define UNIT_TEST_GROUP_1( DEVICE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( FixedHashTable, Empty, DEVICE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( FixedHashTable_T, ContigKeysStartingValue, DEVICE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( FixedHashTable_K, ContigKeysStartingValue, DEVICE ) \
@@ -1176,40 +1177,70 @@ namespace { // (anonymous)
 
 #ifdef KOKKOS_ENABLE_SERIAL
   typedef Kokkos::Device<Kokkos::Serial, Kokkos::HostSpace> serial_device_type;
-
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 #define UNIT_TEST_GROUP_SERIAL( LO, GO ) \
   UNIT_TEST_GROUP_3( LO, GO, serial_device_type )
 
   TPETRA_INSTANTIATE_LG( UNIT_TEST_GROUP_SERIAL )
+#else
+#define UNIT_TEST_GROUP_SERIAL( ) \
+  UNIT_TEST_GROUP_1( serial_device_type )
+#endif
 
 #else
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 #  define UNIT_TEST_GROUP_SERIAL( LO, GO )
+#else
+#  define UNIT_TEST_GROUP_SERIAL( )
+#endif
 #endif // KOKKOS_ENABLE_SERIAL
 
 
 #ifdef KOKKOS_ENABLE_OPENMP
   typedef Kokkos::Device<Kokkos::OpenMP, Kokkos::HostSpace> openmp_device_type;
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 #define UNIT_TEST_GROUP_OPENMP( LO, GO ) \
   UNIT_TEST_GROUP_3( LO, GO, openmp_device_type )
 
   TPETRA_INSTANTIATE_LG( UNIT_TEST_GROUP_OPENMP )
+#else
+#define UNIT_TEST_GROUP_OPENMP( ) \
+  UNIT_TEST_GROUP_1( openmp_device_type )
+
+  //TPETRA_INSTANTIATE( UNIT_TEST_GROUP_OPENMP )
+#endif
 
 #else
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 #  define UNIT_TEST_GROUP_OPENMP( LO, GO )
+#else
+#  define UNIT_TEST_GROUP_OPENMP( )
+#endif
 #endif // KOKKOS_ENABLE_OPENMP
 
 
 #ifdef KOKKOS_ENABLE_THREADS
   typedef Kokkos::Device<Kokkos::Threads, Kokkos::HostSpace> threads_device_type;
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 #define UNIT_TEST_GROUP_PTHREAD( LO, GO ) \
   UNIT_TEST_GROUP_3( LO, GO, threads_device_type )
 
   TPETRA_INSTANTIATE_LG( UNIT_TEST_GROUP_PTHREAD )
+#else
+#define UNIT_TEST_GROUP_PTHREAD( ) \
+  UNIT_TEST_GROUP_1( threads_device_type )
+
+  //TPETRA_INSTANTIATE( UNIT_TEST_GROUP_PTHREAD )
+#endif
 
 #else
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 #  define UNIT_TEST_GROUP_PTHREAD( LO, GO )
+#else
+#  define UNIT_TEST_GROUP_PTHREAD( )
+#endif
 #endif // KOKKOS_ENABLE_THREADS
 
 
@@ -1224,13 +1255,24 @@ namespace { // (anonymous)
 #ifdef KOKKOS_ENABLE_CUDA
   typedef Kokkos::Device<Kokkos::Cuda, Kokkos::CudaUVMSpace> cuda_uvm_device_type;
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 #define UNIT_TEST_GROUP_CUDA_UVM( LO, GO ) \
   UNIT_TEST_GROUP_3( LO, GO, cuda_uvm_device_type )
 
   TPETRA_INSTANTIATE_LG( UNIT_TEST_GROUP_CUDA_UVM )
+#else
+#define UNIT_TEST_GROUP_CUDA_UVM( ) \
+  UNIT_TEST_GROUP_1( cuda_uvm_device_type )
+
+  //TPETRA_INSTANTIATE_( UNIT_TEST_GROUP_CUDA_UVM )
+#endif
 
 #else
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 #  define UNIT_TEST_GROUP_CUDA_UVM( LO, GO )
+#else
+#  define UNIT_TEST_GROUP_CUDA_UVM( )
+#endif
 #endif // KOKKOS_ENABLE_CUDA
 
 } // namespace (anonymous)

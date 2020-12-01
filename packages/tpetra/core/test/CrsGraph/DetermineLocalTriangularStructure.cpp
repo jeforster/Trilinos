@@ -72,6 +72,8 @@ using LocalMap = typename Tpetra::Map<DeviceType>::local_map_type;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 template<class LO, class GO, class NT>
 #else
+using LO = typename Tpetra::Map<>::local_ordinal_type;
+using GO = typename Tpetra::Map<>::global_ordinal_type;
 template<class NT>
 #endif
 LocalCrsGraph<LO, typename NT::device_type>
@@ -308,13 +310,24 @@ makeTridiagonalGraph (const LO lclNumRows,
   return crs_graph_type (ind, ptr);
 }
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 template<class LO, class GO, class DT>
+#else
+using LO = typename Tpetra::Map<>::local_ordinal_type;
+using GO = typename Tpetra::Map<>::global_ordinal_type;
+template<class DT>
+#endif
 void
 testGraph (bool& success,
            Teuchos::FancyOStream& out,
            const LocalCrsGraph<LO, DT>& graph,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
            const LocalMap<LO, GO, DT>& lclRowMap,
            const LocalMap<LO, GO, DT>& lclColMap,
+#else
+           const LocalMap<DT>& lclRowMap,
+           const LocalMap<DT>& lclColMap,
+#endif
            const bool ignoreMapsForTriangularStructure,
            const Tpetra::Details::LocalTriangularStructureResult<LO>& expectedResult)
 {
@@ -387,7 +400,11 @@ TEUCHOS_UNIT_TEST(DetermineLocalTriangularStructure, Test0)
         const LO expectedMaxNumRowEnt = (lclNumRows < LO (1)) ? lclNumRows : LO (1);
         const result_type expectedResult {expectedLclNumDiag,
             expectedMaxNumRowEnt, true, true};
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
         testGraph<LO, GO, DT> (success, out, graph, lclRowMap, lclColMap,
+#else
+        testGraph<DT> (success, out, graph, lclRowMap, lclColMap,
+#endif
                                ignoreMapsForTriangularStructure,
                                expectedResult);
       }
@@ -420,7 +437,11 @@ TEUCHOS_UNIT_TEST(DetermineLocalTriangularStructure, Test0)
             } ();
           const result_type expectedResult {expectedLclNumDiag,
               expectedMaxNumRowEnt, lowerTriangular, upperTriangular};
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
           testGraph<LO, GO, DT> (success, out, graph, lclRowMap, lclColMap,
+#else
+          testGraph<DT> (success, out, graph, lclRowMap, lclColMap,
+#endif
                                  ignoreMapsForTriangularStructure,
                                  expectedResult);
         }
@@ -441,7 +462,11 @@ TEUCHOS_UNIT_TEST(DetermineLocalTriangularStructure, Test0)
         const LO expectedMaxNumRowEnt = (lclNumRows < LO (3)) ? lclNumRows : LO (3);
         const result_type expectedResult {expectedLclNumDiag,
             expectedMaxNumRowEnt, false, false};
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
         testGraph<LO, GO, DT> (success, out, graph, lclRowMap, lclColMap,
+#else
+        testGraph<DT> (success, out, graph, lclRowMap, lclColMap,
+#endif
                                ignoreMapsForTriangularStructure,
                                expectedResult);
       }
@@ -487,7 +512,11 @@ TEUCHOS_UNIT_TEST(DetermineLocalTriangularStructure, Test0)
         const bool looksDiag = ! ignoreMapsForTriangularStructure;
         const result_type expectedResult {expectedLclNumDiag,
             expectedMaxNumRowEnt, looksDiag, looksDiag};
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
         testGraph<LO, GO, DT> (success, out, graph, lclRowMap, lclColMap,
+#else
+        testGraph<DT> (success, out, graph, lclRowMap, lclColMap,
+#endif
                                ignoreMapsForTriangularStructure,
                                expectedResult);
       }
@@ -526,7 +555,11 @@ TEUCHOS_UNIT_TEST(DetermineLocalTriangularStructure, Test0)
             ignoreMapsForTriangularStructure ? false : upperTriangular;
           const result_type expectedResult {expectedLclNumDiag,
               expectedMaxNumRowEnt, expectLowerTri, expectUpperTri};
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
           testGraph<LO, GO, DT> (success, out, graph, lclRowMap, lclColMap,
+#else
+          testGraph<DT> (success, out, graph, lclRowMap, lclColMap,
+#endif
                                  ignoreMapsForTriangularStructure,
                                  expectedResult);
         }
@@ -547,7 +580,11 @@ TEUCHOS_UNIT_TEST(DetermineLocalTriangularStructure, Test0)
         const LO expectedMaxNumRowEnt = (lclNumRows < LO (3)) ? lclNumRows : LO (3);
         const result_type expectedResult {expectedLclNumDiag,
             expectedMaxNumRowEnt, false, false};
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
         testGraph<LO, GO, DT> (success, out, graph, lclRowMap, lclColMap,
+#else
+        testGraph<DT> (success, out, graph, lclRowMap, lclColMap,
+#endif
                                ignoreMapsForTriangularStructure,
                                expectedResult);
       }

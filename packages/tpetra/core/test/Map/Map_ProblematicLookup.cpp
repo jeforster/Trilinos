@@ -84,7 +84,7 @@ TEUCHOS_UNIT_TEST( Map, ProblematicLookup )
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     map = Tpetra::createNonContigMap<LO, GO> (gids ().getConst () , comm);
 #else
-    map = Tpetra::createNonContigMap<> (gids ().getConst () , comm);
+    map = Tpetra::createNonContigMap (gids ().getConst () , comm);
 #endif
   }
   else {
@@ -92,7 +92,7 @@ TEUCHOS_UNIT_TEST( Map, ProblematicLookup )
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     map = Tpetra::createNonContigMap<LO, GO> (gids ().getConst (), comm);
 #else
-    map = Tpetra::createNonContigMap<> (gids ().getConst (), comm);
+    map = Tpetra::createNonContigMap (gids ().getConst (), comm);
 #endif
   }
 

@@ -118,7 +118,6 @@ namespace { // (anonymous)
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     using Teuchos::REDUCE_MIN;
@@ -199,7 +198,6 @@ namespace { // (anonymous)
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     const bool debug = Tpetra::Details::Behavior::debug("CrsGraph");
@@ -249,7 +247,6 @@ namespace { // (anonymous)
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     using Teuchos::Comm;
@@ -479,7 +476,6 @@ namespace { // (anonymous)
     using GRAPH = Tpetra::CrsGraph<LO, GO, Node>;
     using map_type = Tpetra::Map<LO, GO, Node>;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
     using GRAPH = Tpetra::CrsGraph<Node>;
     using map_type = Tpetra::Map<Node>;
@@ -520,7 +516,6 @@ namespace { // (anonymous)
     using row_graph_type = Tpetra::RowGraph<LO, GO, Node>;
     using map_type = Tpetra::Map<LO, GO, Node>;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
     using crs_graph_type = Tpetra::CrsGraph<Node>;
     using row_graph_type = Tpetra::RowGraph<Node>;
@@ -652,8 +647,6 @@ namespace { // (anonymous)
     typedef Tpetra::CrsGraph<LO, GO, Node> graph_type;
     using map_type = Tpetra::Map<LO, GO, Node>;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::CrsGraph<Node> graph_type;
     using map_type = Tpetra::Map<Node>;
 #endif
@@ -972,6 +965,10 @@ namespace { // (anonymous)
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, WithStaticProfile,  LO, GO, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, CopiesAndViews,     LO, GO, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, BadGIDs,            LO, GO, NODE )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
 #else
 #define UNIT_TEST_GROUP(NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, EmptyGraphAlloc0, NODE ) \
@@ -984,10 +981,10 @@ namespace { // (anonymous)
   TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, WithStaticProfile, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, CopiesAndViews, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, BadGIDs, NODE )
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
-  TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+  TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
+#endif
 
 } // namespace (anonymous)

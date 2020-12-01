@@ -121,7 +121,11 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, NonlocalSumInto, ScalarType, NodeT
 
   // Typedefs derived from the above canonical typedefs.
   typedef ScalarTraits<scalar_type> STS;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   typedef Map<local_ordinal_type, global_ordinal_type, node_type> map_type;
+#else
+  typedef Map<node_type> map_type;
+#endif
 
   // Abbreviation typedefs.
   typedef scalar_type ST;
@@ -508,14 +512,18 @@ TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsMatrix, NonlocalSumInto, mat_complex_do
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( SCALAR, LO, GO, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, NonlocalSumInto, LO, GO, SCALAR, NODE )
-#else
-#define UNIT_TEST_GROUP( SCALAR, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, NonlocalSumInto, SCALAR, NODE )
-#endif
 
 TPETRA_ETI_MANGLING_TYPEDEFS()
 
 TPETRA_INSTANTIATE_SLGN( UNIT_TEST_GROUP )
+#else
+#define UNIT_TEST_GROUP( SCALAR, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, NonlocalSumInto, SCALAR, NODE )
+
+TPETRA_ETI_MANGLING_TYPEDEFS()
+
+TPETRA_INSTANTIATE_SN( UNIT_TEST_GROUP )
+#endif
 
 
 

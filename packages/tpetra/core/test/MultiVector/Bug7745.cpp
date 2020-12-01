@@ -62,7 +62,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Bug7745, DefaultToDefault, Scalar,Node)
 #endif
 {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
   // This case demonstrates that owned entries shared between the source and
@@ -139,7 +138,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Bug7745, CyclicToDefault, Scalar,Node)
 #endif
 {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
   // This case demonstrates that owned entries shared between the source and
@@ -235,7 +233,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Bug7745, OverlapToDefault, Scalar,Node)
 #endif
 {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
   // This case demonstrates that owned entries shared between the source and
@@ -339,7 +336,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Bug7745, OddEvenToSerial, Scalar,Node)
 #endif
 {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
   // Test case showing behavior when target map is all on processor zero.
@@ -442,7 +438,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Bug7745, SupersetToDefault, Scalar,Node)
 #endif
 {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
   // This use case is similar to matrix assembly case in which user 
@@ -544,7 +539,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Bug7745, NoSamesToDefault, Scalar,Node)
 #endif
 {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
   // This use case is similar to matrix assembly case in which user 
@@ -649,7 +643,11 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Bug7745, NoSamesToDefault, Scalar,Node)
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   TPETRA_INSTANTIATE_TESTMV( UNIT_TEST_GROUP )
+#else
+  TPETRA_INSTANTIATE_SN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP )
+#endif
 
 } // namespace (anonymous)
 

@@ -182,6 +182,8 @@ deepCopyFillCompleteCrsMatrix (const Tpetra::CrsMatrix<SC, NT>& A)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 template<class SC, class LO, class GO, class NT>
 #else
+using LO = typename Tpetra::Map<>::local_ordinal_type;
+using GO = typename Tpetra::Map<>::global_ordinal_type;
 template<class SC, class NT>
 #endif
 void
@@ -2277,15 +2279,21 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Equilibration, Test0, SC, NT)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( SC, LO, GO, NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( Equilibration, Test0, SC, LO, GO, NT )
-#else
-#define UNIT_TEST_GROUP( SC, NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( Equilibration, Test0, SC, NT )
-#endif
 
 #include "TpetraCore_ETIHelperMacros.h"
 
 TPETRA_ETI_MANGLING_TYPEDEFS()
 
 TPETRA_INSTANTIATE_SLGN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP )
+#else
+#define UNIT_TEST_GROUP( SC, NT ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( Equilibration, Test0, SC, NT )
+
+#include "TpetraCore_ETIHelperMacros.h"
+
+TPETRA_ETI_MANGLING_TYPEDEFS()
+
+TPETRA_INSTANTIATE_SN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP )
+#endif
 
 } // namespace (anonymous)

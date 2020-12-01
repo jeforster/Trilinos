@@ -212,9 +212,11 @@ TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( ImportExport, ReverseCommunication, NT ) {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_3( LO, GO, NT )                                         \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( ImportExport, ReverseCommunication, LO, GO, NT )
-#else
-#define UNIT_TEST_3(NT )                                         \
-  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( ImportExport, ReverseCommunication, NT )
-#endif
 TPETRA_ETI_MANGLING_TYPEDEFS()
 TPETRA_INSTANTIATE_LGN( UNIT_TEST_3 )
+#else
+#define UNIT_TEST_1(NT )                                         \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( ImportExport, ReverseCommunication, NT )
+TPETRA_ETI_MANGLING_TYPEDEFS()
+TPETRA_INSTANTIATE_N( UNIT_TEST_1 )
+#endif

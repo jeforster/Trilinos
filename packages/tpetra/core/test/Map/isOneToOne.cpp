@@ -67,7 +67,7 @@ namespace {
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
+    //using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     out << "Testing Map::isOneToOne with a contiguous uniform Map" << endl;
@@ -140,7 +140,7 @@ namespace {
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
+    //using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     out << "Testing Map::isOneToOne with a contiguous uniform Map over one process" << endl;
@@ -213,7 +213,7 @@ namespace {
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
+    //using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     out << "Testing Map::isOneToOne with a contiguous uniform replicated Map" << endl;
@@ -288,7 +288,7 @@ namespace {
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
+    //using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     out << "Testing Map::isOneToOne with a contiguous uniform replicated Map over one process" << endl;
@@ -365,7 +365,6 @@ namespace {
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     out << "Testing Map::isOneToOne with a contiguous nonuniform Map" << endl;
@@ -440,7 +439,6 @@ namespace {
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     out << "Testing Map::isOneToOne with a contiguous nonuniform Map over one process" << endl;
@@ -515,7 +513,7 @@ namespace {
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
+    //using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     out << "Testing Map::isOneToOne with a noncontiguous, one-to-one Map" << endl;
@@ -599,7 +597,7 @@ namespace {
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
+    //using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     out << "Testing Map::isOneToOne with a noncontiguous, replicated Map" << endl;
@@ -683,7 +681,7 @@ namespace {
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
+    //using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     out << "Testing Map::isOneToOne with a noncontiguous, not one-to-one Map" << endl;
@@ -764,34 +762,23 @@ namespace {
 //
 // Instantiations of tests
 //
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP(LO, GO) \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Map, isOneToOne_contig_uniform_distributed, LO, GO) \
-#else
-#endif
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Map, isOneToOne_serial_contig_uniform_distributed, LO, GO) \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Map, isOneToOne_contig_uniform_replicated, LO, GO) \
-#else
-#endif
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Map, isOneToOne_serial_contig_uniform_replicated, LO, GO) \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Map, isOneToOne_contig_nonuniform, LO, GO) \
-#else
-#endif
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Map, isOneToOne_serial_contig_nonuniform, LO, GO) \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Map, isOneToOne_noncontig_oneToOne, LO, GO) \
-#else
-#endif
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Map, isOneToOne_noncontig_replicated, LO, GO) \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Map, isOneToOne_noncontig_notOneToOne, LO, GO)
-#else
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_LG( UNIT_TEST_GROUP )
+
+#else
+#endif
 
 } // (anonymous)

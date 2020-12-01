@@ -74,7 +74,7 @@ namespace {
   class ModTwoTieBreak : public Tpetra::Details::TieBreak<LO, GO> {
 #else
 
-  class ModTwoTieBreak : public Tpetra::Details::TieBreak<> {
+  class ModTwoTieBreak : public Tpetra::Details::TieBreak {
 #endif
   public:
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -143,7 +143,7 @@ namespace {
     ModTwoTieBreak<LO,GO> tie_break;
     RCP<const Map> new_map = Tpetra::createOneToOne<LO,GO,NT> (map, tie_break);
 #else
-    ModTwoTieBreak<> tie_break;
+    ModTwoTieBreak tie_break;
     RCP<const Map> new_map = Tpetra::createOneToOne<NT> (map, tie_break);
 #endif
 

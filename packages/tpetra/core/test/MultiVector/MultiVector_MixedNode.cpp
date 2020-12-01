@@ -259,21 +259,26 @@ namespace {
 // INSTANTIATIONS
 //
 
-#define UNIT_TEST_GROUP( SCALAR, LO, GO ) \
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+#define UNIT_TEST_GROUP( SCALAR, LO, GO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( MultiVector, mixed_node_basic, SCALAR, LO, GO ) 
-#else
-  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( MultiVector, mixed_node_basic, SCALAR ) 
-#endif
-
 
   typedef Tpetra::Map<>::local_ordinal_type default_local_ordinal_type;
   typedef Tpetra::Map<>::global_ordinal_type default_global_ordinal_type;
 
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_SLG_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP )
+#else
+#define UNIT_TEST_GROUP( SCALAR ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( MultiVector, mixed_node_basic, SCALAR ) 
+
+  typedef Tpetra::Map<>::local_ordinal_type default_local_ordinal_type;
+  typedef Tpetra::Map<>::global_ordinal_type default_global_ordinal_type;
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
-
-  TPETRA_INSTANTIATE_SLG_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP )
+  TPETRA_INSTANTIATE_S_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP )
+#endif
 
 }

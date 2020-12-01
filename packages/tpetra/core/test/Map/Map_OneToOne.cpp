@@ -63,7 +63,7 @@ namespace { // (anonymous)
   template <typename LO,typename GO>
   class GotoLowTieBreak : public Tpetra::Details::TieBreak<LO,GO> {
 #else
-  class GotoLowTieBreak : public Tpetra::Details::TieBreak<> {
+  class GotoLowTieBreak : public Tpetra::Details::TieBreak {
 #endif
   public:
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -94,8 +94,6 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     using Map = Tpetra::Map<LO, GO, NT>;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
     using Map = Tpetra::Map<NT>;
 #endif
     RCP<const Teuchos::Comm<int> > comm = Tpetra::getDefaultComm();
@@ -128,7 +126,6 @@ namespace { // (anonymous)
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     using Teuchos::Array;
@@ -192,7 +189,6 @@ namespace { // (anonymous)
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     using Teuchos::Array;
@@ -256,7 +252,6 @@ namespace { // (anonymous)
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     //Creates a map with large overlaps
@@ -344,7 +339,6 @@ namespace { // (anonymous)
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     //Will create a non-contig map with all of the elements on a single
@@ -387,7 +381,6 @@ namespace { // (anonymous)
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     //An empty map.
@@ -419,7 +412,6 @@ namespace { // (anonymous)
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     //Every processor starts by owning all of them.
@@ -465,7 +457,6 @@ namespace { // (anonymous)
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     //Creates a map with large overlaps
@@ -512,7 +503,7 @@ namespace { // (anonymous)
     RCP<const Map> map = Tpetra::createNonContigMapWithNode<LO,GO,NT>(elementList,comm);
     RCP<const Map> new_map = Tpetra::createOneToOne<LO,GO,NT>(map,tie_break);
 #else
-    GotoLowTieBreak<> tie_break;
+    GotoLowTieBreak tie_break;
     RCP<const Map> map = Tpetra::createNonContigMapWithNode<NT>(elementList,comm);
     RCP<const Map> new_map = Tpetra::createOneToOne<NT>(map,tie_break);
 #endif
@@ -554,6 +545,10 @@ namespace { // (anonymous)
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(OneToOne, NoIDs, LO, GO, NT) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(OneToOne, AllOwnEvery, LO, GO, NT) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(OneToOne, TieBreak, LO, GO, NT)
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
 #else
 #define UNIT_TEST_GROUP(NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(OneToOne, AlreadyOneToOneNonContigIndexBaseZero, NT) \
@@ -564,10 +559,10 @@ namespace { // (anonymous)
   TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(OneToOne, NoIDs, NT) \
   TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(OneToOne, AllOwnEvery, NT) \
   TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(OneToOne, TieBreak, NT)
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
-  TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+  TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
+#endif
 
 } // namespace (anonymous)

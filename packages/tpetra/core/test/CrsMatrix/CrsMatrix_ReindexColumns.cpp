@@ -621,15 +621,18 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( SCALAR, LO, GO, NODE )                          \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrixReindexColumns, ColMapOnlySortingOn, SCALAR, LO, GO, NODE )
-#else
-#define UNIT_TEST_GROUP( SCALAR, NODE )                          \
-  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrixReindexColumns, ColMapOnlySortingOn, SCALAR, NODE )
-#endif
-
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_SLGN( UNIT_TEST_GROUP )
+#else
+#define UNIT_TEST_GROUP( SCALAR, NODE )                          \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrixReindexColumns, ColMapOnlySortingOn, SCALAR, NODE )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_SN( UNIT_TEST_GROUP )
+#endif
 
 }
 

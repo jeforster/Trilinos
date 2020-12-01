@@ -922,8 +922,11 @@ namespace { // (anonymous)
     typedef typename map_type::global_ordinal_type GO;
     //typedef typename map_type::device_type::execution_space execution_space;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    typedef Tpetra::Export<typename map_type::local_ordinal_type,
+    typedef Tpetra::Export<
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
+      typename map_type::local_ordinal_type,
       typename map_type::global_ordinal_type,
+#endif
       typename map_type::node_type> export_type;
 #else
     typedef Tpetra::Export<typename map_type::node_type> export_type;
@@ -1209,14 +1212,18 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( LO, GO, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsMatrix, Albany182, LO, GO, NODE )
-#else
-#define UNIT_TEST_GROUP(NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsMatrix, Albany182, NODE )
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
-  //TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+  TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+#else
+#define UNIT_TEST_GROUP(NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsMatrix, Albany182, NODE )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
+#endif
 
   typedef ::Tpetra::Map<>::node_type default_node_type;
 #ifdef HAVE_TPETRA_INST_INT_LONG_LONG

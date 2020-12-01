@@ -396,15 +396,19 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(CrsMatrix, ImportToStaticMatrixLocal, SC, NT)
 #define UNIT_TEST_GROUP( SC, LO, GO, NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(CrsMatrix, ImportToStaticMatrix, SC, LO, GO, NT) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(CrsMatrix, ImportToStaticMatrixLocal, SC, LO, GO, NT)
-#else
-#define UNIT_TEST_GROUP( SC, NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(CrsMatrix, ImportToStaticMatrix, SC, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(CrsMatrix, ImportToStaticMatrixLocal, SC, NT)
-#endif
 
 TPETRA_ETI_MANGLING_TYPEDEFS()
 
 TPETRA_INSTANTIATE_SLGN(UNIT_TEST_GROUP)
+#else
+#define UNIT_TEST_GROUP( SC, NT ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(CrsMatrix, ImportToStaticMatrix, SC, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(CrsMatrix, ImportToStaticMatrixLocal, SC, NT)
+
+TPETRA_ETI_MANGLING_TYPEDEFS()
+
+TPETRA_INSTANTIATE_SN(UNIT_TEST_GROUP)
+#endif
 
 } // namespace (anonymous)
 

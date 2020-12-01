@@ -288,7 +288,11 @@ namespace {
     using local_ordinal_type = typename MapType::local_ordinal_type;
     using global_ordinal_type = typename MapType::global_ordinal_type;
     using node_type = typename MapType::node_type;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     using import_type = ::Tpetra::Import<local_ordinal_type, global_ordinal_type, node_type>;
+#else
+    using import_type = ::Tpetra::Import<node_type>;
+#endif
   };
 
   // For the given domain Map and (original) column Map, test
@@ -681,18 +685,17 @@ namespace {
   // anonymous namespace as where the tests were defined)
   //
 
-#define UNIT_TEST_GROUP(LO, GO) \
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+#define UNIT_TEST_GROUP(LO, GO) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MakeOptColMap, Test1, LO, GO )
-#else
-#endif
-
   // TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MakeOptColMap, Test2, LO, GO )
   // TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MakeOptColMap, Test3, LO, GO )
 
 TPETRA_ETI_MANGLING_TYPEDEFS()
 
 TPETRA_INSTANTIATE_LG(UNIT_TEST_GROUP)
+#else
+#endif
 
 } // namespace (anonymous)
 

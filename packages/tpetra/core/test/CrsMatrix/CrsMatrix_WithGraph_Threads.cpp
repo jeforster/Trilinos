@@ -61,10 +61,11 @@ TPETRA_ETI_MANGLING_TYPEDEFS()
 // Declare a colon- and comma-free typedef, to avoid macro issues.
 typedef Kokkos::Compat::KokkosThreadsWrapperNode threads_node_type;
 
-#define UNIT_TEST_GROUP_THREADS( SCALAR, LO, GO ) \
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+#define UNIT_TEST_GROUP_THREADS( SCALAR, LO, GO ) \
   UNIT_TEST_GROUP( SCALAR, LO, GO, threads_node_type )
 #else
+#define UNIT_TEST_GROUP_THREADS( SCALAR ) \
   UNIT_TEST_GROUP( SCALAR, threads_node_type )
 #endif
 

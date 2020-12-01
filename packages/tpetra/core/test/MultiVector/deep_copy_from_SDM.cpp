@@ -307,13 +307,17 @@ namespace { // (anonymous)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( ST, LO, GO, NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( MultiVector, deep_copy_from_SDM, ST, LO, GO, NT )
-#else
-#define UNIT_TEST_GROUP( ST, NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, deep_copy_from_SDM, ST, NT )
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_TESTMV( UNIT_TEST_GROUP )
+#else
+#define UNIT_TEST_GROUP( ST, NT ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MultiVector, deep_copy_from_SDM, ST, NT )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_SN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP )
+#endif
 
 } // namespace (anonymous)

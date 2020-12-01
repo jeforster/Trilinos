@@ -77,7 +77,6 @@ TEUCHOS_UNIT_TEST( MapOutputInput, ContigUniformIndexBase0 )
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   typedef Tpetra::Map<LO, GO> map_type;
 #else
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
   typedef Tpetra::Map<> map_type;
 #endif
@@ -215,7 +214,6 @@ TEUCHOS_UNIT_TEST( MapOutputInput, ContigUniformIndexBase1 )
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   typedef Tpetra::Map<LO, GO> map_type;
 #else
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
   typedef Tpetra::Map<> map_type;
 #endif
@@ -276,7 +274,6 @@ TEUCHOS_UNIT_TEST( MapOutputInput, ContigNonuniformIndexBase0 )
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   typedef Tpetra::Map<LO, GO> map_type;
 #else
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
   typedef Tpetra::Map<> map_type;
 #endif
@@ -334,7 +331,6 @@ TEUCHOS_UNIT_TEST( MapOutputInput, ContigNonuniformIndexBase1 )
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   typedef Tpetra::Map<LO, GO> map_type;
 #else
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
   typedef Tpetra::Map<> map_type;
 #endif
@@ -392,7 +388,6 @@ TEUCHOS_UNIT_TEST( MapOutputInput, NoncontigIndexBase0 )
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   typedef Tpetra::Map<LO, GO> map_type;
 #else
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
   typedef Tpetra::Map<> map_type;
 #endif
@@ -456,7 +451,6 @@ TEUCHOS_UNIT_TEST( MapOutputInput, NoncontigIndexBase1 )
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   typedef Tpetra::Map<LO, GO> map_type;
 #else
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
   typedef Tpetra::Map<> map_type;
 #endif
@@ -521,7 +515,6 @@ TEUCHOS_UNIT_TEST( MapOutputInput, NoncontigOvrlpngIndBase0 )
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   typedef Tpetra::Map<LO, GO> map_type;
 #else
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
   typedef Tpetra::Map<> map_type;
 #endif
@@ -586,8 +579,8 @@ TEUCHOS_UNIT_TEST( MapOutputInput, NoncontigOvrlpngIndBase0 )
 //   - indexBase = {0, 1}
 //   - {contiguous uniform, contiguous nonuniform, noncontiguous} Map
 
-#define UNIT_TEST_GROUP( LO, GO ) \
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+#define UNIT_TEST_GROUP( LO, GO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MapOutputInput, ContigUniformIndexBase0, LO, GO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MapOutputInput, ContigUniformIndexBase1, LO, GO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MapOutputInput, ContigNonuniformIndexBase0, LO, GO ) \
@@ -595,13 +588,13 @@ TEUCHOS_UNIT_TEST( MapOutputInput, NoncontigOvrlpngIndBase0 )
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MapOutputInput, NoncontigIndexBase0, LO, GO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MapOutputInput, NoncontigIndexBase1, LO, GO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( MapOutputInput, NoncontigOvrlpngIndBase0, LO, GO )
-#else
-#endif
-
 
 TPETRA_ETI_MANGLING_TYPEDEFS()
 
 TPETRA_INSTANTIATE_LG( UNIT_TEST_GROUP )
+#else
+#endif
+
 
 // mfh 05 Sep 2014: Must close namespace here for some reason, not
 // above the instantiations.

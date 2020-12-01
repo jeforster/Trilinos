@@ -76,20 +76,20 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       sourceRowMap = Tpetra::createNonContigMap<LO, GO> (tuple<GO> (0), comm);
 #else
-      sourceRowMap = Tpetra::createNonContigMap<> (tuple<GO> (0), comm);
+      sourceRowMap = Tpetra::createNonContigMap (tuple<GO> (0), comm);
 #endif
     }
     else {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       sourceRowMap = Tpetra::createNonContigMap<LO, GO> (tuple<GO> (1), comm);
 #else
-      sourceRowMap = Tpetra::createNonContigMap<> (tuple<GO> (1), comm);
+      sourceRowMap = Tpetra::createNonContigMap (tuple<GO> (1), comm);
 #endif
     }
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     destRowMap = Tpetra::createNonContigMap<LO, GO> (tuple<GO> (0, 1), comm);
 #else
-    destRowMap = Tpetra::createNonContigMap<> (tuple<GO> (0, 1), comm);
+    destRowMap = Tpetra::createNonContigMap (tuple<GO> (0, 1), comm);
 #endif
 
     RCP<crs_matrix_type> srcMat = Tpetra::createCrsMatrix<SC>(sourceRowMap, 1);

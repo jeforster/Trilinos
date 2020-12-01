@@ -91,18 +91,26 @@ namespace Tpetra {
 
       //! The MultiVector specialization associated with SparseMatrixType.
       typedef MultiVector<scalar_type,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                           local_ordinal_type,
                           global_ordinal_type,
+#endif
                           node_type> multivector_type;
 
       //! The Vector specialization associated with SparseMatrixType.
       typedef Vector<scalar_type,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                      local_ordinal_type,
                      global_ordinal_type,
+#endif
                      node_type> vector_type;
 
       typedef Teuchos::Comm<int> comm_type;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       typedef Map<local_ordinal_type, global_ordinal_type, node_type> map_type;
+#else
+      typedef Map<node_type> map_type;
+#endif
 
     private:
       /// \typedef size_type
@@ -717,8 +725,10 @@ namespace Tpetra {
 
     public:
        static Teuchos::RCP<Tpetra::Vector<scalar_type,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                                             local_ordinal_type,
                                             global_ordinal_type,
+#endif
                                             node_type> >
        generate_miniFE_vector(
            int nx,

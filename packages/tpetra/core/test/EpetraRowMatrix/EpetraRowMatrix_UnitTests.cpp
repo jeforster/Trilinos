@@ -134,7 +134,7 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     RCP<const Tpetra::Map<LO,GO> > map = Tpetra::createContigMap<LO,GO>(INVALID,numLocal,comm);
 #else
-    RCP<const Tpetra::Map<> > map = Tpetra::createContigMap<>(INVALID,numLocal,comm);
+    RCP<const Tpetra::Map<> > map = Tpetra::createContigMap(INVALID,numLocal,comm);
 #endif
     // create a matrix, modeled closely on Chris' CrsMatrix unit-tests.
     RCP<MAT> matrix(new MAT(map, 3));
@@ -207,13 +207,13 @@ namespace {
 
 TPETRA_ETI_MANGLING_TYPEDEFS()
 
-#define UNIT_TEST_GROUP( LO, GO ) \
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+#define UNIT_TEST_GROUP( LO, GO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( EpetraRowMatrix, BasicFunctionality, LO, GO )
-#else
-#endif
 
 TPETRA_INSTANTIATE_LG( UNIT_TEST_GROUP )
+#else
+#endif
 
 }
 

@@ -117,7 +117,6 @@ namespace { // (anonymous)
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     using Teuchos::Comm;
@@ -277,7 +276,6 @@ namespace { // (anonymous)
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     using Teuchos::Comm;
@@ -368,7 +366,6 @@ namespace { // (anonymous)
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     using Teuchos::Comm;
@@ -439,8 +436,6 @@ namespace { // (anonymous)
     typedef Tpetra::CrsGraph<LO, GO, Node> GRAPH;
     typedef Tpetra::Map<LO, GO, Node> map_type;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::CrsGraph<Node> GRAPH;
     typedef Tpetra::Map<Node> map_type;
 #endif
@@ -567,7 +562,6 @@ namespace { // (anonymous)
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
     using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     using Teuchos::Comm;
     using Teuchos::outArg;
@@ -629,7 +623,6 @@ namespace { // (anonymous)
     typedef Tpetra::Map<LO, GO, Node> map_type;
 #else
     using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::CrsGraph<Node> GRAPH;
     typedef Tpetra::Map<Node> map_type;
 #endif
@@ -674,7 +667,6 @@ namespace { // (anonymous)
     typedef Tpetra::CrsGraph<LO, GO, Node> graph_type;
     typedef Tpetra::Map<LO, GO, Node> map_type;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::CrsGraph<Node> graph_type;
     typedef Tpetra::Map<Node> map_type;
@@ -715,6 +707,10 @@ namespace { // (anonymous)
       TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, TwoArraysESFC,     LO, GO, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, SetAllIndices,     LO, GO, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( CrsGraph, StaticProfileMultiInsert, LO, GO, NODE )
+
+    TPETRA_ETI_MANGLING_TYPEDEFS()
+
+    TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP_DEBUG_AND_RELEASE )
 #else
 #define UNIT_TEST_GROUP_DEBUG_AND_RELEASE(NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, WithColMap, NODE ) \
@@ -726,10 +722,10 @@ namespace { // (anonymous)
       TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, TwoArraysESFC, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, SetAllIndices, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraph, StaticProfileMultiInsert, NODE )
-#endif
 
     TPETRA_ETI_MANGLING_TYPEDEFS()
 
-    TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP_DEBUG_AND_RELEASE )
+    TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP_DEBUG_AND_RELEASE )
+#endif
 
 } // namespace (anonymous)

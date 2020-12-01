@@ -120,8 +120,8 @@ namespace {
       RCP<const map_type> dom = Tpetra::createUniformContigMap<LO, GO>(4,comm);
       RCP<crs_matrix_type> A = Tpetra::createCrsMatrix<SC, LO, GO>(rng, 4);
 #else
-      RCP<const map_type> rng = Tpetra::createUniformContigMap<>(1,comm);
-      RCP<const map_type> dom = Tpetra::createUniformContigMap<>(4,comm);
+      RCP<const map_type> rng = Tpetra::createUniformContigMap(1,comm);
+      RCP<const map_type> dom = Tpetra::createUniformContigMap(4,comm);
       RCP<crs_matrix_type> A = Tpetra::createCrsMatrix<SC>(rng, 4);
 #endif
       if (myImageID == 0) {
@@ -221,10 +221,10 @@ namespace {
     RCP<const Map<LO,GO> > mapIn        = Tpetra::createUniformContigMap<LO,GO>(numGlobal, comm);
     RCP<const Map<LO,GO> > mapOut       = Tpetra::createUniformContigMap<LO,GO>(numGlobal, comm);
 #else
-    RCP<const Map<> > mapImportIn  = Tpetra::createUniformContigMap<>(numGlobal, comm);
-    RCP<const Map<> > mapImportOut = Tpetra::createUniformContigMap<>(numGlobal, comm);
-    RCP<const Map<> > mapIn        = Tpetra::createUniformContigMap<>(numGlobal, comm);
-    RCP<const Map<> > mapOut       = Tpetra::createUniformContigMap<>(numGlobal, comm);
+    RCP<const Map<> > mapImportIn  = Tpetra::createUniformContigMap(numGlobal, comm);
+    RCP<const Map<> > mapImportOut = Tpetra::createUniformContigMap(numGlobal, comm);
+    RCP<const Map<> > mapIn        = Tpetra::createUniformContigMap(numGlobal, comm);
+    RCP<const Map<> > mapOut       = Tpetra::createUniformContigMap(numGlobal, comm);
 #endif
     TEST_EQUALITY_CONST( *mapImportIn  == *mapIn,  true );
     TEST_EQUALITY_CONST( *mapImportOut == *mapOut, true );

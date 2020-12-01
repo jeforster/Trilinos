@@ -113,6 +113,8 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   template<class Scalar, class LocalOrdinal, class GlobalOrdinal, class Node>
 #else
+  using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
+  using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
   template<class Scalar, class Node>
 #endif
   typename Teuchos::ScalarTraits<Scalar>::magnitudeType
@@ -252,13 +254,17 @@ namespace {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP( SCALAR, LO, GO, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, LeftRightScale, LO, GO, SCALAR, NODE )
-#else
-#define UNIT_TEST_GROUP( SCALAR, NODE ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, LeftRightScale, SCALAR, NODE )
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_SLGN( UNIT_TEST_GROUP )
+#else
+#define UNIT_TEST_GROUP( SCALAR, NODE ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, LeftRightScale, SCALAR, NODE )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_SN( UNIT_TEST_GROUP )
+#endif
 
 }

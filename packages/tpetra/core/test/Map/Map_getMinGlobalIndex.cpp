@@ -176,15 +176,15 @@ namespace {
   // INSTANTIATIONS
   //
 
-#define UNIT_TEST_GROUP( LO, GO ) \
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+#define UNIT_TEST_GROUP( LO, GO ) \
     TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( Map, getMinGlobalIndex_nonuniform, LO, GO ) \
     TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( Map, getMinGlobalIndex_noncontiguous, LO, GO )
-#else
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_LG(UNIT_TEST_GROUP)
+#else
+#endif
 
 } // namespace (anonymous)

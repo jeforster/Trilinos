@@ -22,7 +22,11 @@ public:
   typedef map_t::local_ordinal_type lno_t;
   typedef map_t::global_ordinal_type gno_t;
   typedef int scalar_t;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   typedef Tpetra::FEMultiVector<scalar_t, lno_t, gno_t> femv_t;
+#else
+  typedef Tpetra::FEMultiVector<scalar_t> femv_t;
+#endif
 
   FEMultiVectorTest(Teuchos::RCP<const Teuchos::Comm<int> > &comm_);
 

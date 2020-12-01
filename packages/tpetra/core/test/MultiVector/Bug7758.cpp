@@ -63,7 +63,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Bug7758, DefaultToDefault, Scalar,Node)
 #endif
 {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
   // This case demonstrates that owned entries shared between the source and
@@ -246,7 +245,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Bug7758, OverlapToDefault, Scalar,Node)
 #endif
 {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
   // This case demonstrates that owned entries shared between the source and
@@ -350,7 +348,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Bug7758, OddEvenToSerial, Scalar,Node)
 #endif
 {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
   // Test case showing behavior when target map is all on processor zero.
@@ -453,7 +450,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Bug7758, SupersetToDefault, Scalar,Node)
 #endif
 {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
   // This use case is similar to matrix assembly case in which user 
@@ -554,7 +550,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Bug7758, NoSamesToDefault, Scalar,Node)
 #endif
 {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
   // This use case is similar to matrix assembly case in which user 
@@ -647,6 +642,10 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Bug7758, NoSamesToDefault, Scalar,Node)
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Bug7758, OddEvenToSerial, SCALAR, LO, GO, NODE) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Bug7758, SupersetToDefault, SCALAR, LO, GO, NODE) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Bug7758, NoSamesToDefault, SCALAR, LO, GO, NODE)
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_TESTMV( UNIT_TEST_GROUP )
 #else
 #define UNIT_TEST_GROUP( SCALAR, NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Bug7758, DefaultToDefault, SCALAR, NODE) \
@@ -655,11 +654,11 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Bug7758, NoSamesToDefault, Scalar,Node)
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Bug7758, OddEvenToSerial, SCALAR, NODE) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Bug7758, SupersetToDefault, SCALAR, NODE) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Bug7758, NoSamesToDefault, SCALAR, NODE)
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
-  TPETRA_INSTANTIATE_TESTMV( UNIT_TEST_GROUP )
+  TPETRA_INSTANTIATE_SN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP )
+#endif
 
 } // namespace (anonymous)
 

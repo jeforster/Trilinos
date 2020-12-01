@@ -283,8 +283,16 @@ null_add_test (const Matrix_t& A,
   typedef typename Matrix_t::global_ordinal_type global_ordinal_type;
   typedef typename Matrix_t::node_type NT;
   typedef Teuchos::ScalarTraits<scalar_type> STS;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   typedef Tpetra::Map<local_ordinal_type, global_ordinal_type, NT> map_type;
+#else
+  typedef Tpetra::Map<NT> map_type;
+#endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   typedef Tpetra::Export<local_ordinal_type, global_ordinal_type, NT> export_type;
+#else
+  typedef Tpetra::Export<NT> export_type;
+#endif
   const scalar_type one = STS::one ();
 
   out << "  Computing Frobenius norm of the expected result C" << endl;
@@ -1033,16 +1041,20 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL(Tpetra_MatMatKernels, operations_test,SC, NT) 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP_SC_LO_GO_NO( SC, LO, GO, NT )			\
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Tpetra_MatMatKernels, operations_test,SC, LO, GO, NT)
-#else
-#define UNIT_TEST_GROUP_SC_LO_GO_NO( SC, NT )			\
-  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Tpetra_MatMatKernels, operations_test,SC, NT)
-#endif
 
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_SLGN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP_SC_LO_GO_NO )
+#else
+#define UNIT_TEST_GROUP_SC_NO( SC, NT )			\
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Tpetra_MatMatKernels, operations_test,SC, NT)
 
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_SN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP_SC_NO )
+#endif
 
   } //namespace Tpetra
 

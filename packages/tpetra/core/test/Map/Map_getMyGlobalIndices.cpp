@@ -263,16 +263,20 @@ TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( getMyGlobalIndices, Noncontig, NT )
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( getMyGlobalIndices, UniformContig, LO, GO, NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( getMyGlobalIndices, NonuniformContig, LO, GO, NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( getMyGlobalIndices, Noncontig, LO, GO, NT )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_LGN(UNIT_TEST_GROUP)
 #else
 #define UNIT_TEST_GROUP(NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( getMyGlobalIndices, UniformContig, NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( getMyGlobalIndices, NonuniformContig, NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( getMyGlobalIndices, Noncontig, NT )
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
-  TPETRA_INSTANTIATE_LGN(UNIT_TEST_GROUP)
+  TPETRA_INSTANTIATE_N(UNIT_TEST_GROUP)
+#endif
 
 } // namespace (anonymous)
 

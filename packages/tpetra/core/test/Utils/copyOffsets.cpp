@@ -84,11 +84,7 @@ namespace { // (anonymous)
 
   TEUCHOS_UNIT_TEST( CopyOffsets, int_to_int )
   {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     testNoOverflow<int, int> (success, out);
-#else
-    testNoOverflow<> (success, out);
-#endif
   }
 
   // "Convert" between two unsigned types that are the same
@@ -107,11 +103,7 @@ namespace { // (anonymous)
 
   TEUCHOS_UNIT_TEST( CopyOffsets, long_long_to_int )
   {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     testNoOverflow<int, long long> (success, out);
-#else
-    testNoOverflow<> (success, out);
-#endif
   }
 
   // Convert between smaller and larger types, both unsigned

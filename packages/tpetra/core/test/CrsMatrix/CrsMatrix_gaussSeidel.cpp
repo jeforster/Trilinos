@@ -148,7 +148,11 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, gaussSeidelSerial, ScalarType, Nod
   typedef ScalarTraits<scalar_type> STS;
   typedef typename STS::magnitudeType magnitude_type;
   typedef ScalarTraits<magnitude_type> STM;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   typedef Map<local_ordinal_type, global_ordinal_type, node_type> map_type;
+#else
+  typedef Map<node_type> map_type;
+#endif
 
   // Abbreviation typedefs.
   typedef scalar_type ST;
@@ -655,7 +659,11 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, reorderedGaussSeidelSerial, Scalar
   typedef ScalarTraits<scalar_type> STS;
   typedef typename STS::magnitudeType magnitude_type;
   typedef ScalarTraits<magnitude_type> STM;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   typedef Map<local_ordinal_type, global_ordinal_type, node_type> map_type;
+#else
+  typedef Map<node_type> map_type;
+#endif
 
   // Abbreviation typedefs.
   typedef scalar_type ST;
@@ -1026,18 +1034,23 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( CrsMatrix, reorderedGaussSeidelSerial, Scalar
 //////////////////////////////////////////////////////////////////////
 
 typedef Tpetra::Details::DefaultTypes::node_type default_node_type;
-#define UNIT_TEST_GROUP( SCALAR, LO, GO ) \
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+#define UNIT_TEST_GROUP( SCALAR, LO, GO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, gaussSeidelSerial, LO, GO, SCALAR, default_node_type ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( CrsMatrix, reorderedGaussSeidelSerial, LO, GO, SCALAR, default_node_type )
-#else
-  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, gaussSeidelSerial, SCALAR, default_node_type ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, reorderedGaussSeidelSerial, SCALAR, default_node_type )
-#endif
 
 TPETRA_ETI_MANGLING_TYPEDEFS()
 
 TPETRA_INSTANTIATE_SLG( UNIT_TEST_GROUP )
+#else
+#define UNIT_TEST_GROUP( SCALAR ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, gaussSeidelSerial, SCALAR, default_node_type ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( CrsMatrix, reorderedGaussSeidelSerial, SCALAR, default_node_type )
+
+TPETRA_ETI_MANGLING_TYPEDEFS()
+
+TPETRA_INSTANTIATE_S( UNIT_TEST_GROUP )
+#endif
 
 } // namespace (anonymous)
 

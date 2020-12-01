@@ -137,17 +137,27 @@ namespace {
     using std::endl;
 
     using scalar_type = typename MV::scalar_type;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     using local_ordinal_type = typename MV::local_ordinal_type;
     using global_ordinal_type = typename MV::global_ordinal_type;
+#endif
     using node_type = typename MV::node_type;
     using map_type =
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       Tpetra::Map<local_ordinal_type, global_ordinal_type, node_type>;
+#else
+      Tpetra::Map<node_type>;
+#endif
 
     // The reader and writer classes are templated on the
     // Tpetra::CrsMatrix specialization, from which the
     // Tpetra::MultiVector specialization is derived.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     typedef Tpetra::CrsMatrix<scalar_type, local_ordinal_type,
       global_ordinal_type, node_type> sparse_matrix_type;
+#else
+    typedef Tpetra::CrsMatrix<scalar_type, node_type> sparse_matrix_type;
+#endif
 
     const int myRank = comm->getRank ();
     if (verbose && myRank == 0) {
@@ -231,18 +241,28 @@ namespace {
     using std::endl;
 
     typedef typename MV::scalar_type scalar_type;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     typedef typename MV::local_ordinal_type local_ordinal_type;
     typedef typename MV::global_ordinal_type global_ordinal_type;
+#endif
     typedef typename MV::node_type node_type;
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::Map<local_ordinal_type, global_ordinal_type, node_type>
+#else
+    typedef Tpetra::Map<node_type>
+#endif
       map_type;
 
     // The reader and writer classes are templated on the
     // Tpetra::CrsMatrix specialization, from which the
     // Tpetra::MultiVector specialization is derived.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     typedef Tpetra::CrsMatrix<scalar_type, local_ordinal_type,
       global_ordinal_type, node_type> sparse_matrix_type;
+#else
+    typedef Tpetra::CrsMatrix<scalar_type, node_type> sparse_matrix_type;
+#endif
 
     TEUCHOS_TEST_FOR_EXCEPTION(map.is_null(), std::invalid_argument,
       "testReadDenseFileWithInputMap requires a nonnull input map.");
@@ -331,18 +351,28 @@ namespace {
     using std::endl;
 
     typedef typename MV::scalar_type scalar_type;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     typedef typename MV::local_ordinal_type local_ordinal_type;
     typedef typename MV::global_ordinal_type global_ordinal_type;
+#endif
     typedef typename MV::node_type node_type;
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::Map<local_ordinal_type, global_ordinal_type, node_type>
+#else
+    typedef Tpetra::Map<node_type>
+#endif
       map_type;
 
     // The reader and writer classes are templated on the
     // Tpetra::CrsMatrix specialization, from which the
     // Tpetra::MultiVector specialization is derived.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     typedef Tpetra::CrsMatrix<scalar_type, local_ordinal_type,
       global_ordinal_type, node_type> sparse_matrix_type;
+#else
+    typedef Tpetra::CrsMatrix<scalar_type, node_type> sparse_matrix_type;
+#endif
 
     TEUCHOS_TEST_FOR_EXCEPTION(X.is_null(), std::invalid_argument,
       "testWriteDenseFile: The input Tpetra::MultiVector instance X is null.");
@@ -509,7 +539,9 @@ main (int argc, char *argv[])
   if (inputFilename != "") {
     // Convenient abbreviations
     typedef scalar_type ST;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     typedef local_ordinal_type LO;
+#endif
     typedef global_ordinal_type GO;
     typedef node_type NT;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS

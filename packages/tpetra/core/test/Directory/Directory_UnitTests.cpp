@@ -511,20 +511,31 @@ namespace {
   // INSTANTIATIONS
   //
 
-#define UNIT_TEST_GROUP( LO, GO ) \
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+#define UNIT_TEST_GROUP( LO, GO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( Directory, SmallUniformContig, LO, GO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( Directory, UniformContig, LO, GO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( Directory, SmallContig, LO, GO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( Directory, Contig, LO, GO )     \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( Directory, NonContig, LO, GO )  \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( Directory, BadSize, LO, GO )
-#else
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_LG(UNIT_TEST_GROUP)
+#else
+#define UNIT_TEST_GROUP( ) \
+  TEUCHOS_UNIT_TEST( Directory, SmallUniformContig ) \
+  TEUCHOS_UNIT_TEST( Directory, UniformContig ) \
+  TEUCHOS_UNIT_TEST( Directory, SmallContig ) \
+  TEUCHOS_UNIT_TEST( Directory, Contig )     \
+  TEUCHOS_UNIT_TEST( Directory, NonContig )  \
+  TEUCHOS_UNIT_TEST( Directory, BadSize )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  //TPETRA_INSTANTIATE(UNIT_TEST_GROUP)
+#endif
 
 } // namespace (anonymous)
 

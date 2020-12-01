@@ -79,7 +79,7 @@ TEUCHOS_UNIT_TEST(Map, Bug5378_GoodGIDs)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   RCP<const Tpetra::Map<LO,GO> > map = Tpetra::createContigMap<LO,GO>(10,10,comm);
 #else
-  RCP<const Tpetra::Map<> > map = Tpetra::createContigMap<>(10,10,comm);
+  RCP<const Tpetra::Map<> > map = Tpetra::createContigMap(10,10,comm);
 #endif
   Array<GO> lookup_gids(  tuple<GO>(1,3,5) );
   Array<int> expected_ids(  tuple<int>( 0,0,0) ); // MPI process ranks are int
@@ -119,7 +119,7 @@ TEUCHOS_UNIT_TEST(Map, Bug5378_BadGIDs)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   RCP<const Tpetra::Map<LO,GO> > map = Tpetra::createContigMap<LO,GO>(10,10,comm);
 #else
-  RCP<const Tpetra::Map<> > map = Tpetra::createContigMap<>(10,10,comm);
+  RCP<const Tpetra::Map<> > map = Tpetra::createContigMap(10,10,comm);
 #endif
   Array<GO> lookup_gids(  tuple<GO>(1,10,5) );
   Array<int> expected_ids(  tuple<int>( 0,-1,0) ); // MPI process ranks are int
@@ -159,7 +159,7 @@ TEUCHOS_UNIT_TEST(Map, Bug5378_GoodGIDsNoLIDs)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   RCP<const Tpetra::Map<LO,GO> > map = Tpetra::createContigMap<LO,GO>(10,10,comm);
 #else
-  RCP<const Tpetra::Map<> > map = Tpetra::createContigMap<>(10,10,comm);
+  RCP<const Tpetra::Map<> > map = Tpetra::createContigMap(10,10,comm);
 #endif
   Array<GO> lookup_gids(  tuple<GO>(1,3,5) );
   Array<int> expected_ids(  tuple<int>( 0,0,0) ); // MPI process ranks are int
@@ -196,7 +196,7 @@ TEUCHOS_UNIT_TEST(Map, Bug5378_BadGIDsNoLIDs)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   RCP<const Tpetra::Map<LO,GO> > map = Tpetra::createContigMap<LO,GO>(10,10,comm);
 #else
-  RCP<const Tpetra::Map<> > map = Tpetra::createContigMap<>(10,10,comm);
+  RCP<const Tpetra::Map<> > map = Tpetra::createContigMap(10,10,comm);
 #endif
   Array<GO> lookup_gids(  tuple<GO>(1,10,5) );
   Array<int> expected_ids(  tuple<int>( 0,-1,0) ); // MPI process ranks are int
@@ -211,20 +211,17 @@ TEUCHOS_UNIT_TEST(Map, Bug5378_BadGIDsNoLIDs)
   comm->barrier ();
 }
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP(LO, GO) \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Map, Bug5378_GoodGIDs, LO, GO) \
-#else
-#endif
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Map, Bug5378_BadGIDs, LO, GO) \
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Map, Bug5378_GoodGIDsNoLIDs, LO, GO) \
-#else
-#endif
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Map, Bug5378_BadGIDsNoLIDs, LO, GO)
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_LG(UNIT_TEST_GROUP)
+#else
+#endif
 
 } // namespace (anonymous)

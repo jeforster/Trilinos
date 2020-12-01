@@ -149,7 +149,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(CrsGraph, PackThenUnpackAndCombine, NT)
   typedef Tpetra::CrsGraph<LO, GO, NT> crs_graph_type;
 #else
   using LO = typename Tpetra::Map<>::local_ordinal_type;
-  using GO = typename Tpetra::Map<>::global_ordinal_type;
+  //using GO = typename Tpetra::Map<>::global_ordinal_type;
   typedef Tpetra::CrsGraph<NT> crs_graph_type;
 #endif
   typedef typename crs_graph_type::packet_type packet_type;
@@ -329,7 +329,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(CrsGraph, PackWithError, NT)
   typedef Tpetra::CrsGraph<LO, GO, NT> crs_graph_type;
 #else
   using LO = typename Tpetra::Map<>::local_ordinal_type;
-  using GO = typename Tpetra::Map<>::global_ordinal_type;
+  //using GO = typename Tpetra::Map<>::global_ordinal_type;
   typedef Tpetra::CrsGraph<NT> crs_graph_type;
 #endif
   typedef typename crs_graph_type::packet_type packet_type;
@@ -445,14 +445,18 @@ TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL(CrsGraph, PackWithError, NT)
 #define UNIT_TEST_GROUP( LO, GO, NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(CrsGraph, PackThenUnpackAndCombine, LO, GO, NT) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT(CrsGraph, PackWithError, LO, GO, NT)
-#else
-#define UNIT_TEST_GROUP(NT ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(CrsGraph, PackThenUnpackAndCombine, NT) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(CrsGraph, PackWithError, NT)
-#endif
 
 TPETRA_ETI_MANGLING_TYPEDEFS()
 
 TPETRA_INSTANTIATE_LGN(UNIT_TEST_GROUP)
+#else
+#define UNIT_TEST_GROUP( NT ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(CrsGraph, PackThenUnpackAndCombine, NT) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT(CrsGraph, PackWithError, NT)
+
+TPETRA_ETI_MANGLING_TYPEDEFS()
+
+TPETRA_INSTANTIATE_N(UNIT_TEST_GROUP)
+#endif
 
 } // namespace (anonymous)

@@ -297,10 +297,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL( Tpetra_MatrixMarket, MultiVector_Output_Perm,
 TEUCHOS_UNIT_TEST( Tpetra_MatrixMarket, MultiVector_Output_Perm )
 #endif
 {
-#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
-  using GO = typename Tpetra::Map<>::global_ordinal_type;
-#endif
   using Teuchos::Comm;
   using Teuchos::ParameterList;
   using Teuchos::RCP;
@@ -332,15 +328,15 @@ TEUCHOS_UNIT_TEST( Tpetra_MatrixMarket, MultiVector_Output_Perm )
 // INSTANTIATE THE TEMPLATED UNIT TESTS
 //////////////////////////////////////////////////////////////////////
 
-#define UNIT_TEST_GROUP( LO, GO ) \
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+#define UNIT_TEST_GROUP( LO, GO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( Tpetra_MatrixMarket, MultiVector_Output_Perm, LO, GO )
-#else
-#endif
 
 TPETRA_ETI_MANGLING_TYPEDEFS()
 
 TPETRA_INSTANTIATE_LG( UNIT_TEST_GROUP )
+#else
+#endif
 
 } // namespace (anonymous)
 

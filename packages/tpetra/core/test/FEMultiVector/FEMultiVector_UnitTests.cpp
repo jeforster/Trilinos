@@ -97,7 +97,6 @@ namespace {
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     const GST INVALID = Teuchos::OrdinalTraits<GST>::invalid ();
@@ -225,7 +224,6 @@ namespace {
 #endif
   {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     const GST INVALID = Teuchos::OrdinalTraits<GST>::invalid ();
@@ -278,13 +276,17 @@ namespace {
 #define UNIT_TEST_GROUP( SC, LO, GO, NO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( FEMultiVector, doImport, LO, GO, SC, NO ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT( FEMultiVector, AssemblyHelpers, LO, GO, SC, NO )
-#else
-#define UNIT_TEST_GROUP( SC, NO ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( FEMultiVector, doImport, SC, NO ) \
-  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( FEMultiVector, AssemblyHelpers, SC, NO )
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_TESTMV( UNIT_TEST_GROUP )
+#else
+#define UNIT_TEST_GROUP( SC, NO ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( FEMultiVector, doImport, SC, NO ) \
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT( FEMultiVector, AssemblyHelpers, SC, NO )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_SN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP )
+#endif
 }

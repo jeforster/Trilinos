@@ -88,6 +88,8 @@ trueEverywhere (const bool localTruthValue,
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 template<class LO, class GO, class NT>
 #else
+using LO = typename Tpetra::Map<>::local_ordinal_type;
+using GO = typename Tpetra::Map<>::global_ordinal_type;
 template<class NT>
 #endif
 void
@@ -825,10 +827,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_3_DECL( ImportExport, Issue2198, LO, GO, NT )
 TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( ImportExport, Issue2198, NT )
 #endif
 {
-#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
-  using GO = typename Tpetra::Map<>::global_ordinal_type;
-#endif
   int lclSuccess = 1;
   int gblSuccess = 1;
 
@@ -889,7 +887,7 @@ TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( ImportExport, Issue2198, NT )
 #define UNIT_TEST_GROUP( LO, GO, NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( ImportExport, Issue2198, LO, GO, NT )
 #else
-#define UNIT_TEST_GROUP(NT ) \
+#define UNIT_TEST_GROUP( NT ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( ImportExport, Issue2198, NT )
 #endif
 
@@ -899,6 +897,12 @@ using default_local_ordinal_type = Tpetra::Map<>::local_ordinal_type;
 using default_global_ordinal_type = Tpetra::Map<>::global_ordinal_type;
 using default_node_type = Tpetra::Map<>::node_type;
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 UNIT_TEST_GROUP( default_local_ordinal_type, default_global_ordinal_type, default_node_type )
 
-//TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+#else
+UNIT_TEST_GROUP( default_node_type )
+
+//TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
+#endif

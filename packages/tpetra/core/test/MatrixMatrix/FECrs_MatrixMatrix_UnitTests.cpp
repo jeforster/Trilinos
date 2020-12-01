@@ -57,7 +57,13 @@ using Teuchos::RCP;
 using Teuchos::Comm;
 using Tpetra::createNonContigMapWithNode;
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 template<int NumElemNodes, class LO, class GO, class NT>
+#else
+using LO = typename Tpetra::Map<>::local_ordinal_type;
+using GO = typename Tpetra::Map<>::global_ordinal_type;
+template<int NumElemNodes, class NT>
+#endif
 class MeshInfo {
 public:
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -89,6 +95,8 @@ private:
 template<class LO, class GO, class NT>
 void generate_fem2d_q1_graph(size_t numCells1D, RCP<const Comm<int> > comm , MeshInfo<4,LO,GO,NT> & mesh) {
 #else
+using LO = typename Tpetra::Map<>::local_ordinal_type;
+using GO = typename Tpetra::Map<>::global_ordinal_type;
 template<class NT>
 void generate_fem2d_q1_graph(size_t numCells1D, RCP<const Comm<int> > comm , MeshInfo<4,NT> & mesh) {
 #endif
@@ -444,13 +452,17 @@ TEUCHOS_UNIT_TEST_TEMPLATE_2_DECL (Tpetra_MatMat, FECrsMatrix, SC, NT)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 #define UNIT_TEST_GROUP_SC_LO_GO_NO( SC, LO, GO, NT )			\
   TEUCHOS_UNIT_TEST_TEMPLATE_4_INSTANT(Tpetra_MatMat, FECrsMatrix, SC, LO, GO, NT)
-#else
-#define UNIT_TEST_GROUP_SC_LO_GO_NO( SC, NT )			\
-  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Tpetra_MatMat, FECrsMatrix, SC, NT)
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_SLGN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP_SC_LO_GO_NO )
+#else
+#define UNIT_TEST_GROUP_SC_NO( SC, NT )			\
+  TEUCHOS_UNIT_TEST_TEMPLATE_2_INSTANT(Tpetra_MatMat, FECrsMatrix, SC, NT)
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_SN_NO_ORDINAL_SCALAR( UNIT_TEST_GROUP_SC_NO )
+#endif
 
 } // anonymous namespace

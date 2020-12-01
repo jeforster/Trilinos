@@ -16,7 +16,9 @@ int main(int argc, char *argv[]) {
   using Teuchos::Array;
   using Teuchos::rcp;
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   typedef Tpetra::Map<>::local_ordinal_type LO;
+#endif
   typedef Tpetra::Map<>::global_ordinal_type GO;
   typedef Tpetra::Details::DefaultTypes::node_type NO;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS

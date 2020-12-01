@@ -67,8 +67,16 @@ namespace {
     typedef typename CrsMatrixType::local_ordinal_type local_ordinal_type;
     typedef typename CrsMatrixType::global_ordinal_type global_ordinal_type;
     typedef typename CrsMatrixType::node_type node_type;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::Map<local_ordinal_type, global_ordinal_type, node_type> map_type;
+#else
+    typedef Tpetra::Map<node_type> map_type;
+#endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::CrsGraph<local_ordinal_type, global_ordinal_type, node_type> graph_type;
+#else
+    typedef Tpetra::CrsGraph<node_type> graph_type;
+#endif
 
     Tester (const Teuchos::EVerbosityLevel verbLevel = Teuchos::VERB_DEFAULT,
             const Teuchos::RCP<Teuchos::FancyOStream>& outStream = Teuchos::null) :

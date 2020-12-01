@@ -125,6 +125,8 @@ bool compare_final_graph_structure(Teuchos::FancyOStream &out,Tpetra::CrsGraph<N
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 template<class LO, class GO, class Node>
 #else
+using LO = typename Tpetra::Map<>::local_ordinal_type;
+using GO = typename Tpetra::Map<>::global_ordinal_type;
 template<class Node>
 #endif
 bool compare_final_graph_structure_relaxed(Teuchos::FancyOStream &out,
@@ -211,7 +213,11 @@ bool compare_final_graph_structure_relaxed(Teuchos::FancyOStream &out,
 }
 
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 template<int NumElemNodes, class LO, class GO, class Node>
+#else
+template<int NumElemNodes, class Node>
+#endif
 class GraphPack {
 public:
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -431,7 +437,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( FECrsGraph, Diagonal, Node )
     typedef Tpetra::FECrsGraph<LO,GO,Node> FEG;
     typedef Tpetra::CrsGraph<LO,GO,Node> CG;
 #else
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
     using GO = typename Tpetra::Map<>::global_ordinal_type;
     typedef Tpetra::FECrsGraph<Node> FEG;
     typedef Tpetra::CrsGraph<Node> CG;
@@ -527,7 +532,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( FECrsGraph, Assemble1D, Node )
   typedef Tpetra::FECrsGraph<LO,GO,Node> FEG;
   typedef Tpetra::CrsGraph<LO,GO,Node> CG;
 #else
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
   using GO = typename Tpetra::Map<>::global_ordinal_type;
   typedef Tpetra::FECrsGraph<Node> FEG;
   typedef Tpetra::CrsGraph<Node> CG;
@@ -644,8 +648,6 @@ TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( FECrsGraph, Assemble2D_OPSDomain, Node )
   typedef Tpetra::FECrsGraph<LO,GO,Node> FEG;
   typedef Tpetra::CrsGraph<LO,GO,Node> CG;
 #else
-  using LO = typename Tpetra::Map<>::local_ordinal_type;
-  using GO = typename Tpetra::Map<>::global_ordinal_type;
   typedef Tpetra::FECrsGraph<Node> FEG;
   typedef Tpetra::CrsGraph<Node> CG;
 #endif
@@ -733,6 +735,10 @@ TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( FECrsGraph, Assemble2D_OPSDomain, Node )
       TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( FECrsGraph, Assemble1D, LO, GO, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( FECrsGraph, Assemble1D_LocalIndex, LO, GO, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_3_INSTANT( FECrsGraph, Assemble2D_OPSDomain, LO, GO, NODE )
+
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
 #else
 #define UNIT_TEST_GROUP(NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( FECrsGraph, Diagonal, NODE ) \
@@ -740,11 +746,11 @@ TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( FECrsGraph, Assemble2D_OPSDomain, Node )
       TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( FECrsGraph, Assemble1D, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( FECrsGraph, Assemble1D_LocalIndex, NODE ) \
       TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( FECrsGraph, Assemble2D_OPSDomain, NODE )
-#endif
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
-  TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+  TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
+#endif
 
 } // end namespace (anonymous)
 
