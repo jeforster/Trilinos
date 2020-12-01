@@ -79,8 +79,12 @@ public:
   typedef typename TpetraOperatorType::node_type node_type;
   // The type of a Tpetra vector with the same template parameters as
   // those of TpetraOperatorType.
-  typedef Tpetra::Vector<scalar_type, local_ordinal_type,
-                         global_ordinal_type, node_type> vec_type;
+  typedef Tpetra::Vector<scalar_type, 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
+                         local_ordinal_type,
+                         global_ordinal_type, 
+#endif
+                         node_type> vec_type;
   // The type of the norm of the above Tpetra::Vector specialization.
   typedef typename vec_type::mag_type magnitude_type;
   // Run the power method and return the eigenvalue estimate.
