@@ -187,24 +187,35 @@ namespace Tpetra {
       typedef typename SparseMatrixType::node_type node_type;
 
       //! The CrsGraph specialization associated with SparseMatrixType.
-      typedef CrsGraph<local_ordinal_type,
+      typedef CrsGraph<
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
+                       local_ordinal_type,
                        global_ordinal_type,
+#endif
                        node_type> sparse_graph_type;
 
       //! The MultiVector specialization associated with SparseMatrixType.
       typedef MultiVector<scalar_type,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                           local_ordinal_type,
                           global_ordinal_type,
+#endif
                           node_type> multivector_type;
 
       //! The Vector specialization associated with SparseMatrixType.
       typedef Vector<scalar_type,
-                          local_ordinal_type,
-                          global_ordinal_type,
-                          node_type> vector_type;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
+                     local_ordinal_type,
+                     global_ordinal_type,
+#endif
+                     node_type> vector_type;
 
       typedef Teuchos::Comm<int> comm_type;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       typedef Map<local_ordinal_type, global_ordinal_type, node_type> map_type;
+#else
+      typedef Map<node_type> map_type;
+#endif
 
 
     private:
@@ -308,8 +319,10 @@ namespace Tpetra {
                      const global_ordinal_type numCols)
       {
         // Abbreviations so that the map creation call isn't too long.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
         typedef local_ordinal_type LO;
         typedef global_ordinal_type GO;
+#endif
         typedef node_type NT;
 
         if (numRows == numCols) {
@@ -1598,7 +1611,11 @@ namespace Tpetra {
           distGraph = rcp(new sparse_graph_type(distMap,colMap,0,StaticProfile,constructorParams));
 
           // Create an importer/exporter/vandelay to redistribute the graph
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
           typedef Import<local_ordinal_type, global_ordinal_type, node_type> import_type;
+#else
+          typedef Import<node_type> import_type;
+#endif
           import_type importer (proc0Map, distMap);
 
           // Import the data
@@ -1608,7 +1625,11 @@ namespace Tpetra {
           distGraph = rcp(new sparse_graph_type(rowMap,colMap,0,StaticProfile,constructorParams));
 
           // Create an importer/exporter/vandelay to redistribute the graph
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
           typedef Import<local_ordinal_type, global_ordinal_type, node_type> import_type;
+#else
+          typedef Import<node_type> import_type;
+#endif
           import_type importer (proc0Map, rowMap);
 
           // Import the data
@@ -3861,7 +3882,11 @@ namespace Tpetra {
         } else {
           A = rcp (new sparse_matrix_type (rowMap, colMap, maxNumEntriesPerRow));
         }
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
         typedef Export<local_ordinal_type, global_ordinal_type, node_type> export_type;
+#else
+        typedef Export<node_type> export_type;
+#endif
         export_type exp (gatherRowMap, rowMap);
         A->doExport (*A_proc0, exp, INSERT);
 
@@ -4181,8 +4206,10 @@ namespace Tpetra {
     private:
       template<class MultiVectorScalarType>
       static Teuchos::RCP<Tpetra::MultiVector<MultiVectorScalarType,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                                      local_ordinal_type,
                                      global_ordinal_type,
+#endif
                                      node_type> >
       readDenseImpl (std::istream& in,
                      const Teuchos::RCP<const comm_type>& comm,
@@ -4201,7 +4228,9 @@ namespace Tpetra {
         using Teuchos::Tuple;
         using std::endl;
         typedef MultiVectorScalarType ST;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
         typedef local_ordinal_type LO;
+#endif
         typedef global_ordinal_type GO;
         typedef node_type NT;
         typedef Teuchos::ScalarTraits<ST> STS;
@@ -4712,8 +4741,10 @@ namespace Tpetra {
 
       template<class VectorScalarType>
       static Teuchos::RCP<Tpetra::Vector<VectorScalarType,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                                      local_ordinal_type,
                                      global_ordinal_type,
+#endif
                                      node_type> >
       readVectorImpl (std::istream& in,
                       const Teuchos::RCP<const comm_type>& comm,
@@ -4731,7 +4762,9 @@ namespace Tpetra {
         using Teuchos::Tuple;
         using std::endl;
         typedef VectorScalarType ST;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
         typedef local_ordinal_type LO;
+#endif
         typedef global_ordinal_type GO;
         typedef node_type NT;
         typedef Teuchos::ScalarTraits<ST> STS;
@@ -5331,7 +5364,9 @@ namespace Tpetra {
         using std::endl;
         typedef Tpetra::global_size_t GST;
         typedef ptrdiff_t int_type; // Can hold int and GO
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
         typedef local_ordinal_type LO;
+#endif
         typedef global_ordinal_type GO;
         typedef node_type NT;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -5607,11 +5642,7 @@ namespace Tpetra {
             }
             // Only send if that process actually has nonzero GIDs.
             if (numSendGids > 0) {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
               dataReq = isend<int, GO> (sendGids, p, dataTag, *comm);
-#else
-              dataReq = isend<> (sendGids, p, dataTag, *comm);
-#endif
             }
             wait<int> (*comm, outArg (dataReq));
           }
@@ -5753,16 +5784,31 @@ namespace Tpetra {
 
       //! Specialization of Tpetra::MultiVector that matches SparseMatrixType.
       typedef MultiVector<scalar_type,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                           local_ordinal_type,
                           global_ordinal_type,
+#endif
                           node_type> multivector_type;
       //! Specialization of Tpetra::Map that matches SparseMatrixType.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       typedef Map<local_ordinal_type, global_ordinal_type, node_type> map_type;
+#else
+      typedef Map<node_type> map_type;
+#endif
       //! Specialization of Tpetra::CrsGraph that matches SparseMatrixType.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       typedef CrsGraph<local_ordinal_type, global_ordinal_type, node_type> crs_graph_type;
+#else
+      typedef CrsGraph<node_type> crs_graph_type;
+#endif
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       typedef Tpetra::Operator<scalar_type, local_ordinal_type, global_ordinal_type, node_type>            operator_type;
       typedef Tpetra::MultiVector<scalar_type, local_ordinal_type, global_ordinal_type, node_type>         mv_type;
+#else
+      typedef Tpetra::Operator<scalar_type, node_type>            operator_type;
+      typedef Tpetra::MultiVector<scalar_type, node_type>         mv_type;
+#endif
 
       /// \brief Print the sparse matrix in Matrix Market format, with
       ///   comments.

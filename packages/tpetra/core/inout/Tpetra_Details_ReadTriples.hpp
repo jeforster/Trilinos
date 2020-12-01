@@ -715,11 +715,7 @@ readAndSendOneBatchOfTriples (std::istream& inputStream,
              << " with tag " << sizeTag << endl;
           *errStrm << os.str ();
         }
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
         auto sizeReq = isend<int, int> (sizeBuf, destRank, sizeTag, comm);
-#else
-        auto sizeReq = isend<> (sizeBuf, destRank, sizeTag, comm);
-#endif
 
         msgBuf.resize (outBufSize);
         char* outBuf = msgBuf.getRawPtr ();

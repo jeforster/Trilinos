@@ -592,12 +592,20 @@ public:
   typedef NT node_type;
   typedef typename NT::device_type device_type;
   //! Type of the Map specialization to give to the constructor.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   typedef ::Tpetra::Map<local_ordinal_type, global_ordinal_type, node_type> map_type;
+#else
+  typedef ::Tpetra::Map<node_type> map_type;
+#endif
 
 private:
   //! Type of the base class of CooMatrix.
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   typedef ::Tpetra::DistObject<packet_type, local_ordinal_type,
                                global_ordinal_type, node_type> base_type;
+#else
+  typedef ::Tpetra::DistObject<packet_type, node_type> base_type;
+#endif
 
   //! Implementation (internal data structure).
   Impl::CooMatrixImpl<SC, GO> impl_;
