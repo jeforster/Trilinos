@@ -1552,11 +1552,7 @@ isend (const ArrayRCP<const unsigned long>& sendBuffer,
 // Specialization for Ordinal=int and Packet=int.
 template<>
 void
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 gather<int, int> (const int sendBuf[],
-#else
-gather<> (const int sendBuf[],
-#endif
                   const int sendCount,
                   int recvBuf[],
                   const int recvCount,
@@ -1568,11 +1564,7 @@ gather<> (const int sendBuf[],
 
 template<>
 void
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 gatherv<int, int> (const int sendBuf[],
-#else
-gatherv<> (const int sendBuf[],
-#endif
                    const int sendCount,
                    int recvBuf[],
                    const int recvCounts[],
@@ -1585,11 +1577,7 @@ gatherv<> (const int sendBuf[],
 
 template<>
 void
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 scatter<int, int> (const int sendBuf[],
-#else
-scatter<> (const int sendBuf[],
-#endif
                    const int sendCount,
                    int recvBuf[],
                    const int recvCount,
@@ -1601,11 +1589,7 @@ scatter<> (const int sendBuf[],
 
 template<>
 void
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 reduce<int, int> (const int sendBuf[],
-#else
-reduce<> (const int sendBuf[],
-#endif
                   int recvBuf[],
                   const int count,
                   const EReductionType reductType,
@@ -1613,21 +1597,13 @@ reduce<> (const int sendBuf[],
                   const Comm<int>& comm)
 {
   TEUCHOS_COMM_TIME_MONITOR
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     ("Teuchos::reduce<int, int> (" << count << ", " << toString (reductType)
-#else
-    ("Teuchos::reduce<> (" << count << ", " << toString (reductType)
-#endif
      << ")");
   reduceImpl<int> (sendBuf, recvBuf, count, reductType, root, comm);
 }
 template<>
 void
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 reduce<int, long> (const long sendBuf[],
-#else
-reduce<> (const long sendBuf[],
-#endif
                    long recvBuf[],
                    const int count,
                    const EReductionType reductType,
@@ -1635,11 +1611,7 @@ reduce<> (const long sendBuf[],
                    const Comm<int>& comm)
 {
   TEUCHOS_COMM_TIME_MONITOR
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     ("Teuchos::reduce<int, int> (" << count << ", " << toString (reductType)
-#else
-    ("Teuchos::reduce<> (" << count << ", " << toString (reductType)
-#endif
      << ")");
   reduceImpl<long> (sendBuf, recvBuf, count, reductType, root, comm);
 }
@@ -1654,11 +1626,7 @@ reduce<int, unsigned long> (const unsigned long sendBuf[],
                             const Comm<int>& comm)
 {
   TEUCHOS_COMM_TIME_MONITOR
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     ("Teuchos::reduce<int, int> (" << count << ", " << toString (reductType)
-#else
-    ("Teuchos::reduce<> (" << count << ", " << toString (reductType)
-#endif
      << ")");
   reduceImpl<unsigned long> (sendBuf, recvBuf, count, reductType, root, comm);
 }
@@ -1673,11 +1641,7 @@ reduce<int, unsigned long long > (const unsigned long long sendBuf[],
                                   const Comm<int>& comm)
 {
   TEUCHOS_COMM_TIME_MONITOR
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     ("Teuchos::reduce<int, int> (" << count << ", " << toString (reductType)
-#else
-    ("Teuchos::reduce<> (" << count << ", " << toString (reductType)
-#endif
      << ")");
   reduceImpl<unsigned long long> (sendBuf, recvBuf, count, reductType, root, comm);
 }
@@ -1692,11 +1656,7 @@ reduce<int, double> (const double sendBuf[],
                      const Comm<int>& comm)
 {
   TEUCHOS_COMM_TIME_MONITOR
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     ("Teuchos::reduce<int, int> (" << count << ", " << toString (reductType)
-#else
-    ("Teuchos::reduce<> (" << count << ", " << toString (reductType)
-#endif
      << ")");
   reduceImpl<double> (sendBuf, recvBuf, count, reductType, root, comm);
 }
@@ -1717,48 +1677,28 @@ reduceAll<int, int> (const Comm<int>& comm,
 
 template<>
 RCP<Teuchos::CommRequest<int> >
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 ireceive<int, int> (const Comm<int>& comm,
-#else
-ireceive<> (const Comm<int>& comm,
-#endif
                     const ArrayRCP<int>& recvBuffer,
                     const int sourceRank)
 {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_COMM_TIME_MONITOR("ireceive<int, int>");
-#else
-  TEUCHOS_COMM_TIME_MONITOR("ireceive<>");
-#endif
   return ireceiveImpl<int> (comm, recvBuffer, sourceRank);
 }
 
 template<>
 RCP<Teuchos::CommRequest<int> >
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 ireceive<int, int> (const ArrayRCP<int>& recvBuffer,
-#else
-ireceive<> (const ArrayRCP<int>& recvBuffer,
-#endif
                     const int sourceRank,
                     const int tag,
                     const Comm<int>& comm)
 {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_COMM_TIME_MONITOR("ireceive<int, int>");
-#else
-  TEUCHOS_COMM_TIME_MONITOR("ireceive<>");
-#endif
   return ireceiveImpl<int> (recvBuffer, sourceRank, tag, comm);
 }
 
 template<>
 void
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 send<int, int> (const Comm<int>& comm,
-#else
-send<> (const Comm<int>& comm,
-#endif
                 const int count,
                 const int sendBuffer[],
                 const int destRank)
@@ -1768,11 +1708,7 @@ send<> (const Comm<int>& comm,
 
 template<>
 void
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 send<int, int> (const int sendBuffer[],
-#else
-send<> (const int sendBuffer[],
-#endif
                 const int count,
                 const int destRank,
                 const int tag,
@@ -1794,11 +1730,7 @@ isend (const ArrayRCP<const int>& sendBuffer,
 // Specialization for Ordinal=int and Packet=unsigned int.
 template<>
 void
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 gather<int, unsigned int> (const unsigned int sendBuf[],
-#else
-gather<> (const unsigned int sendBuf[],
-#endif
                             const int sendCount,
                             unsigned int recvBuf[],
                             const int recvCount,
@@ -1810,11 +1742,7 @@ gather<> (const unsigned int sendBuf[],
 
 template<>
 void
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 gatherv<int, unsigned int> (const unsigned int sendBuf[],
-#else
-gatherv<> (const unsigned int sendBuf[],
-#endif
                              const int sendCount,
                              unsigned int recvBuf[],
                              const int recvCounts[],
@@ -1842,48 +1770,28 @@ reduceAll<int, unsigned int> (const Comm<int>& comm,
 
 template<>
 RCP<Teuchos::CommRequest<int> >
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 ireceive<int, unsigned int> (const Comm<int>& comm,
-#else
-ireceive<> (const Comm<int>& comm,
-#endif
                              const ArrayRCP<unsigned int>& recvBuffer,
                              const int sourceRank)
 {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_COMM_TIME_MONITOR("ireceive<int, unsigned int>");
-#else
-  TEUCHOS_COMM_TIME_MONITOR("ireceive<>");
-#endif
   return ireceiveImpl<unsigned int> (comm, recvBuffer, sourceRank);
 }
 
 template<>
 RCP<Teuchos::CommRequest<int> >
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 ireceive<int, unsigned int> (const ArrayRCP<unsigned int>& recvBuffer,
-#else
-ireceive<> (const ArrayRCP<unsigned int>& recvBuffer,
-#endif
                              const int sourceRank,
                              const int tag,
                              const Comm<int>& comm)
 {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   TEUCHOS_COMM_TIME_MONITOR("ireceive<int, unsigned int>");
-#else
-  TEUCHOS_COMM_TIME_MONITOR("ireceive<>");
-#endif
   return ireceiveImpl<unsigned int> (recvBuffer, sourceRank, tag, comm);
 }
 
 template<>
 void
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 send<int, unsigned int> (const Comm<int>& comm,
-#else
-send<> (const Comm<int>& comm,
-#endif
                          const int count,
                          const unsigned int sendBuffer[],
                          const int destRank)
@@ -1893,11 +1801,7 @@ send<> (const Comm<int>& comm,
 
 template<>
 void
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 send<int, unsigned int> (const unsigned int sendBuffer[],
-#else
-send<> (const unsigned int sendBuffer[],
-#endif
                          const int count,
                          const int destRank,
                          const int tag,

@@ -1787,26 +1787,15 @@ public:
 
 //! Convert from <tt>unsigned int<tt> to \c int.
 template<>
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 class ValueTypeConversionTraits<int, unsigned int> {
-#else
-class ValueTypeConversionTraits<> {
-#endif
+
 public:
   static int convert (const unsigned int t) {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     return UnsignedToSignedValueTypeConversionTraits<int, unsigned int>::convert (t);
-#else
-    return UnsignedToSignedValueTypeConversionTraits<>::convert (t);
-#endif
   }
 
   static int safeConvert (const unsigned int t) {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     return UnsignedToSignedValueTypeConversionTraits<int, unsigned int>::safeConvert (t);
-#else
-    return UnsignedToSignedValueTypeConversionTraits<>::safeConvert (t);
-#endif
   }
 };
 
@@ -1957,11 +1946,7 @@ public:
 
 //! Convert from \c long to \c int.
 template<>
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 class ValueTypeConversionTraits<int, long> {
-#else
-class ValueTypeConversionTraits<> {
-#endif
 public:
   /// \brief Convert the given \c long to an \c int.
   ///
@@ -1970,7 +1955,7 @@ public:
   ///   sure that the given \c long value fits in an \c int.
   static int convert (const long t) {
     // Implicit conversion from long to int may cause compiler
-    // warnings, but static_cast does not.
+    // warnings, but static_cast does not.0
     return static_cast<int> (t);
   }
 
@@ -1985,11 +1970,7 @@ public:
       t < static_cast<long> (minInt) ||
       t > static_cast<long> (maxInt),
       std::range_error,
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       "Teuchos::ValueTypeConversionTraits<int, long>::safeConvert: "
-#else
-      "Teuchos::ValueTypeConversionTraits<>::safeConvert: "
-#endif
       "Input long t = " << t << " is out of the valid range [" << minInt
       << ", " << maxInt << "] for conversion to int.");
 
@@ -2230,11 +2211,7 @@ public:
 
 //! Convert from <tt>long long</tt> to \c int.
 template<>
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 class ValueTypeConversionTraits<int, long long> {
-#else
-class ValueTypeConversionTraits<> {
-#endif
 public:
   /// \brief Convert the given <tt>long long</tt> to an \c int.
   ///
@@ -2256,11 +2233,7 @@ public:
       t < static_cast<long long> (minInt) ||
       t > static_cast<long long> (maxInt),
       std::range_error,
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       "Teuchos::ValueTypeConversionTraits<int, long long>::safeConvert: "
-#else
-      "Teuchos::ValueTypeConversionTraits<>::safeConvert: "
-#endif
       "Input long long t = " << t << " is out of the valid range [" << minInt
       << ", " << maxInt << "] for conversion to int.");
 
