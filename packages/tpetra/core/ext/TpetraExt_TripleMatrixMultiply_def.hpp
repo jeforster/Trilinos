@@ -121,8 +121,10 @@ namespace Tpetra {
       using Teuchos::null;
       using Teuchos::RCP;
       typedef Scalar                            SC;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
       typedef LocalOrdinal                      LO;
       typedef GlobalOrdinal                     GO;
+#endif
       typedef Node                              NO;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       typedef CrsMatrix<SC,LO,GO,NO>            crs_matrix_type;
@@ -1004,8 +1006,10 @@ namespace Tpetra {
     // RAP NewMatrix Kernel wrappers (Default non-threaded version)
     // Computes R * A * P -> Ac using classic Gustavson approach
     template<class Scalar,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
              class LocalOrdinal,
              class GlobalOrdinal,
+#endif
              class Node,
              class LocalOrdinalViewType>
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -1056,7 +1060,9 @@ namespace Tpetra {
 
       typedef Scalar            SC;
       typedef LocalOrdinal      LO;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
       typedef GlobalOrdinal     GO;
+#endif
       typedef Node              NO;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       typedef Map<LO,GO,NO>     map_type;
@@ -1266,8 +1272,10 @@ namespace Tpetra {
     // RAP Reuse Kernel wrappers (Default non-threaded version)
     // Computes R * A * P -> Ac using reuse Gustavson
     template<class Scalar,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
              class LocalOrdinal,
              class GlobalOrdinal,
+#endif
              class Node,
              class LocalOrdinalViewType>
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -1317,7 +1325,9 @@ namespace Tpetra {
 
       typedef Scalar            SC;
       typedef LocalOrdinal      LO;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
       typedef GlobalOrdinal     GO;
+#endif
       typedef Node              NO;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       typedef Map<LO,GO,NO>     map_type;
@@ -1466,8 +1476,10 @@ namespace Tpetra {
     // PT_A_P NewMatrix Kernel wrappers (Default, general, non-threaded version)
     // Computes P.T * A * P -> Ac
     template<class Scalar,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
              class LocalOrdinal,
              class GlobalOrdinal,
+#endif
              class Node,
              class LocalOrdinalViewType>
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -1534,8 +1546,10 @@ namespace Tpetra {
     // PT_A_P Reuse Kernel wrappers (Default, general, non-threaded version)
     // Computes P.T * A * P -> Ac
     template<class Scalar,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
              class LocalOrdinal,
              class GlobalOrdinal,
+#endif
              class Node,
              class LocalOrdinalViewType>
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -1643,7 +1657,9 @@ namespace Tpetra {
 
       typedef Scalar            SC;
       typedef LocalOrdinal      LO;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
       typedef GlobalOrdinal     GO;
+#endif
       typedef Node              NO;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       typedef RowMatrixTransposer<SC,LO,GO,NO>  transposer_type;

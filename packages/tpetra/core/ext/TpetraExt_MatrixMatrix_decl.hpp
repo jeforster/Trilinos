@@ -553,8 +553,10 @@ void setMaxNumEntriesPerRow(
   // MMM Kernel wrappers struct
   // Because C++ doesn't support partial template specialization of functions.
   template<class Scalar,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 	   class LocalOrdinal,
 	   class GlobalOrdinal,
+#endif
 	   class Node,
            class LocalOrdinalViewType>
   struct KernelWrappers {
@@ -605,8 +607,10 @@ void setMaxNumEntriesPerRow(
   // Because C++ doesn't support partial template specialization of functions.
 
   template<class Scalar,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 	   class LocalOrdinal,
 	   class GlobalOrdinal,
+#endif
 	   class Node,
            class LocalOrdinalViewType>
   struct KernelWrappers2 {
@@ -663,8 +667,10 @@ void setMaxNumEntriesPerRow(
   // Triple-Product Kernel wrappers struct
   // Because C++ doesn't support partial template specialization of functions.
   template<class Scalar,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 	   class LocalOrdinal,
 	   class GlobalOrdinal,
+#endif
 	   class Node,
            class LocalOrdinalViewType>
   struct KernelWrappers3 {
@@ -759,12 +765,13 @@ void setMaxNumEntriesPerRow(
   };
 
   // This only merges matrices that look like B & Bimport, aka, they have no overlapping rows
-  template<class Scalar,class LocalOrdinal,class GlobalOrdinal,class Node, class LocalOrdinalViewType>
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  template<class Scalar,class LocalOrdinal,class GlobalOrdinal,class Node, class LocalOrdinalViewType>
   inline const typename Tpetra::CrsMatrix<Scalar,LocalOrdinal,GlobalOrdinal,Node>::local_matrix_type 
   merge_matrices(CrsMatrixStruct<Scalar, LocalOrdinal, GlobalOrdinal, Node>& Aview,
                  CrsMatrixStruct<Scalar, LocalOrdinal, GlobalOrdinal, Node>& Bview,
 #else
+  template<class Scalar,class Node, class LocalOrdinalViewType>
   inline const typename Tpetra::CrsMatrix<Scalar,Node>::local_matrix_type 
   merge_matrices(CrsMatrixStruct<Scalar, Node>& Aview,
                  CrsMatrixStruct<Scalar, Node>& Bview,

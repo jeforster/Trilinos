@@ -125,10 +125,10 @@ void Multiply(
   using Teuchos::RCP;
   using Teuchos::rcp;
   typedef Scalar                            SC;
-  typedef LocalOrdinal                      LO;
-  typedef GlobalOrdinal                     GO;
   typedef Node                              NO;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  typedef LocalOrdinal                      LO;
+  typedef GlobalOrdinal                     GO;
   typedef CrsMatrix<SC,LO,GO,NO>            crs_matrix_type;
   typedef Import<LO,GO,NO>                  import_type;
   typedef CrsMatrixStruct<SC,LO,GO,NO>      crs_matrix_struct_type;
@@ -336,10 +336,10 @@ void Jacobi(Scalar omega,
 {
   using Teuchos::RCP;
   typedef Scalar                            SC;
-  typedef LocalOrdinal                      LO;
-  typedef GlobalOrdinal                     GO;
   typedef Node                              NO;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  typedef LocalOrdinal                      LO;
+  typedef GlobalOrdinal                     GO;
   typedef Import<LO,GO,NO>                  import_type;
   typedef CrsMatrixStruct<SC,LO,GO,NO>      crs_matrix_struct_type;
   typedef Map<LO,GO,NO>                     map_type;
@@ -724,9 +724,9 @@ add (const Scalar& alpha,
   using Teuchos::TimeMonitor;
   using SC = Scalar;
   using LO = LocalOrdinal;
-  using GO = GlobalOrdinal;
   using NO = Node;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using GO = GlobalOrdinal;
   using crs_matrix_type = CrsMatrix<SC,LO,GO,NO>;
   using crs_graph_type  = CrsGraph<LO,GO,NO>;
   using map_type        = Map<LO,GO,NO>;
@@ -1275,10 +1275,10 @@ void mult_AT_B_newmatrix(
   using Teuchos::RCP;
   using Teuchos::rcp;
   typedef Scalar                            SC;
-  typedef LocalOrdinal                      LO;
-  typedef GlobalOrdinal                     GO;
   typedef Node                              NO;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  typedef LocalOrdinal                      LO;
+  typedef GlobalOrdinal                     GO;
   typedef CrsMatrixStruct<SC,LO,GO,NO>      crs_matrix_struct_type;
   typedef RowMatrixTransposer<SC,LO,GO,NO>  transposer_type;
 #else
@@ -1912,8 +1912,10 @@ void mult_A_B_newmatrix(
 /*********************************************************************************************************/
 // AB NewMatrix Kernel wrappers (Default non-threaded version)
 template<class Scalar,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
          class LocalOrdinal,
          class GlobalOrdinal,
+#endif
          class Node,
          class LocalOrdinalViewType>
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -1962,9 +1964,9 @@ void KernelWrappers<Scalar,Node,LocalOrdinalViewType>::mult_A_B_newmatrix_kernel
 
   typedef Scalar            SC;
   typedef LocalOrdinal      LO;
-  typedef GlobalOrdinal     GO;
   typedef Node              NO;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  typedef GlobalOrdinal     GO;
   typedef Map<LO,GO,NO>     map_type;
 #else
   typedef Map<NO>     map_type;
@@ -2272,8 +2274,10 @@ void mult_A_B_reuse(
 
 /*********************************************************************************************************/
 template<class Scalar,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
          class LocalOrdinal,
          class GlobalOrdinal,
+#endif
          class Node,
          class LocalOrdinalViewType>
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -2321,9 +2325,9 @@ void KernelWrappers<Scalar,Node,LocalOrdinalViewType>::mult_A_B_reuse_kernel_wra
 
   typedef Scalar            SC;
   typedef LocalOrdinal      LO;
-  typedef GlobalOrdinal     GO;
   typedef Node              NO;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  typedef GlobalOrdinal     GO;
   typedef Map<LO,GO,NO>     map_type;
 #else
   typedef Map<NO>     map_type;
@@ -2621,8 +2625,10 @@ void jacobi_A_B_newmatrix(
 // Kernel method for computing the local portion of C = (I-omega D^{-1} A)*B
 
 template<class Scalar,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
          class LocalOrdinal,
          class GlobalOrdinal,
+#endif
          class Node,
          class LocalOrdinalViewType>
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -2679,7 +2685,9 @@ void KernelWrappers2<Scalar,Node,LocalOrdinalViewType>::jacobi_A_B_newmatrix_ker
 
   typedef Scalar            SC;
   typedef LocalOrdinal      LO;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   typedef GlobalOrdinal     GO;
+#endif
   typedef Node              NO;
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -3008,8 +3016,10 @@ void jacobi_A_B_reuse(
 
 /*********************************************************************************************************/
 template<class Scalar,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
          class LocalOrdinal,
          class GlobalOrdinal,
+#endif
          class Node,
          class LocalOrdinalViewType>
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -3061,7 +3071,9 @@ void KernelWrappers2<Scalar,Node,LocalOrdinalViewType>::jacobi_A_B_reuse_kernel_
 
   typedef Scalar            SC;
   typedef LocalOrdinal      LO;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   typedef GlobalOrdinal     GO;
+#endif
   typedef Node              NO;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   typedef Map<LO,GO,NO>     map_type;
@@ -3423,12 +3435,13 @@ void import_and_extract_views(
 
 /*********************************************************************************************************/
  // This only merges matrices that look like B & Bimport, aka, they have no overlapping rows
-template<class Scalar,class LocalOrdinal,class GlobalOrdinal,class Node, class LocalOrdinalViewType>
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+template<class Scalar,class LocalOrdinal,class GlobalOrdinal,class Node, class LocalOrdinalViewType>
 const typename Tpetra::CrsMatrix<Scalar,LocalOrdinal,GlobalOrdinal,Node>::local_matrix_type
 merge_matrices(CrsMatrixStruct<Scalar, LocalOrdinal, GlobalOrdinal, Node>& Aview,
                     CrsMatrixStruct<Scalar, LocalOrdinal, GlobalOrdinal, Node>& Bview,
 #else
+template<class Scalar,class Node, class LocalOrdinalViewType>
 const typename Tpetra::CrsMatrix<Scalar,Node>::local_matrix_type
 merge_matrices(CrsMatrixStruct<Scalar, Node>& Aview,
                     CrsMatrixStruct<Scalar, Node>& Bview,
