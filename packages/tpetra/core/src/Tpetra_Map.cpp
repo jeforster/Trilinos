@@ -50,6 +50,44 @@
 
 namespace Tpetra {
 
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+
+  Teuchos::RCP< const Tpetra::Map<> >
+  createLocalMap (const size_t numElements,
+                          const Teuchos::RCP<const Teuchos::Comm<int> >& comm)
+  {
+    using NT = typename ::Tpetra::Map<>::node_type;
+    return createLocalMapWithNode<NT> (numElements, comm);
+  }
+
+  Teuchos::RCP< const Tpetra::Map<> >
+  createUniformContigMap (const global_size_t numElements,
+                                  const Teuchos::RCP<const Teuchos::Comm<int> >& comm)
+  {
+    using NT = typename ::Tpetra::Map<>::node_type;
+    return createUniformContigMapWithNode<NT> (numElements, comm);
+  }
+
+  Teuchos::RCP< const Tpetra::Map<> >
+  createContigMap (const Tpetra::global_size_t numElements,
+                          const size_t localNumElements,
+                          const Teuchos::RCP<const Teuchos::Comm<int> >& comm)
+  {
+    using NT = typename Tpetra::Map<>::node_type;
+    return Tpetra::createContigMapWithNode<NT> (numElements, localNumElements, comm);
+  }
+
+
+  Teuchos::RCP< const Tpetra::Map<> >
+  createNonContigMap(const Teuchos::ArrayView<const GlobalOrdinal>& elementList,
+                            const Teuchos::RCP<const Teuchos::Comm<int> >& comm)
+  {
+    using NT = typename Tpetra::Map<>::node_type;
+    return Tpetra::createNonContigMapWithNode<NT> (elementList, comm);
+  }
+
+#endif
+
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   // for all nodes, lo, go

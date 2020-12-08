@@ -2637,45 +2637,30 @@ namespace Tpetra {
 } // namespace Tpetra
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+
 template <class LocalOrdinal, class GlobalOrdinal>
 Teuchos::RCP< const Tpetra::Map<LocalOrdinal, GlobalOrdinal> >
-#else
-
-Teuchos::RCP< const Tpetra::Map<> >
-#endif
 Tpetra::createLocalMap (const size_t numElements,
                         const Teuchos::RCP<const Teuchos::Comm<int> >& comm)
 {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   typedef LocalOrdinal LO;
   typedef GlobalOrdinal GO;
   using NT = typename ::Tpetra::Map<LO, GO>::node_type;
   return createLocalMapWithNode<LO, GO, NT> (numElements, comm);
-#else
-  using NT = typename ::Tpetra::Map<>::node_type;
-  return createLocalMapWithNode<NT> (numElements, comm);
-#endif
 }
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+
 template <class LocalOrdinal, class GlobalOrdinal>
 Teuchos::RCP< const Tpetra::Map<LocalOrdinal, GlobalOrdinal> >
-#else
-
-Teuchos::RCP< const Tpetra::Map<> >
-#endif
 Tpetra::createUniformContigMap (const global_size_t numElements,
                                 const Teuchos::RCP<const Teuchos::Comm<int> >& comm)
 {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   typedef LocalOrdinal LO;
   typedef GlobalOrdinal GO;
   using NT = typename ::Tpetra::Map<LO, GO>::node_type;
   return createUniformContigMapWithNode<LO, GO, NT> (numElements, comm);
-#else
-  using NT = typename ::Tpetra::Map<>::node_type;
-  return createUniformContigMapWithNode<NT> (numElements, comm);
-#endif
 }
+
+#endif
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 template <class LocalOrdinal, class GlobalOrdinal, class Node>
@@ -2745,57 +2730,33 @@ Tpetra::createContigMapWithNode (const Tpetra::global_size_t numElements,
 
   return rcp (new map_type (numElements, localNumElements, indexBase, comm));
 }
+
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 
 template <class LocalOrdinal, class GlobalOrdinal>
 Teuchos::RCP< const Tpetra::Map<LocalOrdinal, GlobalOrdinal> >
-#else
-
-Teuchos::RCP< const Tpetra::Map<> >
-#endif
 Tpetra::createContigMap (const Tpetra::global_size_t numElements,
                          const size_t localNumElements,
                          const Teuchos::RCP<const Teuchos::Comm<int> >& comm)
 {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   typedef LocalOrdinal LO;
   typedef GlobalOrdinal GO;
   using NT = typename Tpetra::Map<LO, GO>::node_type;
-#else
-  using NT = typename Tpetra::Map<>::node_type;
-#endif
-
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   return Tpetra::createContigMapWithNode<LO, GO, NT> (numElements, localNumElements, comm);
-#else
-  return Tpetra::createContigMapWithNode<NT> (numElements, localNumElements, comm);
-#endif
 }
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 
 template <class LocalOrdinal, class GlobalOrdinal>
 Teuchos::RCP< const Tpetra::Map<LocalOrdinal, GlobalOrdinal> >
-#else
-
-Teuchos::RCP< const Tpetra::Map<> >
-#endif
 Tpetra::createNonContigMap(const Teuchos::ArrayView<const GlobalOrdinal>& elementList,
                            const Teuchos::RCP<const Teuchos::Comm<int> >& comm)
 {
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   typedef LocalOrdinal LO;
   typedef GlobalOrdinal GO;
   using NT = typename Tpetra::Map<LO, GO>::node_type;
-#else
-  using NT = typename Tpetra::Map<>::node_type;
-#endif
-
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   return Tpetra::createNonContigMapWithNode<LO, GO, NT> (elementList, comm);
-#else
-  return Tpetra::createNonContigMapWithNode<NT> (elementList, comm);
-#endif
 }
+
+#endif
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 template <class LocalOrdinal, class GlobalOrdinal, class Node>
