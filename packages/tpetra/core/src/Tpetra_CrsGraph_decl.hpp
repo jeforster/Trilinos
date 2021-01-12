@@ -248,6 +248,8 @@ namespace Tpetra {
 #else
     using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
     using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
+    using LO = typename Tpetra::Map<>::local_ordinal_type;
+    using GO = typename Tpetra::Map<>::global_ordinal_type;
     template <class S, class N>
 #endif
     friend class CrsMatrix;

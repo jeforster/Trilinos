@@ -91,6 +91,8 @@ namespace Tpetra {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
       using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
       using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
+      using LO = typename Tpetra::Map<>::local_ordinal_type;
+      using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
       typedef LocalOrdinal local_ordinal_type;
       typedef GlobalOrdinal global_ordinal_type;
@@ -188,6 +190,8 @@ namespace Tpetra {
 #else
       using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
       using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
+      using LO = typename Tpetra::Map<>::local_ordinal_type;
+      using GO = typename Tpetra::Map<>::global_ordinal_type;
       typedef Directory<NodeType> base_type;
 #endif
       typedef typename base_type::map_type map_type;
@@ -246,6 +250,8 @@ namespace Tpetra {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
       using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
       using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
+      using LO = typename Tpetra::Map<>::local_ordinal_type;
+      using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
       // This friend declaration lets us implement clone().
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -307,6 +313,8 @@ namespace Tpetra {
 #else
       using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
       using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
+      using LO = typename Tpetra::Map<>::local_ordinal_type;
+      using GO = typename Tpetra::Map<>::global_ordinal_type;
       template <class N> friend class DistributedContiguousDirectory;
 #endif
 
@@ -390,6 +398,8 @@ namespace Tpetra {
 #else
       using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
       using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
+      using LO = typename Tpetra::Map<>::local_ordinal_type;
+      using GO = typename Tpetra::Map<>::global_ordinal_type;
       template <class N>
 #endif
       friend class DistributedNoncontiguousDirectory;

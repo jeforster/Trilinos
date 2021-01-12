@@ -102,6 +102,7 @@ public:
                          ::Kokkos::MemoryUnmanaged> row_offsets_type;
   // This is unmanaged for performance, because we need to take
   // subviews inside the functor.
+  //using LO = typename Tpetra::Map<>::local_ordinal_type;
   typedef ::Kokkos::View<const LO*,
                          ::Kokkos::LayoutLeft,
                          device_type,

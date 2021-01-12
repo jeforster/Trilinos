@@ -132,6 +132,8 @@ namespace Tpetra {
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
     using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
     using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
+    using LO = typename Tpetra::Map<>::local_ordinal_type;
+    using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     //! Type of the Map specialization to give to the constructor.
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
