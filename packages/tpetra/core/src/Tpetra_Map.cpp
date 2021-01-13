@@ -50,7 +50,22 @@
 
 namespace Tpetra {
 
+  TPETRA_ETI_MANGLING_TYPEDEFS()
+
+  // for all nodes, lo, go
+  TPETRA_INSTANTIATE_LGN(TPETRA_MAP_INSTANT)
+
+  // for default node, all lo,go
+  TPETRA_INSTANTIATE_LG(TPETRA_MAP_INSTANT_DEFAULTNODE)
+
+} // namespace Tpetra
+
+#endif // HAVE_TPETRA_EXPLICIT_INSTANTIATION
+
+
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+
+namespace Tpetra {
 
   Teuchos::RCP< const Tpetra::Map<> >
   createLocalMap (const size_t numElements,
@@ -85,17 +100,5 @@ namespace Tpetra {
     using NT = typename Tpetra::Map<>::node_type;
     return Tpetra::createNonContigMapWithNode<NT> (elementList, comm);
   }
-
+}
 #endif
-
-  TPETRA_ETI_MANGLING_TYPEDEFS()
-
-  // for all nodes, lo, go
-  TPETRA_INSTANTIATE_LGN(TPETRA_MAP_INSTANT)
-
-  // for default node, all lo,go
-  TPETRA_INSTANTIATE_LG(TPETRA_MAP_INSTANT_DEFAULTNODE)
-
-} // namespace Tpetra
-
-#endif // HAVE_TPETRA_EXPLICIT_INSTANTIATION
