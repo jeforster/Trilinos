@@ -893,14 +893,16 @@ TEUCHOS_UNIT_TEST_TEMPLATE_1_DECL( ImportExport, Issue2198, NT )
 
 TPETRA_ETI_MANGLING_TYPEDEFS()
 
-using default_local_ordinal_type = Tpetra::Map<>::local_ordinal_type;
-using default_global_ordinal_type = Tpetra::Map<>::global_ordinal_type;
 using default_node_type = Tpetra::Map<>::node_type;
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
+
+using default_local_ordinal_type = Tpetra::Map<>::local_ordinal_type;
+using default_global_ordinal_type = Tpetra::Map<>::global_ordinal_type;
+
 UNIT_TEST_GROUP( default_local_ordinal_type, default_global_ordinal_type, default_node_type )
 
-TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+//TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
 #else
 UNIT_TEST_GROUP( default_node_type )
 
