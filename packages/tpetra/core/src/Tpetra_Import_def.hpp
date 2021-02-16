@@ -601,15 +601,27 @@ namespace Tpetra {
     ImportLocalSetupResult<NT>
     setupSamePermuteRemoteFromUserGlobalIndexList (const ::Tpetra::Map<NT>& sourceMap,
 #endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                                                    const GO targetMapRemoteOrPermuteGlobalIndices[],
+#else
+                                                   const Tpetra::Map<>::global_ordinal_type targetMapRemoteOrPermuteGlobalIndices[],
+#endif
                                                    const int targetMapRemoteOrPermuteProcessRanks[],
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                                                    const LO numTargetMapRemoteOrPermuteGlobalIndices,
+#else
+                                                   const Tpetra::Map<>::local_ordinal_type numTargetMapRemoteOrPermuteGlobalIndices,
+#endif
                                                    const bool mayReorderTargetMapIndicesLocally,
                                                    Teuchos::FancyOStream* out, // only valid if verbose
                                                    const std::string* verboseHeader, // only valid if verbose
                                                    const bool verbose,
                                                    const bool debug)
     {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+      using LO = typename Tpetra::Map<>::local_ordinal_type;
+      using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
       using std::endl;
       const int myRank = sourceMap.getComm ()->getRank ();
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -901,6 +913,9 @@ namespace Tpetra {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     typedef LocalOrdinal LO;
     typedef GlobalOrdinal GO;
+#else
+    using LO = typename Tpetra::Map<>::local_ordinal_type;
+    using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
     typedef Node NT;
 

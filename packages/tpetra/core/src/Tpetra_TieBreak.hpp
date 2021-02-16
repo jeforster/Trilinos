@@ -72,8 +72,8 @@ namespace Details {
   class TieBreak {
   public:
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
-    using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
+    using LocalOrdinal = Tpetra::Details::DefaultTypes::local_ordinal_type;
+    using GlobalOrdinal = Tpetra::Details::DefaultTypes::global_ordinal_type;
 #endif
     /// \brief Representation of a global index on a process.
     ///

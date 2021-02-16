@@ -136,7 +136,11 @@ packCrsMatrix (const CrsMatrix<ST, NT>& sourceMatrix,
 #endif
                Teuchos::Array<char>& exports,
                const Teuchos::ArrayView<size_t>& numPacketsPerLID,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                const Teuchos::ArrayView<const LO>& exportLIDs,
+#else
+               const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>& exportLIDs,
+#endif
                size_t& constantNumPackets,
                Distributor& distor);
 
@@ -194,7 +198,11 @@ packCrsMatrixNew (const CrsMatrix<ST, NT>& sourceMatrix,
 #else
                     typename DistObject<char,NT>::buffer_device_type>& numPacketsPerLID,
 #endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                   const Kokkos::DualView<const LO*,
+#else
+                  const Kokkos::DualView<const Tpetra::Map<>::local_ordinal_type*,
+#endif
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                     typename DistObject<char, LO, GO, NT>::buffer_device_type>& exportLIDs,
 #else
@@ -250,7 +258,11 @@ packCrsMatrixWithOwningPIDs (const CrsMatrix<ST, NT>& sourceMatrix,
                              Kokkos::DualView<char*, typename DistObject<char,NT>::buffer_device_type>& exports_dv,
 #endif
                              const Teuchos::ArrayView<size_t>& numPacketsPerLID,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                              const Teuchos::ArrayView<const LO>& exportLIDs,
+#else
+                             const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>& exportLIDs,
+#endif
                              const Teuchos::ArrayView<const int>& sourcePIDs,
                              size_t& constantNumPackets,
                              Distributor& distor);

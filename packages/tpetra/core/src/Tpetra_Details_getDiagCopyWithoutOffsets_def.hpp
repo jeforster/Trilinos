@@ -205,10 +205,11 @@ private:
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 template<class SC, class LO, class GO, class NT>
+LO
 #else
 template<class SC, class NT>
+Tpetra::Details::DefaultTypes::local_ordinal_type
 #endif
-LO
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 getLocalDiagCopyWithoutOffsetsNotFillComplete ( ::Tpetra::Vector<SC, LO, GO, NT>& diag,
                                                 const ::Tpetra::RowMatrix<SC, LO, GO, NT>& A,
@@ -227,6 +228,7 @@ getLocalDiagCopyWithoutOffsetsNotFillComplete ( ::Tpetra::Vector<SC, NT>& diag,
     LO, GO, NT> functor_type;
 #else
   typedef GetLocalDiagCopyWithoutOffsetsNotFillCompleteFunctor<SC, NT> functor_type;
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
 #endif
 
   // The functor's constructor does error checking and executes the
@@ -304,7 +306,7 @@ getLocalDiagCopyWithoutOffsetsNotFillComplete ( ::Tpetra::Vector<SC, NT>& diag,
       const bool debug);
 #else
 #define TPETRA_DETAILS_GETDIAGCOPYWITHOUTOFFSETS_INSTANT( SCALAR, NODE ) \
-  template LO \
+  template Tpetra::Details::DefaultTypes::local_ordinal_type \
   Details::getLocalDiagCopyWithoutOffsetsNotFillComplete< SCALAR, NODE > \
     ( ::Tpetra::Vector< SCALAR, NODE >& diag, \
       const ::Tpetra::RowMatrix< SCALAR, NODE >& A, \

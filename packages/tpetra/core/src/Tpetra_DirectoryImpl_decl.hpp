@@ -89,10 +89,10 @@ namespace Tpetra {
     class Directory : public Teuchos::Describable {
     public:
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-      using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
-      using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
-      using LO = typename Tpetra::Map<>::local_ordinal_type;
-      using GO = typename Tpetra::Map<>::global_ordinal_type;
+      using LocalOrdinal = Tpetra::Details::DefaultTypes::local_ordinal_type;
+      using GlobalOrdinal = Tpetra::Details::DefaultTypes::global_ordinal_type;
+      using LO = Tpetra::Details::DefaultTypes::local_ordinal_type;
+      using GO = Tpetra::Details::DefaultTypes::global_ordinal_type;
 #endif
       typedef LocalOrdinal local_ordinal_type;
       typedef GlobalOrdinal global_ordinal_type;
@@ -188,10 +188,10 @@ namespace Tpetra {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       typedef Directory<LocalOrdinal, GlobalOrdinal, NodeType> base_type;
 #else
-      using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
-      using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
-      using LO = typename Tpetra::Map<>::local_ordinal_type;
-      using GO = typename Tpetra::Map<>::global_ordinal_type;
+      using LocalOrdinal = Tpetra::Details::DefaultTypes::local_ordinal_type;
+      using GlobalOrdinal = Tpetra::Details::DefaultTypes::global_ordinal_type;
+      using LO = Tpetra::Details::DefaultTypes::local_ordinal_type;
+      using GO = Tpetra::Details::DefaultTypes::global_ordinal_type;
       typedef Directory<NodeType> base_type;
 #endif
       typedef typename base_type::map_type map_type;
@@ -248,10 +248,10 @@ namespace Tpetra {
 #endif
     private:
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-      using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
-      using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
-      using LO = typename Tpetra::Map<>::local_ordinal_type;
-      using GO = typename Tpetra::Map<>::global_ordinal_type;
+      using LocalOrdinal = Tpetra::Details::DefaultTypes::local_ordinal_type;
+      using GlobalOrdinal = Tpetra::Details::DefaultTypes::global_ordinal_type;
+      using LO = Tpetra::Details::DefaultTypes::local_ordinal_type;
+      using GO = Tpetra::Details::DefaultTypes::global_ordinal_type;
 #endif
       // This friend declaration lets us implement clone().
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -311,10 +311,10 @@ namespace Tpetra {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       template <class LO, class GO, class N> friend class DistributedContiguousDirectory;
 #else
-      using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
-      using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
-      using LO = typename Tpetra::Map<>::local_ordinal_type;
-      using GO = typename Tpetra::Map<>::global_ordinal_type;
+      using LocalOrdinal = Tpetra::Details::DefaultTypes::local_ordinal_type;
+      using GlobalOrdinal = Tpetra::Details::DefaultTypes::global_ordinal_type;
+      using LO = Tpetra::Details::DefaultTypes::local_ordinal_type;
+      using GO = Tpetra::Details::DefaultTypes::global_ordinal_type;
       template <class N> friend class DistributedContiguousDirectory;
 #endif
 
@@ -396,10 +396,13 @@ namespace Tpetra {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       template <class LO, class GO, class N>
 #else
-      using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
-      using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
-      using LO = typename Tpetra::Map<>::local_ordinal_type;
-      using GO = typename Tpetra::Map<>::global_ordinal_type;
+      using LocalOrdinal = Tpetra::Details::DefaultTypes::local_ordinal_type;
+
+      using GlobalOrdinal = Tpetra::Details::DefaultTypes::global_ordinal_type;
+
+      using LO = Tpetra::Details::DefaultTypes::local_ordinal_type;
+
+      using GO = Tpetra::Details::DefaultTypes::global_ordinal_type;
       template <class N>
 #endif
       friend class DistributedNoncontiguousDirectory;

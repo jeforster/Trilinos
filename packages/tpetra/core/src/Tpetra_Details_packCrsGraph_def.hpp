@@ -687,10 +687,11 @@ packCrsGraph
 #endif
  >& num_packets_per_lid,
  const Kokkos::View<
-   const LO*,
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+   const LO*,
    typename CrsGraph<LO, GO, NT>::buffer_device_type
 #else
+   const Tpetra::Map<>::local_ordinal_type*,
    typename CrsGraph<NT>::buffer_device_type
 #endif
  >& export_lids,
@@ -810,10 +811,18 @@ packCrsGraph (const CrsGraph<NT>& sourceGraph,
               Teuchos::Array<typename CrsGraph<NT>::packet_type>& exports,
 #endif
               const Teuchos::ArrayView<size_t>& numPacketsPerLID,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
               const Teuchos::ArrayView<const LO>& exportLIDs,
+#else
+              const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>& exportLIDs,
+#endif
               size_t& constantNumPackets,
               Distributor& distor)
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+  using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
   using Kokkos::HostSpace;
   using Kokkos::MemoryUnmanaged;
   using Kokkos::View;
@@ -911,10 +920,11 @@ packCrsGraphNew (const CrsGraph<LO,GO,NT>& sourceGraph,
 packCrsGraphNew (const CrsGraph<NT>& sourceGraph,
 #endif
                  const Kokkos::DualView<
-                   const LO*,
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+                   const LO*,
                    typename CrsGraph<LO,GO,NT>::buffer_device_type
 #else
+                   const Tpetra::Map<>::local_ordinal_type*,
                    typename CrsGraph<NT>::buffer_device_type
 #endif
                  >& export_lids,
@@ -1048,11 +1058,18 @@ packCrsGraphWithOwningPIDs
 #endif
  >& exports_dv,
  const Teuchos::ArrayView<size_t>& numPacketsPerLID,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
  const Teuchos::ArrayView<const LO>& exportLIDs,
+#else
+ const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>& exportLIDs,
+#endif
  const Teuchos::ArrayView<const int>& sourcePIDs,
  size_t& constantNumPackets,
  Distributor& distor)
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+#endif
   using Kokkos::HostSpace;
   using Kokkos::MemoryUnmanaged;
   using Kokkos::View;
@@ -1146,14 +1163,14 @@ packCrsGraphWithOwningPIDs
     const CrsGraph<NT>&, \
     Teuchos::Array<CrsGraph<NT>::packet_type>&, \
     const Teuchos::ArrayView<size_t>&, \
-    const Teuchos::ArrayView<const LO>&, \
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>&, \
     size_t&, \
     Distributor&); \
   template void \
   Details::packCrsGraphNew<NT> ( \
     const CrsGraph<NT>&, \
     const Kokkos::DualView< \
-      const LO*, \
+      const Tpetra::Map<>::local_ordinal_type*, \
       CrsGraph<NT>::buffer_device_type>&, \
     const Kokkos::DualView< \
       const int*, \
@@ -1172,7 +1189,7 @@ packCrsGraphWithOwningPIDs
     const CrsGraph<NT>&, \
     Kokkos::DualView<CrsGraph<NT>::packet_type*, CrsGraph<NT>::buffer_device_type>&, \
     const Teuchos::ArrayView<size_t>&, \
-    const Teuchos::ArrayView<const LO>&, \
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>&, \
     const Teuchos::ArrayView<const int>&, \
     size_t&, \
     Distributor&);

@@ -80,6 +80,9 @@ leftAndOrRightScaleCrsMatrix (Tpetra::CrsMatrix<SC, NT>& A,
                               const bool assumeSymmetric,
                               const EScaling scaling)
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+#endif
   if (! leftScale && ! rightScale) {
     return;
   }

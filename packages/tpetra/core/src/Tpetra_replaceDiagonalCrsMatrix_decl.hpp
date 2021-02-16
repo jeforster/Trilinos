@@ -69,10 +69,11 @@ namespace Tpetra {
 /// \return Local number of successfully replaced diagonal entries
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 template<class SC, class LO, class GO, class NT>
+LO
 #else
 template<class SC, class NT>
+Tpetra::Details::DefaultTypes::local_ordinal_type
 #endif
-LO
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 replaceDiagonalCrsMatrix(::Tpetra::CrsMatrix<SC, LO, GO, NT>& matrix,
     const ::Tpetra::Vector<SC, LO, GO, NT>& newDiag);

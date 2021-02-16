@@ -87,8 +87,8 @@ namespace Tpetra {
   class ImportExportData {
   public:
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
-    using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
+    using LocalOrdinal = Tpetra::Details::DefaultTypes::local_ordinal_type;
+    using GlobalOrdinal = Tpetra::Details::DefaultTypes::global_ordinal_type;
 #endif
     typedef LocalOrdinal local_ordinal_type;
     typedef GlobalOrdinal global_ordinal_type;

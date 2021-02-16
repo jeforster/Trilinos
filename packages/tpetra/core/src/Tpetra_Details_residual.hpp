@@ -145,6 +145,10 @@ void localResidual(const CrsMatrix<SC,NO> &  A,
                    const MultiVector<SC,NO> & B,
                    MultiVector<SC,NO> & R) {
 #endif
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+  using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
   using Tpetra::Details::ProfilingRegion;
   using Teuchos::NO_TRANS;
   ProfilingRegion regionLocalApply ("Tpetra::CrsMatrix::localResidual");

@@ -82,8 +82,13 @@ makeColMapImpl(Teuchos::RCP<const Tpetra::Map<NT>>& colMap,
 #endif
             size_t numLocalColGIDs,
             size_t numRemoteColGIDs,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
             std::set<GO>& RemoteGIDSet,
             std::vector<GO>& RemoteGIDUnorderedVector,
+#else
+            std::set<Tpetra::Map<>::global_ordinal_type>& RemoteGIDSet,
+            std::vector<Tpetra::Map<>::global_ordinal_type>& RemoteGIDUnorderedVector,
+#endif
             std::vector<bool>& GIDisLocal, 
             const bool sortEachProcsGids,
             std::ostream* errStrm)
@@ -98,6 +103,7 @@ makeColMapImpl(Teuchos::RCP<const Tpetra::Map<NT>>& colMap,
   typedef ::Tpetra::Map<LO, GO, NT> map_type;
 #else
   typedef ::Tpetra::Map<NT> map_type;
+  using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
   // Possible short-circuit for serial scenario:
   //
@@ -368,6 +374,8 @@ makeColMap (Teuchos::RCP<const Tpetra::Map<NT> >& colMap,
   typedef ::Tpetra::Map<LO, GO, NT> map_type;
 #else
   typedef ::Tpetra::Map<NT> map_type;
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+  using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
   const char prefix[] = "Tpetra::Details::makeColMap: ";
   int errCode = 0;
@@ -627,13 +635,18 @@ int
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 makeColMap (Teuchos::RCP<const Tpetra::Map<LO, GO, NT>>& colMap,
             const Teuchos::RCP<const Tpetra::Map<LO, GO, NT>>& domMap,
+            Kokkos::View<GO*, typename NT::memory_space> gids,
 #else
 makeColMap (Teuchos::RCP<const Tpetra::Map<NT>>& colMap,
             const Teuchos::RCP<const Tpetra::Map<NT>>& domMap,
+            Kokkos::View<Tpetra::Details::DefaultTypes::global_ordinal_type*, typename NT::memory_space> gids,
 #endif
-            Kokkos::View<GO*, typename NT::memory_space> gids,
             std::ostream* errStrm)
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+  using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
   using Teuchos::RCP;
   using Teuchos::Array;
   using Kokkos::RangePolicy;
@@ -763,7 +776,7 @@ makeColMap (Teuchos::RCP<const Tpetra::Map<NT>>& colMap,
     template int \
     makeColMap (Teuchos::RCP<const Tpetra::Map<NT> >&, \
                 const Teuchos::RCP<const Tpetra::Map<NT> >&, \
-                Kokkos::View<GO*, typename NT::memory_space>, \
+                Kokkos::View<Tpetra::Details::DefaultTypes::global_ordinal_type*, typename NT::memory_space>, \
                 std::ostream*); \
   }
 #endif

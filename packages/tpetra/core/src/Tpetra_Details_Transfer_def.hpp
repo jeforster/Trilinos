@@ -174,7 +174,7 @@ Kokkos::DualView<const LO*, typename Transfer<LO, GO, NT>::device_type>
 Transfer<LO, GO, NT>::
 #else
 template <class NT>  
-Kokkos::DualView<const LO*, typename Transfer<NT>::device_type>
+Kokkos::DualView<const Tpetra::Details::DefaultTypes::local_ordinal_type*, typename Transfer<NT>::device_type>
 Transfer<NT>::
 #endif
 getPermuteFromLIDs_dv () const {
@@ -192,10 +192,11 @@ getPermuteFromLIDs_dv () const {
   
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 template <class LO, class GO, class NT>  
+Teuchos::ArrayView<const LO>
 #else
 template <class NT>  
+Teuchos::ArrayView<const Tpetra::Details::DefaultTypes::local_ordinal_type>
 #endif
-Teuchos::ArrayView<const LO>
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 Transfer<LO, GO, NT>::
 #else
@@ -211,7 +212,7 @@ Kokkos::DualView<const LO*, typename Transfer<LO, GO, NT>::device_type>
 Transfer<LO, GO, NT>::
 #else
 template <class NT>  
-Kokkos::DualView<const LO*, typename Transfer<NT>::device_type>
+Kokkos::DualView<const Tpetra::Details::DefaultTypes::local_ordinal_type*, typename Transfer<NT>::device_type>
 Transfer<NT>::
 #endif
 getPermuteToLIDs_dv () const {
@@ -229,10 +230,11 @@ getPermuteToLIDs_dv () const {
   
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 template <class LO, class GO, class NT>  
+Teuchos::ArrayView<const LO>
 #else
 template <class NT>  
+Teuchos::ArrayView<const Tpetra::Details::DefaultTypes::local_ordinal_type>
 #endif
-Teuchos::ArrayView<const LO>
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 Transfer<LO, GO, NT>::
 #else
@@ -263,7 +265,7 @@ Kokkos::DualView<const LO*, typename Transfer<LO, GO, NT>::device_type>
 Transfer<LO, GO, NT>::
 #else
 template <class NT>  
-Kokkos::DualView<const LO*, typename Transfer<NT>::device_type>
+Kokkos::DualView<const Tpetra::Details::DefaultTypes::local_ordinal_type*, typename Transfer<NT>::device_type>
 Transfer<NT>::
 #endif
 getRemoteLIDs_dv () const {
@@ -281,10 +283,11 @@ getRemoteLIDs_dv () const {
   
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 template <class LO, class GO, class NT>  
+Teuchos::ArrayView<const LO>
 #else
 template <class NT>  
+Teuchos::ArrayView<const Tpetra::Details::DefaultTypes::local_ordinal_type>
 #endif
-Teuchos::ArrayView<const LO>
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 Transfer<LO, GO, NT>::
 #else
@@ -315,7 +318,7 @@ Kokkos::DualView<const LO*, typename Transfer<LO, GO, NT>::device_type>
 Transfer<LO, GO, NT>::
 #else
 template <class NT>  
-Kokkos::DualView<const LO*, typename Transfer<NT>::device_type>
+Kokkos::DualView<const Tpetra::Details::DefaultTypes::local_ordinal_type*, typename Transfer<NT>::device_type>
 Transfer<NT>::
 #endif
 getExportLIDs_dv () const {
@@ -333,10 +336,11 @@ getExportLIDs_dv () const {
   
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 template <class LO, class GO, class NT>
+Teuchos::ArrayView<const LO>
 #else
 template <class NT>
+Teuchos::ArrayView<const Tpetra::Details::DefaultTypes::local_ordinal_type>
 #endif
-Teuchos::ArrayView<const LO>
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 Transfer<LO, GO, NT>::
 #else

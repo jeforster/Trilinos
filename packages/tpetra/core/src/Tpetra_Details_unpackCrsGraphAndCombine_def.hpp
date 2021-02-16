@@ -1143,34 +1143,34 @@ unpackAndCombineIntoCrsArrays(
   template void \
   Details::unpackAndCombineIntoCrsArrays<NT>( \
     const CrsGraph<NT> &, \
-    const Teuchos::ArrayView<const LO>&, \
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>&, \
     const Teuchos::ArrayView<const typename CrsGraph<NT>::packet_type>&, \
     const Teuchos::ArrayView<const size_t>&, \
     const size_t, \
     Distributor&, \
     const CombineMode, \
     const size_t, \
-    const Teuchos::ArrayView<const LO>&, \
-    const Teuchos::ArrayView<const LO>&, \
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>&, \
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>&, \
     size_t, \
     size_t, \
     const int, \
     const Teuchos::ArrayView<size_t>&, \
-    const Teuchos::ArrayView<GO>&, \
+    const Teuchos::ArrayView<Tpetra::Map<>::global_ordinal_type>&, \
     const Teuchos::ArrayView<const int>&, \
     Teuchos::Array<int>&); \
   template size_t \
   Details::unpackAndCombineWithOwningPIDsCount<NT>( \
     const CrsGraph<NT> &, \
-    const Teuchos::ArrayView<const LO> &, \
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type> &, \
     const Teuchos::ArrayView<const typename CrsGraph<NT>::packet_type> &, \
     const Teuchos::ArrayView<const size_t>&, \
     size_t, \
     Distributor &, \
     CombineMode, \
     size_t, \
-    const Teuchos::ArrayView<const LO>&, \
-    const Teuchos::ArrayView<const LO>&);
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>&, \
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>&);
 #endif
 
 #endif // TPETRA_DETAILS_UNPACKCRSGRAPHANDCOMBINE_DEF_HPP

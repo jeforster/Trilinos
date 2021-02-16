@@ -63,7 +63,11 @@ template <class SC, class NT>
 #endif
 KokkosSparse::CrsMatrix<
   typename Kokkos::ArithTraits<SC>::val_type,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     LO,
+#else
+    typename Tpetra::Details::DefaultTypes::local_ordinal_type,
+#endif
     typename NT::device_type,
     void,
     size_t>
@@ -173,7 +177,7 @@ namespace Details { \
 namespace Details { \
   template KokkosSparse::CrsMatrix< \
     Kokkos::ArithTraits<SC>::val_type, \
-    LO, NT::execution_space, void, size_t> \
+    Tpetra::Details::DefaultTypes::local_ordinal_type, NT::device_type, void, size_t> \
   localDeepCopyLocallyIndexedRowMatrix<SC, NT> \
     (const RowMatrix<SC, NT>& A, \
      const char label[]); \

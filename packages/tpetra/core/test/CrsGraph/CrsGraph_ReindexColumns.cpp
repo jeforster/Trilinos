@@ -1027,6 +1027,8 @@ namespace {
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+
+}
 #else
 #define UNIT_TEST_GROUP(NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsGraphReindexColumns, ColMapOnlySortingOn, NODE ) \
@@ -1035,9 +1037,8 @@ namespace {
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
   TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
-#endif
-
 
 }
+#endif
 
 

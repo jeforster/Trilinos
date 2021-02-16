@@ -246,10 +246,11 @@ getDiagCopyWithoutOffsets (const DiagType& D,
 /// the implementation does not actually depend on Tpetra::CrsMatrix.
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 template<class SC, class LO, class GO, class NT>
+LO
 #else
 template<class SC, class NT>
+Tpetra::Map<>::local_ordinal_type
 #endif
-LO
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 getLocalDiagCopyWithoutOffsetsNotFillComplete ( ::Tpetra::Vector<SC, LO, GO, NT>& diag,
                                                 const ::Tpetra::RowMatrix<SC, LO, GO, NT>& A,

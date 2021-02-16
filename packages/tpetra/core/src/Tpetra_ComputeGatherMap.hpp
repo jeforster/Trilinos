@@ -206,6 +206,8 @@ namespace Tpetra {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
       typedef typename MapType::local_ordinal_type LO;
       typedef typename MapType::global_ordinal_type GO;
+#else
+      using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
       typedef typename MapType::node_type NT;
 

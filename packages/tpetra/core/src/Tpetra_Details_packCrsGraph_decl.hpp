@@ -133,7 +133,11 @@ packCrsGraph (const CrsGraph<NT>& sourceGraph,
                Teuchos::Array<typename CrsGraph<NT>::packet_type>& exports,
 #endif
                const Teuchos::ArrayView<size_t>& numPacketsPerLID,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                const Teuchos::ArrayView<const LO>& exportLIDs,
+#else
+               const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>& exportLIDs,
+#endif
                size_t& constantNumPackets,
                Distributor& distor);
 
@@ -178,10 +182,11 @@ packCrsGraphNew (const CrsGraph<LO, GO, NT>& sourceGraph,
 packCrsGraphNew (const CrsGraph<NT>& sourceGraph,
 #endif
                  const Kokkos::DualView<
-                   const LO*,
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+                   const LO*,
                    typename CrsGraph<LO, GO, NT>::buffer_device_type
 #else
+                   const Tpetra::Map<>::local_ordinal_type*,
                    typename CrsGraph<NT>::buffer_device_type
 #endif
                  >& exportLIDs,
@@ -261,7 +266,11 @@ packCrsGraphWithOwningPIDs (const CrsGraph<NT>& sourceGraph,
 #endif
                                              exports_dv,
                             const Teuchos::ArrayView<size_t>& numPacketsPerLID,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                             const Teuchos::ArrayView<const LO>& exportLIDs,
+#else
+                            const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>& exportLIDs,
+#endif
                             const Teuchos::ArrayView<const int>& sourcePIDs,
                             size_t& constantNumPackets,
                             Distributor& distor);

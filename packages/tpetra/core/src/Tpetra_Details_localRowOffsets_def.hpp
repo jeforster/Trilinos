@@ -69,6 +69,9 @@ localRowCounts (const RowGraph<NT>& G)
   using result_type = LocalRowOffsetsResult<NT>;
   using offsets_type = typename result_type::offsets_type;
   using offset_type = typename result_type::offset_type;
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+#endif
 
   const LO lclNumRows (G.getNodeNumRows ());
   offsets_type entPerRow;
@@ -111,6 +114,9 @@ localRowOffsetsFromRowGraph (const RowGraph<NT>& G)
   using result_type = LocalRowOffsetsResult<NT>;
   using offsets_type = typename result_type::offsets_type;
   using offset_type = typename result_type::offset_type;
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+#endif
 
   offsets_type entPerRow;
   size_t maxNumEnt = 0;

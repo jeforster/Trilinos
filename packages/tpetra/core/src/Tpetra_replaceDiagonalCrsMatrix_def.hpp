@@ -53,10 +53,11 @@ namespace Tpetra {
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 template<class SC, class LO, class GO, class NT>
+LO
 #else
 template<class SC, class NT>
+Tpetra::Details::DefaultTypes::local_ordinal_type
 #endif
-LO
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 replaceDiagonalCrsMatrix (CrsMatrix<SC, LO, GO, NT>& matrix,
     const Vector<SC, LO, GO, NT>& newDiag) {
@@ -69,6 +70,8 @@ replaceDiagonalCrsMatrix (CrsMatrix<SC, NT>& matrix,
   using map_type = Map<LO, GO, NT>;
   using crs_matrix_type = CrsMatrix<SC, LO, GO, NT>;
 #else
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+  using GO = typename Tpetra::Map<>::global_ordinal_type;
   using map_type = Map<NT>;
   using crs_matrix_type = CrsMatrix<SC, NT>;
 #endif
@@ -163,7 +166,7 @@ replaceDiagonalCrsMatrix (CrsMatrix<SC, NT>& matrix,
 #define TPETRA_REPLACEDIAGONALCRSMATRIX_INSTANT(SCALAR,NODE)                \
                                                                             \
   template                                                                  \
-  LO replaceDiagonalCrsMatrix(                                              \
+  Tpetra::Details::DefaultTypes::local_ordinal_type replaceDiagonalCrsMatrix(                                              \
                               CrsMatrix<SCALAR, NODE>& matrix,              \
                               const Vector<SCALAR, NODE>& newDiag);         \
 

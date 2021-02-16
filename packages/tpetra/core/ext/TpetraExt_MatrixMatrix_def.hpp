@@ -3630,7 +3630,11 @@ addUnsorted(
   const typename MMdetails::AddKernels<SC, NO>::col_inds_array& Bcolinds,
   const typename MMdetails::AddKernels<SC, NO>::impl_scalar_type scalarB,
 #endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   GO /* numGlobalCols */,
+#else
+  Tpetra::Map<>::global_ordinal_type /* numGlobalCols */,
+#endif
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   typename MMdetails::AddKernels<SC, LO, GO, NO>::values_array& Cvals,
   typename MMdetails::AddKernels<SC, LO, GO, NO>::row_ptrs_array& Crowptrs,
@@ -3734,6 +3738,9 @@ convertToGlobalAndAdd(
   typename MMdetails::AddKernels<SC, NO>::global_col_inds_array& Ccolinds)
 #endif
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
   using Teuchos::TimeMonitor;
   //Need to use a different KokkosKernelsHandle type than other versions,
   //since the ordinals are now GO

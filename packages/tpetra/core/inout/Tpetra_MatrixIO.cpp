@@ -330,7 +330,11 @@ namespace Tpetra {
 
     TPETRA_ETI_MANGLING_TYPEDEFS()
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     TPETRA_INSTANTIATE_SLGN(TPETRA_MATRIXIO_INSTANT)
+#else
+    TPETRA_INSTANTIATE_SN(TPETRA_MATRIXIO_INSTANT)
+#endif
 
   } // namespace Tpetra::Utils
 } // namespace Tpetra

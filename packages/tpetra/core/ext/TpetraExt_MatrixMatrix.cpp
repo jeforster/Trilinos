@@ -52,7 +52,11 @@ namespace Tpetra {
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   TPETRA_INSTANTIATE_SLGN(TPETRA_MATRIXMATRIX_INSTANT)
+#else
+  TPETRA_INSTANTIATE_SN(TPETRA_MATRIXMATRIX_INSTANT)
+#endif
 
   // Zoltan2 wants Scalar = int (Bug 6298).
   // This is already covered above for the GO = int case.

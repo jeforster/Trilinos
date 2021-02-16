@@ -130,10 +130,10 @@ namespace Tpetra {
   class Directory : public Teuchos::Describable {
   public:
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-    using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
-    using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
+    using LocalOrdinal = Tpetra::Details::DefaultTypes::local_ordinal_type;
+    using GlobalOrdinal = Tpetra::Details::DefaultTypes::global_ordinal_type;
+    using LO = Tpetra::Details::DefaultTypes::local_ordinal_type;
+    using GO = Tpetra::Details::DefaultTypes::global_ordinal_type;
 #endif
     //! Type of the Map specialization to give to the constructor.
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS

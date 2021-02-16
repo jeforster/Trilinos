@@ -102,6 +102,11 @@ namespace Tpetra {
     using Teuchos::RCP;
     using Teuchos::rcp;
 
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+    using LO = typename Tpetra::Map<>::local_ordinal_type;
+    using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
+
     typedef Teuchos::OrdinalTraits<GO>                     TOT;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef BlockCrsMatrix<Scalar, LO, GO, Node>           block_crs_matrix_type;
@@ -234,6 +239,8 @@ namespace Tpetra {
     using map_type = Tpetra::Map<LO, GO, Node>;
 #else
     using map_type = Tpetra::Map<Node>;
+    using LO = typename Tpetra::Map<>::local_ordinal_type;
+    using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
 
     size_t numRows = A.getGlobalNumRows();
@@ -333,7 +340,7 @@ namespace Tpetra {
 #else
   template<class Scalar, class Node>
   Teuchos::RCP<BlockCrsMatrix<Scalar, Node> >
-  convertToBlockCrsMatrix(const Tpetra::CrsMatrix<Scalar, Node>& pointMatrix, const LO &blockSize)
+  convertToBlockCrsMatrix(const Tpetra::CrsMatrix<Scalar, Node>& pointMatrix, const Tpetra::Map<>::local_ordinal_type &blockSize)
 #endif
   {
 
@@ -348,6 +355,10 @@ namespace Tpetra {
       using Teuchos::Array;
       using Teuchos::ArrayView;
       using Teuchos::RCP;
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+      using LO = typename Tpetra::Map<>::local_ordinal_type;
+      using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       typedef Tpetra::BlockCrsMatrix<Scalar,LO,GO,Node> block_crs_matrix_type;
@@ -485,9 +496,12 @@ namespace Tpetra {
 #else
   template<class Node>
   Teuchos::RCP<const Tpetra::Map<Node> >
-  createMeshMap (const LO& blockSize, const Tpetra::Map<Node>& pointMap)
+  createMeshMap (const Tpetra::Map<>::local_ordinal_type& blockSize, const Tpetra::Map<Node>& pointMap)
 #endif
   {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+    using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
     typedef Teuchos::OrdinalTraits<Tpetra::global_size_t> TOT;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typedef Tpetra::Map<LO,GO,Node> map_type;
@@ -541,7 +555,7 @@ namespace Tpetra {
   template void blockCrsMatrixWriter(BlockCrsMatrix<S,NODE> const &A, std::ostream &os); \
   template void blockCrsMatrixWriter(BlockCrsMatrix<S,NODE> const &A, std::ostream &os, Teuchos::ParameterList const &params); \
   template void writeMatrixStrip(BlockCrsMatrix<S,NODE> const &A, std::ostream &os, Teuchos::ParameterList const &params); \
-  template Teuchos::RCP<BlockCrsMatrix<S, NODE> > convertToBlockCrsMatrix(const CrsMatrix<S, NODE>& pointMatrix, const LO &blockSize);
+  template Teuchos::RCP<BlockCrsMatrix<S, NODE> > convertToBlockCrsMatrix(const CrsMatrix<S, NODE>& pointMatrix, const Tpetra::Map<>::local_ordinal_type &blockSize);
 #endif
 
 //
@@ -552,7 +566,7 @@ namespace Tpetra {
   template Teuchos::RCP<const Map<LO,GO,NODE> > createMeshMap (const LO& blockSize, const Map<LO,GO,NODE>& pointMap);
 #else
 #define TPETRA_CREATEMESHMAP_INSTANT(NODE) \
-  template Teuchos::RCP<const Map<NODE> > createMeshMap (const LO& blockSize, const Map<NODE>& pointMap);
+  template Teuchos::RCP<const Map<NODE> > createMeshMap (const Tpetra::Map<>::local_ordinal_type& blockSize, const Map<NODE>& pointMap);
 #endif
 
 #endif // TPETRA_BLOCKCRSMATRIX_HELPERS_DEF_HPP

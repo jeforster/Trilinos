@@ -83,8 +83,8 @@ template<
 class GetGraphDiagOffsets {
 public:
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS 
-  typedef typename Tpetra::Map<>::local_ordinal_type LO;
-  typedef typename Tpetra::Map<>::global_ordinal_type GO;
+  typedef typename Tpetra::Details::DefaultTypes::local_ordinal_type LO;
+  typedef typename Tpetra::Details::DefaultTypes::global_ordinal_type GO;
 #endif
   typedef typename DeviceType::device_type device_type;
   typedef DiagOffsetType diag_offset_type;

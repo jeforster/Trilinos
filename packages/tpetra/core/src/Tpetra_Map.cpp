@@ -52,11 +52,21 @@ namespace Tpetra {
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   // for all nodes, lo, go
   TPETRA_INSTANTIATE_LGN(TPETRA_MAP_INSTANT)
+#else
+  // for all nodes, lo, go
+  TPETRA_INSTANTIATE_N(TPETRA_MAP_INSTANT)
+#endif
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   // for default node, all lo,go
   TPETRA_INSTANTIATE_LG(TPETRA_MAP_INSTANT_DEFAULTNODE)
+#else
+  // for default node, all lo,go
+  //TPETRA_INSTANTIATE(TPETRA_MAP_INSTANT_DEFAULTNODE)
+#endif
 
 } // namespace Tpetra
 

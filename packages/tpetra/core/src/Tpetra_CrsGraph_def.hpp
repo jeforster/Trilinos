@@ -121,19 +121,25 @@ namespace Tpetra {
 
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
       template<class LO, class GO, class Node>
+      Teuchos::ArrayView<GO>
 #else
       template<class Node>
+      Teuchos::ArrayView<Tpetra::Map<>::global_ordinal_type>
 #endif
-      Teuchos::ArrayView<GO>
       getRowGraphGlobalRow(
-        std::vector<GO>& gblColIndsStorage,
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
+        std::vector<GO>& gblColIndsStorage,
         const RowGraph<LO, GO, Node>& graph,
-#else
-        const RowGraph<Node>& graph,
-#endif
         const GO gblRowInd)
+#else
+        std::vector<Tpetra::Map<>::global_ordinal_type>& gblColIndsStorage,
+        const RowGraph<Node>& graph,
+        const Tpetra::Map<>::global_ordinal_type gblRowInd)
+#endif
       {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+        using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
         size_t origNumEnt = graph.getNumEntriesInGlobalRow(gblRowInd);
         if (gblColIndsStorage.size() < origNumEnt) {
           gblColIndsStorage.resize(origNumEnt);
@@ -151,6 +157,10 @@ namespace Tpetra {
 #endif
       class ConvertColumnIndicesFromGlobalToLocal {
       public:
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+        using LO = typename Tpetra::Map<>::local_ordinal_type;
+        using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
         ConvertColumnIndicesFromGlobalToLocal (const ::Kokkos::View<LO*, DT>& lclColInds,
                                                const ::Kokkos::View<const GO*, DT>& gblColInds,
                                                const ::Kokkos::View<const OffsetType*, DT>& ptr,
@@ -248,8 +258,13 @@ namespace Tpetra {
     template<class DT, class OffsetType, class NumEntType>
 #endif
     OffsetType
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     convertColumnIndicesFromGlobalToLocal (const Kokkos::View<LO*, DT>& lclColInds,
                                            const Kokkos::View<const GO*, DT>& gblColInds,
+#else
+    convertColumnIndicesFromGlobalToLocal (const Kokkos::View<Tpetra::Map<>::local_ordinal_type*, DT>& lclColInds,
+                                           const Kokkos::View<const Tpetra::Map<>::global_ordinal_type*, DT>& gblColInds,
+#endif
                                            const Kokkos::View<const OffsetType*, DT>& ptr,
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                                            const LocalMap<LO, GO, DT>& lclColMap,

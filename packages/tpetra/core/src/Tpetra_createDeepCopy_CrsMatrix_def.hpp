@@ -72,6 +72,8 @@ createDeepCopy (const RowMatrix<SC, NT>& A)
   using crs_matrix_type = CrsMatrix<SC, LO, GO, NT>;
 #else
   using crs_matrix_type = CrsMatrix<SC, NT>;
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+  using GO = typename Tpetra::Map<>::global_ordinal_type;
 #endif
   const crs_matrix_type* A_crs =
     dynamic_cast<const crs_matrix_type*> (&A);

@@ -127,7 +127,7 @@ namespace Tpetra {
 #else
   template<class Scalar, class Node>
   Teuchos::RCP<BlockCrsMatrix<Scalar, Node>>
-  convertToBlockCrsMatrix(const Tpetra::CrsMatrix<Scalar, Node>& pointMatrix, const LO &blockSize);
+  convertToBlockCrsMatrix(const Tpetra::CrsMatrix<Scalar, Node>& pointMatrix, const Tpetra::Details::DefaultTypes::local_ordinal_type &blockSize);
 #endif
 
   /// @brief Helper function to generate a mesh map from a point map.
@@ -139,7 +139,7 @@ namespace Tpetra {
 #else
   template<class Node>
   Teuchos::RCP<const Tpetra::Map<Node>>
-  createMeshMap(LO const &blockSize, const Tpetra::Map<Node> &pointMap);
+  createMeshMap(Tpetra::Details::DefaultTypes::local_ordinal_type const &blockSize, const Tpetra::Map<Node> &pointMap);
 #endif
 
 } // namespace Tpetra

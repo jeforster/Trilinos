@@ -139,7 +139,11 @@ unpackCrsMatrixAndCombine (const CrsMatrix<ST, NT>& sourceMatrix,
 #endif
                            const Teuchos::ArrayView<const char>& imports,
                            const Teuchos::ArrayView<const size_t>& numPacketsPerLID,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                            const Teuchos::ArrayView<const LO>& importLIDs,
+#else
+                           const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>& importLIDs,
+#endif
                            size_t constantNumPackets,
                            Distributor & distor,
                            CombineMode combineMode);
@@ -168,7 +172,11 @@ unpackCrsMatrixAndCombineNew(
 #else
     typename DistObject<char,NT>::buffer_device_type> numPacketsPerLID,
 #endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   const Kokkos::DualView<const LO*,
+#else
+  const Kokkos::DualView<const Tpetra::Map<>::local_ordinal_type*,
+#endif
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typename DistObject<char, LO, GO, NT>::buffer_device_type>& importLIDs,
 #else

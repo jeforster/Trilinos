@@ -1099,7 +1099,11 @@ public:
 #else
   template<class Scalar, class Node>
 #endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   LO
+#else
+  Tpetra::Map<>::local_ordinal_type
+#endif
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   BlockCrsMatrix<Scalar, LO, GO, Node>::
 #else
@@ -1491,7 +1495,11 @@ public:
 #else
   template<class Scalar, class Node>
 #endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   LO
+#else
+  Tpetra::Map<>::local_ordinal_type
+#endif
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   BlockCrsMatrix<Scalar, LO, GO, Node>::
 #else
@@ -1542,7 +1550,11 @@ public:
 #else
   template<class Scalar, class Node>
 #endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   LO
+#else
+  Tpetra::Map<>::local_ordinal_type
+#endif
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   BlockCrsMatrix<Scalar, LO, GO, Node>::
 #else
@@ -1623,7 +1635,11 @@ public:
 #else
   template<class Scalar, class Node>
 #endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   LO
+#else
+  Tpetra::Map<>::local_ordinal_type
+#endif
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   BlockCrsMatrix<Scalar, LO, GO, Node>::
 #else
@@ -1708,7 +1724,11 @@ public:
 #else
   template<class Scalar, class Node>
 #endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   LO
+#else
+  Tpetra::Map<>::local_ordinal_type
+#endif
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   BlockCrsMatrix<Scalar, LO, GO, Node>::
 #else
@@ -1749,7 +1769,11 @@ public:
 #else
   template<class Scalar, class Node>
 #endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   LO
+#else
+  Tpetra::Map<>::local_ordinal_type
+#endif
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   BlockCrsMatrix<Scalar, LO, GO, Node>::
 #else
@@ -1796,7 +1820,11 @@ public:
 #else
   template<class Scalar, class Node>
 #endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   LO
+#else
+  Tpetra::Map<>::local_ordinal_type
+#endif
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   BlockCrsMatrix<Scalar, LO, GO, Node>::
 #else
@@ -1843,7 +1871,11 @@ public:
 #else
   template<class Scalar, class Node>
 #endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   LO
+#else
+  Tpetra::Map<>::local_ordinal_type
+#endif
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   BlockCrsMatrix<Scalar, LO, GO, Node>::
 #else
@@ -2099,7 +2131,11 @@ public:
 #else
   template<class Scalar, class Node>
 #endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   LO
+#else
+  Tpetra::Map<>::local_ordinal_type
+#endif
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   BlockCrsMatrix<Scalar, LO, GO, Node>::
 #else
@@ -2160,7 +2196,11 @@ public:
 #else
   template<class Scalar, class Node>
 #endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   LO
+#else
+  Tpetra::Map<>::local_ordinal_type
+#endif
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   BlockCrsMatrix<Scalar, LO, GO, Node>::
 #else
@@ -2888,6 +2928,10 @@ public:
                   const size_t numBytesPerValue,
                   const size_t blkSize)
     {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+      using LO = typename Tpetra::Map<>::local_ordinal_type;
+      using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
       using ::Tpetra::Details::PackTraits;
 
       if (numEnt == 0) {
@@ -2921,11 +2965,18 @@ public:
     template<class ST>
 #endif
     size_t
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     unpackRowCount (const typename ::Tpetra::Details::PackTraits<LO>::input_buffer_type& imports,
+#else
+    unpackRowCount (const typename ::Tpetra::Details::PackTraits<Tpetra::Map<>::local_ordinal_type>::input_buffer_type& imports,
+#endif
                     const size_t offset,
                     const size_t numBytes,
                     const size_t /* numBytesPerValue */)
     {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+      using LO = typename Tpetra::Map<>::local_ordinal_type;
+#endif
       using Kokkos::subview;
       using ::Tpetra::Details::PackTraits;
 
@@ -2959,14 +3010,26 @@ public:
     template<class ST>
 #endif
     size_t
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     packRowForBlockCrs (const typename ::Tpetra::Details::PackTraits<LO>::output_buffer_type exports,
+#else
+    packRowForBlockCrs (const typename ::Tpetra::Details::PackTraits<Tpetra::Map<>::local_ordinal_type>::output_buffer_type exports,
+#endif
                         const size_t offset,
                         const size_t numEnt,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                         const typename ::Tpetra::Details::PackTraits<GO>::input_array_type& gidsIn,
+#else
+                        const typename ::Tpetra::Details::PackTraits<Tpetra::Map<>::global_ordinal_type>::input_array_type& gidsIn,
+#endif
                         const typename ::Tpetra::Details::PackTraits<ST>::input_array_type& valsIn,
                         const size_t numBytesPerValue,
                         const size_t blockSize)
     {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+      using LO = typename Tpetra::Map<>::local_ordinal_type;
+      using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
       using Kokkos::subview;
       using ::Tpetra::Details::PackTraits;
 
@@ -3025,7 +3088,11 @@ public:
     template<class ST>
 #endif
     size_t
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     unpackRowForBlockCrs (const typename ::Tpetra::Details::PackTraits<GO>::output_array_type& gidsOut,
+#else
+    unpackRowForBlockCrs (const typename ::Tpetra::Details::PackTraits<Tpetra::Map<>::global_ordinal_type>::output_array_type& gidsOut,
+#endif
                           const typename ::Tpetra::Details::PackTraits<ST>::output_array_type& valsOut,
                           const typename ::Tpetra::Details::PackTraits<int>::input_buffer_type& imports,
                           const size_t offset,
@@ -3034,6 +3101,10 @@ public:
                           const size_t numBytesPerValue,
                           const size_t blockSize)
     {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+      using LO = typename Tpetra::Map<>::local_ordinal_type;
+      using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
       using ::Tpetra::Details::PackTraits;
 
       if (numBytes == 0) {
@@ -3126,6 +3197,10 @@ public:
    size_t& constantNumPackets,
    Distributor& /* distor */)
   {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+    using LO = typename Tpetra::Map<>::local_ordinal_type;
+    using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
     using ::Tpetra::Details::Behavior;
     using ::Tpetra::Details::dualViewStatusToString;
     using ::Tpetra::Details::ProfilingRegion;
@@ -4086,7 +4161,11 @@ public:
 #else
   template<class Scalar, class Node>
 #endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   GO
+#else
+  Tpetra::Map<>::global_ordinal_type
+#endif
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   BlockCrsMatrix<Scalar, LO, GO, Node>::
 #else

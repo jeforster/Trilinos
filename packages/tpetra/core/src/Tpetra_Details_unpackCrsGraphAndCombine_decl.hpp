@@ -149,10 +149,11 @@ size_t
 unpackAndCombineWithOwningPIDsCount(
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     const CrsGraph<LO, GO, NT> & sourceGraph,
+    const Teuchos::ArrayView<const LO> &importLIDs,
 #else
     const CrsGraph<NT> & sourceGraph,
+    const Teuchos::ArrayView<const Tpetra::Details::DefaultTypes::local_ordinal_type> &importLIDs,
 #endif
-    const Teuchos::ArrayView<const LO> &importLIDs,
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     const Teuchos::ArrayView<const typename CrsGraph<LO,GO,NT>::packet_type> &imports,
 #else
@@ -163,8 +164,13 @@ unpackAndCombineWithOwningPIDsCount(
     Distributor &distor,
     CombineMode combineMode,
     size_t numSameIDs,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     const Teuchos::ArrayView<const LO>& permuteToLIDs,
     const Teuchos::ArrayView<const LO>& permuteFromLIDs);
+#else
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>& permuteToLIDs,
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>& permuteFromLIDs);
+#endif
 
 /// \brief unpackAndCombineIntoCrsArrays
 ///
@@ -189,10 +195,11 @@ void
 unpackAndCombineIntoCrsArrays(
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     const CrsGraph<LO, GO, NT> & sourceGraph,
+    const Teuchos::ArrayView<const LO>& importLIDs,
 #else
     const CrsGraph<NT> & sourceGraph,
+    const Teuchos::ArrayView<const typename Tpetra::Map<>::local_ordinal_type>& importLIDs,
 #endif
-    const Teuchos::ArrayView<const LO>& importLIDs,
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     const Teuchos::ArrayView<const typename CrsGraph<LO,GO,NT>::packet_type>& imports,
 #else
@@ -203,13 +210,22 @@ unpackAndCombineIntoCrsArrays(
     Distributor& distor,
     const CombineMode combineMode,
     const size_t numSameIDs,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     const Teuchos::ArrayView<const LO>& permuteToLIDs,
     const Teuchos::ArrayView<const LO>& permuteFromLIDs,
+#else
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>& permuteToLIDs,
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>& permuteFromLIDs,
+#endif
     size_t TargetNumRows,
     size_t TargetNumNonzeros,
     const int MyTargetPID,
     const Teuchos::ArrayView<size_t>& CRS_rowptr,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     const Teuchos::ArrayView<GO>& CRS_colind,
+#else
+    const Teuchos::ArrayView<Tpetra::Map<>::global_ordinal_type>& CRS_colind,
+#endif
     const Teuchos::ArrayView<const int>& SourcePids,
     Teuchos::Array<int>& TargetPids);
 

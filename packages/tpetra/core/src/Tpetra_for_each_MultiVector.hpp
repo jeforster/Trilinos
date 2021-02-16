@@ -175,6 +175,7 @@ namespace Tpetra {
         using MV = Tpetra::MultiVector<SC, LO, GO, NT>;
 #else
         using MV = Tpetra::MultiVector<SC, NT>;
+        using LO = typename Tpetra::Map<>::local_ordinal_type;
 #endif
         using preferred_memory_space =
           typename MV::device_type::memory_space;

@@ -51,6 +51,11 @@
 namespace Tpetra {
 namespace Details {
 
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = Tpetra::Details::DefaultTypes::local_ordinal_type;
+  using GO = Tpetra::Details::DefaultTypes::global_ordinal_type;
+#endif
+
 //! Deep copy of A's local sparse matrix.
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 template <class SC, class LO, class GO, class NT>

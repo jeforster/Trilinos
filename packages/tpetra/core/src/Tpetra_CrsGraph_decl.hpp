@@ -246,10 +246,10 @@ namespace Tpetra {
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     template <class S, class LO, class GO, class N>
 #else
-    using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
-    using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
-    using LO = typename Tpetra::Map<>::local_ordinal_type;
-    using GO = typename Tpetra::Map<>::global_ordinal_type;
+    using LocalOrdinal = Tpetra::Details::DefaultTypes::local_ordinal_type;
+    using GlobalOrdinal = Tpetra::Details::DefaultTypes::global_ordinal_type;
+    using LO = Tpetra::Details::DefaultTypes::local_ordinal_type;
+    using GO = Tpetra::Details::DefaultTypes::global_ordinal_type;
     template <class S, class N>
 #endif
     friend class CrsMatrix;

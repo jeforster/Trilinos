@@ -81,8 +81,8 @@ template<class Scalar,
 class RowMatrixTransposer {
 public:
 #ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
-  using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
-  using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
+  using LocalOrdinal = typename Tpetra::Details::DefaultTypes::local_ordinal_type;
+  using GlobalOrdinal = typename Tpetra::Details::DefaultTypes::global_ordinal_type;
 #endif
   //! @name Typedefs
   //@{

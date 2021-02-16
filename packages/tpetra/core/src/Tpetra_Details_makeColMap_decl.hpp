@@ -158,11 +158,13 @@ int
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 makeColMap (Teuchos::RCP<const Tpetra::Map<LO, GO, NT>>& colMap,
             const Teuchos::RCP<const Tpetra::Map<LO, GO, NT>>& domMap,
+            Kokkos::View<GO*, 
 #else
 makeColMap (Teuchos::RCP<const Tpetra::Map<NT>>& colMap,
             const Teuchos::RCP<const Tpetra::Map<NT>>& domMap,
+            Kokkos::View<Tpetra::Details::DefaultTypes::global_ordinal_type*, 
 #endif
-            Kokkos::View<GO*, typename NT::memory_space> gids,
+            typename NT::memory_space> gids,
             std::ostream* errStrm = NULL);
 
 } // namespace Details

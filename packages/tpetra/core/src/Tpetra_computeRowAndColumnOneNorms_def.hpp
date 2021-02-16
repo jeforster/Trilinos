@@ -74,6 +74,9 @@ lclMaxNumEntriesRowMatrix (const Tpetra::RowMatrix<SC, LO, GO, NT>& A)
 lclMaxNumEntriesRowMatrix (const Tpetra::RowMatrix<SC, NT>& A)
 #endif
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+#endif
   const auto& rowMap = * (A.getRowMap ());
   const LO lclNumRows = static_cast<LO> (rowMap.getNodeNumElements ());
 
@@ -93,16 +96,27 @@ template<class SC, class NT>
 void
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 forEachLocalRowMatrixRow (const Tpetra::RowMatrix<SC, LO, GO, NT>& A,
+                          const LO lclNumRows,
 #else
 forEachLocalRowMatrixRow (const Tpetra::RowMatrix<SC, NT>& A,
+                          const Tpetra::Map<>::local_ordinal_type lclNumRows,
 #endif
-                          const LO lclNumRows,
                           const std::size_t maxNumEnt,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                           std::function<void (const LO lclRow,
                                               const Teuchos::ArrayView<LO>& /* ind */,
                                               const Teuchos::ArrayView<SC>& /* val */,
                                               std::size_t /* numEnt */ )> doForEachRow)
+#else
+                          std::function<void (const Tpetra::Map<>::local_ordinal_type lclRow,
+                                              const Teuchos::ArrayView<Tpetra::Map<>::local_ordinal_type>& /* ind */,
+                                              const Teuchos::ArrayView<SC>& /* val */,
+                                              std::size_t /* numEnt */ )> doForEachRow)
+#endif
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+#endif
   Teuchos::Array<LO> indBuf (maxNumEnt);
   Teuchos::Array<SC> valBuf (maxNumEnt);
 
@@ -126,11 +140,19 @@ forEachLocalRowMatrixRow (const Tpetra::RowMatrix<SC, LO, GO, NT>& A,
 #else
 forEachLocalRowMatrixRow (const Tpetra::RowMatrix<SC, NT>& A,
 #endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                           std::function<void (const LO lclRow,
                                               const Teuchos::ArrayView<LO>& /* ind */,
+#else
+                          std::function<void (const Tpetra::Map<>::local_ordinal_type lclRow,
+                                              const Teuchos::ArrayView<Tpetra::Map<>::local_ordinal_type>& /* ind */,
+#endif
                                               const Teuchos::ArrayView<SC>& /* val */,
                                               std::size_t /* numEnt */ )> doForEachRow)
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+#endif
   const auto& rowMap = * (A.getRowMap ());
   const LO lclNumRows = static_cast<LO> (rowMap.getNodeNumElements ());
   const std::size_t maxNumEnt = lclMaxNumEntriesRowMatrix (A);
@@ -159,6 +181,9 @@ computeLocalRowScaledColumnNorms_RowMatrix (EquilibrationInfo<typename Kokkos::A
                                             const Tpetra::RowMatrix<SC, NT>& A)
 #endif
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+#endif
   using KAT = Kokkos::ArithTraits<SC>;
   using mag_type = typename KAT::mag_type;
 
@@ -200,6 +225,10 @@ computeLocalRowOneNorms_RowMatrix (const Tpetra::RowMatrix<SC, LO, GO, NT>& A)
 computeLocalRowOneNorms_RowMatrix (const Tpetra::RowMatrix<SC, NT>& A)
 #endif
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+  using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
   using KAT = Kokkos::ArithTraits<SC>;
   using val_type = typename KAT::val_type;
   using mag_type = typename KAT::mag_type;
@@ -281,6 +310,10 @@ computeLocalRowAndColumnOneNorms_RowMatrix (const Tpetra::RowMatrix<SC, NT>& A,
 #endif
                                             const bool assumeSymmetric)
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+  using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
   using KAT = Kokkos::ArithTraits<SC>;
   using val_type = typename KAT::val_type;
   using mag_type = typename KAT::mag_type;
@@ -458,6 +491,9 @@ computeLocalRowScaledColumnNorms (EquilibrationInfo<typename Kokkos::ArithTraits
                                   const Tpetra::RowMatrix<SC, NT>& A)
 #endif
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+#endif
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   using crs_matrix_type = Tpetra::CrsMatrix<SC, LO, GO, NT>;
 #else
@@ -727,6 +763,9 @@ computeLocalRowOneNorms_CrsMatrix (const Tpetra::CrsMatrix<SC, LO, GO, NT>& A)
 computeLocalRowOneNorms_CrsMatrix (const Tpetra::CrsMatrix<SC, NT>& A)
 #endif
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+#endif
   using execution_space = typename NT::device_type::execution_space;
   using range_type = Kokkos::RangePolicy<execution_space, LO>;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -772,6 +811,9 @@ computeLocalRowAndColumnOneNorms_CrsMatrix (const Tpetra::CrsMatrix<SC, NT>& A,
 #endif
                                             const bool assumeSymmetric)
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+#endif
   using execution_space = typename NT::device_type::execution_space;
   using range_type = Kokkos::RangePolicy<execution_space, LO>;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -898,11 +940,12 @@ getLocalView_2d (const Tpetra::MultiVector<SC, NT>& X)
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 template<class SC, class LO, class GO, class NT>
 auto getLocalView_1d (const Tpetra::MultiVector<SC, LO, GO, NT>& X,
+                      const LO whichColumn)
 #else
 template<class SC, class NT>
 auto getLocalView_1d (const Tpetra::MultiVector<SC, NT>& X,
+                      const Tpetra::Map<>::local_ordinal_type whichColumn)
 #endif
-                      const LO whichColumn)
   -> decltype (Kokkos::subview (getLocalView_2d (X), Kokkos::ALL (), whichColumn))
 {
   if (X.isConstantStride ()) {
@@ -922,10 +965,11 @@ template<class SC, class NT, class ViewValueType>
 void
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 copy1DViewIntoMultiVectorColumn (Tpetra::MultiVector<SC, LO, GO, NT>& X,
+                                 const LO whichColumn,
 #else
 copy1DViewIntoMultiVectorColumn (Tpetra::MultiVector<SC, NT>& X,
+                                 const Tpetra::Map<>::local_ordinal_type whichColumn,
 #endif
-                                 const LO whichColumn,
                                  const Kokkos::View<ViewValueType*, typename NT::device_type>& view)
 {
   using dev_memory_space = typename NT::device_type::memory_space;
@@ -944,10 +988,11 @@ void
 copyMultiVectorColumnInto1DView (const Kokkos::View<ViewValueType*, typename NT::device_type>& view,
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                                  Tpetra::MultiVector<SC, LO, GO, NT>& X,
+                                 const LO whichColumn)
 #else
                                  Tpetra::MultiVector<SC, NT>& X,
+                                 const Tpetra::Map<>::local_ordinal_type whichColumn)
 #endif
-                                 const LO whichColumn)
 {
   using dev_memory_space = typename NT::device_type::memory_space;
   X.template sync<dev_memory_space> ();
@@ -1085,6 +1130,10 @@ globalizeColumnOneNorms (EquilibrationInfo<typename Kokkos::ArithTraits<SC>::val
 #endif
                          const bool assumeSymmetric) // if so, use row norms
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+  using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
   using val_type = typename Kokkos::ArithTraits<SC>::val_type;
   using mag_type = typename Kokkos::ArithTraits<val_type>::mag_type;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS

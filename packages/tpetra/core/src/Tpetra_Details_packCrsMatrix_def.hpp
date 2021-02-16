@@ -736,12 +736,20 @@ packCrsMatrix (const CrsMatrix<ST, NT>& sourceMatrix,
 #endif
                Kokkos::DualView<char*, BufferDeviceType>& exports,
                const Kokkos::View<size_t*, BufferDeviceType>& num_packets_per_lid,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                const Kokkos::View<const LO*, BufferDeviceType>& export_lids,
+#else
+               const Kokkos::View<const Tpetra::Map<>::local_ordinal_type*, BufferDeviceType>& export_lids,
+#endif
                const Kokkos::View<const int*, typename NT::device_type>& export_pids,
                size_t& constant_num_packets,
                const bool pack_pids,
                Distributor& /* dist */)
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+  using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
   ::Tpetra::Details::ProfilingRegion region_pack_crs_matrix(
     "Tpetra::Details::PackCrsMatrixImpl::packCrsMatrix",
     "Import/Export"
@@ -879,10 +887,18 @@ packCrsMatrix (const CrsMatrix<ST, NT>& sourceMatrix,
 #endif
                Teuchos::Array<char>& exports,
                const Teuchos::ArrayView<size_t>& numPacketsPerLID,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                const Teuchos::ArrayView<const LO>& exportLIDs,
+#else
+               const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>& exportLIDs,
+#endif
                size_t& constantNumPackets,
                Distributor& distor)
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+  using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   using local_matrix_type = typename CrsMatrix<ST,LO,GO,NT>::local_matrix_type;
 #else
@@ -966,7 +982,7 @@ packCrsMatrixNew(
   const CrsMatrix<ST, NT>& sourceMatrix,
   Kokkos::DualView<char*, typename DistObject<char,NT>::buffer_device_type>& exports,
   const Kokkos::DualView<size_t*, typename DistObject<char,NT>::buffer_device_type>& numPacketsPerLID,
-  const Kokkos::DualView<const LO*, typename DistObject<char,NT>::buffer_device_type>& exportLIDs,
+  const Kokkos::DualView<const Tpetra::Map<>::local_ordinal_type*, typename DistObject<char,NT>::buffer_device_type>& exportLIDs,
 #endif
   size_t& constantNumPackets,
   Distributor& distor
@@ -1021,7 +1037,11 @@ packCrsMatrixWithOwningPIDs (const CrsMatrix<ST, NT>& sourceMatrix,
                              Kokkos::DualView<char*, typename DistObject<char,NT>::buffer_device_type>& exports_dv,
 #endif
                              const Teuchos::ArrayView<size_t>& numPacketsPerLID,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                              const Teuchos::ArrayView<const LO>& exportLIDs,
+#else
+                             const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>& exportLIDs,
+#endif
                              const Teuchos::ArrayView<const int>& sourcePIDs,
                              size_t& constantNumPackets,
                              Distributor& distor)
@@ -1177,21 +1197,21 @@ packCrsMatrixWithOwningPIDs (const CrsMatrix<ST, NT>& sourceMatrix,
   Details::packCrsMatrix<ST, NT> (const CrsMatrix<ST, NT>&, \
     Teuchos::Array<char>&, \
     const Teuchos::ArrayView<size_t>&, \
-    const Teuchos::ArrayView<const LO>&, \
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>&, \
     size_t&, \
     Distributor&); \
   template void \
   Details::packCrsMatrixNew<ST, NT> (const CrsMatrix<ST, NT>&, \
     Kokkos::DualView<char*, DistObject<char,NT>::buffer_device_type>&, \
     const Kokkos::DualView<size_t*, DistObject<char,NT>::buffer_device_type>&, \
-    const Kokkos::DualView<const LO*, DistObject<char,NT>::buffer_device_type>&, \
+    const Kokkos::DualView<const Tpetra::Map<>::local_ordinal_type*, DistObject<char,NT>::buffer_device_type>&, \
     size_t&, \
     Distributor&); \
   template void \
   Details::packCrsMatrixWithOwningPIDs<ST, NT> (const CrsMatrix<ST, NT>&, \
     Kokkos::DualView<char*, DistObject<char,NT>::buffer_device_type>&, \
     const Teuchos::ArrayView<size_t>&, \
-    const Teuchos::ArrayView<const LO>&, \
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>&, \
     const Teuchos::ArrayView<const int>&, \
     size_t&, \
     Distributor&);

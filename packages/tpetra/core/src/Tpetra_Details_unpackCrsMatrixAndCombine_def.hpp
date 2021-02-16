@@ -105,7 +105,11 @@ template<class ST, class LO, class GO>
 template<class ST>
 #endif
 KOKKOS_FUNCTION int
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 unpackRow(const typename PackTraits<GO>::output_array_type& gids_out,
+#else
+unpackRow(const typename PackTraits<Tpetra::Map<>::global_ordinal_type>::output_array_type& gids_out,
+#endif
           const typename PackTraits<int>::output_array_type& pids_out,
           const typename PackTraits<ST>::output_array_type& vals_out,
           const char imports[],
@@ -114,6 +118,10 @@ unpackRow(const typename PackTraits<GO>::output_array_type& gids_out,
           const size_t num_ent,
           const size_t bytes_per_value)
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+  using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
   if (num_ent == 0) {
     // Empty rows always take zero bytes, to ensure sparsity.
     return 0;
@@ -1205,11 +1213,19 @@ unpackCrsMatrixAndCombine(
 #endif
     const Teuchos::ArrayView<const char>& imports,
     const Teuchos::ArrayView<const size_t>& numPacketsPerLID,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     const Teuchos::ArrayView<const LO>& importLIDs,
+#else
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>& importLIDs,
+#endif
     size_t /* constantNumPackets */,
     Distributor & /* distor */,
     CombineMode combineMode)
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+  using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
   using Kokkos::View;
   typedef typename Node::device_type device_type;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
@@ -1282,7 +1298,11 @@ unpackCrsMatrixAndCombineNew(
 #else
     typename DistObject<char,NT>::buffer_device_type> numPacketsPerLID,
 #endif
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   const Kokkos::DualView<const LO*,
+#else
+  const Kokkos::DualView<const Tpetra::Map<>::local_ordinal_type*,
+#endif
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     typename DistObject<char, LO, GO, NT>::buffer_device_type>& importLIDs,
 #else
@@ -1743,7 +1763,7 @@ unpackAndCombineIntoCrsArrays (
     const CrsMatrix<ST, NT>&, \
     const Teuchos::ArrayView<const char>&, \
     const Teuchos::ArrayView<const size_t>&, \
-    const Teuchos::ArrayView<const LO>&, \
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>&, \
     size_t, \
     Distributor&, \
     CombineMode); \
@@ -1752,42 +1772,42 @@ unpackAndCombineIntoCrsArrays (
     const CrsMatrix<ST, NT>&, \
     Kokkos::DualView<char*, typename DistObject<char,NT>::buffer_device_type>, \
     Kokkos::DualView<size_t*, typename DistObject<char,NT>::buffer_device_type>, \
-    const Kokkos::DualView<const LO*, typename DistObject<char,NT>::buffer_device_type>&, \
+    const Kokkos::DualView<const Tpetra::Map<>::local_ordinal_type*, typename DistObject<char,NT>::buffer_device_type>&, \
     const size_t, \
     Distributor&, \
     const CombineMode); \
   template void \
   Details::unpackAndCombineIntoCrsArrays<ST, NT> ( \
     const CrsMatrix<ST, NT> &, \
-    const Teuchos::ArrayView<const LO>&, \
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>&, \
     const Teuchos::ArrayView<const char>&, \
     const Teuchos::ArrayView<const size_t>&, \
     const size_t, \
     Distributor&, \
     const CombineMode, \
     const size_t, \
-    const Teuchos::ArrayView<const LO>&, \
-    const Teuchos::ArrayView<const LO>&, \
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>&, \
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>&, \
     size_t, \
     size_t, \
     const int, \
     const Teuchos::ArrayView<size_t>&, \
-    const Teuchos::ArrayView<GO>&, \
+    const Teuchos::ArrayView<Tpetra::Map<>::global_ordinal_type>&, \
     const Teuchos::ArrayView<CrsMatrix<ST, NT>::impl_scalar_type>&, \
     const Teuchos::ArrayView<const int>&, \
     Teuchos::Array<int>&); \
   template size_t \
   Details::unpackAndCombineWithOwningPIDsCount<ST, NT> ( \
     const CrsMatrix<ST, NT> &, \
-    const Teuchos::ArrayView<const LO> &, \
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type> &, \
     const Teuchos::ArrayView<const char> &, \
     const Teuchos::ArrayView<const size_t>&, \
     size_t, \
     Distributor &, \
     CombineMode, \
     size_t, \
-    const Teuchos::ArrayView<const LO>&, \
-    const Teuchos::ArrayView<const LO>&);
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>&, \
+    const Teuchos::ArrayView<const Tpetra::Map<>::local_ordinal_type>&);
 #endif
 
 #endif // TPETRA_DETAILS_UNPACKCRSMATRIXANDCOMBINE_DEF_HPP
