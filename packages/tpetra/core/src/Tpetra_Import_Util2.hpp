@@ -127,8 +127,13 @@ template <typename Node>
 #endif
 void
 lowCommunicationMakeColMapAndReindex (const Teuchos::ArrayView<const size_t> &rowPointers,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                                       const Teuchos::ArrayView<LocalOrdinal> &columnIndices_LID,
                                       const Teuchos::ArrayView<GlobalOrdinal> &columnIndices_GID,
+#else
+                                      const Teuchos::ArrayView<Tpetra::Map<>::local_ordinal_type> &columnIndices_LID,
+                                      const Teuchos::ArrayView<Tpetra::Map<>::global_ordinal_type> &columnIndices_GID,
+#endif
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                                       const Teuchos::RCP<const Tpetra::Map<LocalOrdinal,GlobalOrdinal,Node> > & domainMap,
 #else
@@ -761,8 +766,13 @@ template <typename Node>
 #endif
 void
 lowCommunicationMakeColMapAndReindex (const Teuchos::ArrayView<const size_t> &rowptr,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
                                       const Teuchos::ArrayView<LocalOrdinal> &colind_LID,
                                       const Teuchos::ArrayView<GlobalOrdinal> &colind_GID,
+#else
+                                      const Teuchos::ArrayView<Tpetra::Map<>::local_ordinal_type> &colind_LID,
+                                      const Teuchos::ArrayView<Tpetra::Map<>::global_ordinal_type> &colind_GID,
+#endif
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                                       const Teuchos::RCP<const Tpetra::Map<LocalOrdinal,GlobalOrdinal,Node> >& domainMapRCP,
 #else
@@ -776,6 +786,10 @@ lowCommunicationMakeColMapAndReindex (const Teuchos::ArrayView<const size_t> &ro
                                       Teuchos::RCP<const Tpetra::Map<Node> > & colMap)
 #endif
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LocalOrdinal = typename Tpetra::Map<>::local_ordinal_type;
+  using GlobalOrdinal = typename Tpetra::Map<>::global_ordinal_type;
+#endif
   using Teuchos::rcp;
   typedef LocalOrdinal LO;
   typedef GlobalOrdinal GO;

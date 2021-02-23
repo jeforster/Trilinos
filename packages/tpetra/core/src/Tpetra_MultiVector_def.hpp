@@ -3629,6 +3629,9 @@ namespace Tpetra {
                const local_ordinal_type rowOffset) :
     base_type (subMap)
   {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+    using LO = typename Tpetra::Map<>::local_ordinal_type;
+#endif
     using Kokkos::ALL;
     using Kokkos::subview;
     using Teuchos::outArg;
@@ -5573,6 +5576,9 @@ namespace Tpetra {
 #endif
              const Teuchos::SerialDenseMatrix<int, ST>& src)
   {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+    using LO = typename Tpetra::Map<>::local_ordinal_type;
+#endif
     using ::Tpetra::Details::localDeepCopy;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     using MV = MultiVector<ST, LO, GO, NT>;
@@ -5626,6 +5632,9 @@ namespace Tpetra {
              const MultiVector<ST, NT>& src)
 #endif
   {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+    using LO = typename Tpetra::Map<>::local_ordinal_type;
+#endif
     using ::Tpetra::Details::localDeepCopy;
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
     using MV = MultiVector<ST, LO, GO, NT>;

@@ -11135,15 +11135,9 @@ namespace Tpetra {
   template<>      \
   Teuchos::RCP<CrsMatrix<SCALAR, NODE> >                        \
   importAndFillCompleteCrsMatrix (const Teuchos::RCP<const CrsMatrix<SCALAR, NODE> >& sourceMatrix, \
-                                  const Import<CrsMatrix<SCALAR, NODE>::local_ordinal_type,  \
-                                               CrsMatrix<SCALAR, NODE>::global_ordinal_type,  \
-                                               CrsMatrix<SCALAR, NODE>::node_type>& importer, \
-                                  const Teuchos::RCP<const Map<CrsMatrix<SCALAR, NODE>::local_ordinal_type,      \
-                                                               CrsMatrix<SCALAR, NODE>::global_ordinal_type,     \
-                                                               CrsMatrix<SCALAR, NODE>::node_type> >& domainMap, \
-                                  const Teuchos::RCP<const Map<CrsMatrix<SCALAR, NODE>::local_ordinal_type,      \
-                                                               CrsMatrix<SCALAR, NODE>::global_ordinal_type,     \
-                                                               CrsMatrix<SCALAR, NODE>::node_type> >& rangeMap,  \
+                                  const Import<CrsMatrix<SCALAR, NODE>::node_type>& importer, \
+                                  const Teuchos::RCP<const Map<CrsMatrix<SCALAR, NODE>::node_type> >& domainMap, \
+                                  const Teuchos::RCP<const Map<CrsMatrix<SCALAR, NODE>::node_type> >& rangeMap,  \
                                                                const Teuchos::RCP<Teuchos::ParameterList>& params);
 #endif                                                                 
 
@@ -11170,18 +11164,10 @@ namespace Tpetra {
   template<>  \
   Teuchos::RCP<CrsMatrix<SCALAR, NODE> >                        \
   importAndFillCompleteCrsMatrix (const Teuchos::RCP<const CrsMatrix<SCALAR, NODE> >& sourceMatrix, \
-                                  const Import<CrsMatrix<SCALAR, NODE>::local_ordinal_type,  \
-                                               CrsMatrix<SCALAR, NODE>::global_ordinal_type,  \
-                                               CrsMatrix<SCALAR, NODE>::node_type>& rowImporter, \
-                                  const Import<CrsMatrix<SCALAR, NODE>::local_ordinal_type,  \
-                                               CrsMatrix<SCALAR, NODE>::global_ordinal_type,  \
-                                               CrsMatrix<SCALAR, NODE>::node_type>& domainImporter, \
-                                  const Teuchos::RCP<const Map<CrsMatrix<SCALAR, NODE>::local_ordinal_type,      \
-                                                               CrsMatrix<SCALAR, NODE>::global_ordinal_type,     \
-                                                               CrsMatrix<SCALAR, NODE>::node_type> >& domainMap, \
-                                  const Teuchos::RCP<const Map<CrsMatrix<SCALAR, NODE>::local_ordinal_type,      \
-                                                               CrsMatrix<SCALAR, NODE>::global_ordinal_type,     \
-                                                               CrsMatrix<SCALAR, NODE>::node_type> >& rangeMap,  \
+                                  const Import<CrsMatrix<SCALAR, NODE>::node_type>& rowImporter, \
+                                  const Import<CrsMatrix<SCALAR, NODE>::node_type>& domainImporter, \
+                                  const Teuchos::RCP<const Map<CrsMatrix<SCALAR, NODE>::node_type> >& domainMap, \
+                                  const Teuchos::RCP<const Map<CrsMatrix<SCALAR, NODE>::node_type> >& rangeMap,  \
                                                                const Teuchos::RCP<Teuchos::ParameterList>& params);
 #endif
 
@@ -11205,15 +11191,9 @@ namespace Tpetra {
   template<>  \
   Teuchos::RCP<CrsMatrix<SCALAR, NODE> >                        \
   exportAndFillCompleteCrsMatrix (const Teuchos::RCP<const CrsMatrix<SCALAR, NODE> >& sourceMatrix, \
-                                  const Export<CrsMatrix<SCALAR, NODE>::local_ordinal_type,  \
-                                               CrsMatrix<SCALAR, NODE>::global_ordinal_type,  \
-                                               CrsMatrix<SCALAR, NODE>::node_type>& exporter, \
-                                  const Teuchos::RCP<const Map<CrsMatrix<SCALAR, NODE>::local_ordinal_type,      \
-                                                               CrsMatrix<SCALAR, NODE>::global_ordinal_type,     \
-                                                               CrsMatrix<SCALAR, NODE>::node_type> >& domainMap, \
-                                  const Teuchos::RCP<const Map<CrsMatrix<SCALAR, NODE>::local_ordinal_type,      \
-                                                               CrsMatrix<SCALAR, NODE>::global_ordinal_type,     \
-                                                               CrsMatrix<SCALAR, NODE>::node_type> >& rangeMap,  \
+                                  const Export<CrsMatrix<SCALAR, NODE>::node_type>& exporter, \
+                                  const Teuchos::RCP<const Map<CrsMatrix<SCALAR, NODE>::node_type> >& domainMap, \
+                                  const Teuchos::RCP<const Map<CrsMatrix<SCALAR, NODE>::node_type> >& rangeMap,  \
                                                                const Teuchos::RCP<Teuchos::ParameterList>& params);
 #endif
                                                                 
@@ -11240,18 +11220,10 @@ namespace Tpetra {
   template<>   \
   Teuchos::RCP<CrsMatrix<SCALAR, NODE> >                        \
   exportAndFillCompleteCrsMatrix (const Teuchos::RCP<const CrsMatrix<SCALAR, NODE> >& sourceMatrix, \
-                                  const Export<CrsMatrix<SCALAR, NODE>::local_ordinal_type,  \
-                                               CrsMatrix<SCALAR, NODE>::global_ordinal_type,  \
-                                               CrsMatrix<SCALAR, NODE>::node_type>& rowExporter, \
-                                  const Export<CrsMatrix<SCALAR, NODE>::local_ordinal_type,  \
-                                               CrsMatrix<SCALAR, NODE>::global_ordinal_type,  \
-                                               CrsMatrix<SCALAR, NODE>::node_type>& domainExporter, \
-                                  const Teuchos::RCP<const Map<CrsMatrix<SCALAR, NODE>::local_ordinal_type,      \
-                                                               CrsMatrix<SCALAR, NODE>::global_ordinal_type,     \
-                                                               CrsMatrix<SCALAR, NODE>::node_type> >& domainMap, \
-                                  const Teuchos::RCP<const Map<CrsMatrix<SCALAR, NODE>::local_ordinal_type,      \
-                                                               CrsMatrix<SCALAR, NODE>::global_ordinal_type,     \
-                                                               CrsMatrix<SCALAR, NODE>::node_type> >& rangeMap,  \
+                                  const Export<CrsMatrix<SCALAR, NODE>::node_type>& rowExporter, \
+                                  const Export<CrsMatrix<SCALAR, NODE>::node_type>& domainExporter, \
+                                  const Teuchos::RCP<const Map<CrsMatrix<SCALAR, NODE>::node_type> >& domainMap, \
+                                  const Teuchos::RCP<const Map<CrsMatrix<SCALAR, NODE>::node_type> >& rangeMap,  \
                                                                const Teuchos::RCP<Teuchos::ParameterList>& params);
 #endif
 
