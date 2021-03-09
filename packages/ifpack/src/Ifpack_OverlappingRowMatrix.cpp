@@ -288,19 +288,11 @@ Ifpack_OverlappingRowMatrix(const RCP<const Epetra_RowMatrix>& Matrix_in,
   t0=t1;
 #endif
 
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   Teuchos::Hashtable<int,int> colMapTable(3 * A().RowMatrixColMap().NumMyElements() );
-#else
-  Teuchos::Hashtable<> colMapTable(3 * A().RowMatrixColMap().NumMyElements() );
-#endif
 
   // ghostTable holds off-node GIDs that are connected to on-node rows and can potentially be this PID's overlap
   // TODO hopefully 3 times the # column entries is a reasonable table size
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   Teuchos::Hashtable<int,int> ghostTable(3 * A().RowMatrixColMap().NumMyElements() );
-#else
-  Teuchos::Hashtable<> ghostTable(3 * A().RowMatrixColMap().NumMyElements() );
-#endif
 
   /* ** ************************************************************************** ** */
   /* ** ********************** start of main overlap loop ************************ ** */
@@ -982,19 +974,11 @@ Ifpack_OverlappingRowMatrix(const RCP<const Epetra_RowMatrix>& Matrix_in,
   t0=t1;
 #endif
 
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   Teuchos::Hashtable<int,int> colMapTable(3 * A().RowMatrixColMap().NumMyElements() );
-#else
-  Teuchos::Hashtable<> colMapTable(3 * A().RowMatrixColMap().NumMyElements() );
-#endif
 
   // ghostTable holds off-node GIDs that are connected to on-node rows and can potentially be this PID's overlap
   // TODO hopefully 3 times the # column entries is a reasonable table size
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   Teuchos::Hashtable<int,int> ghostTable(3 * A().RowMatrixColMap().NumMyElements() );
-#else
-  Teuchos::Hashtable<> ghostTable(3 * A().RowMatrixColMap().NumMyElements() );
-#endif
 
   /* ** ************************************************************************** ** */
   /* ** ********************** start of main overlap loop ************************ ** */

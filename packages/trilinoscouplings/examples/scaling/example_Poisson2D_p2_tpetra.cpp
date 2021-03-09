@@ -2246,11 +2246,7 @@ void GenerateIdentityCoarsening_p2_to_p1(const FieldContainer<int> & P2_elemToNo
 
   //We must keep track of the nodes already encountered.  Inserting more than once will cause
   //the values to be summed.  Using a hashtable would work -- we abuse std::map for this purpose.
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   std::map<int,int> hashTable;
-#else
-  std::map<> hashTable;
-#endif
   int Nelem=P2_elemToNode.dimension(0);
   Array<scalar_type> vals1(1);
   vals1[0] = one;

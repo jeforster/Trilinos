@@ -330,11 +330,7 @@ namespace MueLu {
         // i.e, a vector V of vectors, where V[i] is PID i's vector of data.
         // Hence we need to be able to quickly look up  an array index
         // associated with each PID.
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
         Tpetra::Details::HashTable<int,int> hashTable(3*num_neighbors);
-#else
-        Tpetra::Details::HashTable<> hashTable(3*num_neighbors);
-#endif
         for (int i = 0; i < num_neighbors; i++)
           hashTable.add(neighbors[i], i);
 
