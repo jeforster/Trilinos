@@ -71,11 +71,13 @@ static int checkProc(GO gid, int proc, int correct) {
   }
   return 0;
 }
-#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
 template <typename LO, typename GO>
-#endif
 static int checkLid(GO gid, LO lid, LO correct) {
+#else
+static int checkLid(Tpetra::Map<>::global_ordinal_type gid, Tpetra::Map<>::local_ordinal_type lid, Tpetra::Map<>::local_ordinal_type correct) {
+#endif
   //  Report error if found LID is incorrec2
   if (lid != correct) {
     std::cout << "\nError: ID " << gid << " has LID " << lid
