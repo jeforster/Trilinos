@@ -1215,7 +1215,7 @@ namespace { // (anonymous)
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
-  TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
+  //TPETRA_INSTANTIATE_LGN( UNIT_TEST_GROUP )
 
   typedef ::Tpetra::Map<>::node_type default_node_type;
 #ifdef HAVE_TPETRA_INST_INT_LONG_LONG
@@ -1227,12 +1227,12 @@ namespace { // (anonymous)
 #endif // HAVE_TPETRA_INST_INT_LONG_LONG
 
 #else
-#define UNIT_TEST_GROUP(NODE ) \
+#define UNIT_TEST_GROUP( NODE ) \
   TEUCHOS_UNIT_TEST_TEMPLATE_1_INSTANT( CrsMatrix, Albany182, NODE )
 
   TPETRA_ETI_MANGLING_TYPEDEFS()
 
-  TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
+  //TPETRA_INSTANTIATE_N( UNIT_TEST_GROUP )
 
   typedef ::Tpetra::Map<>::node_type default_node_type;
   UNIT_TEST_GROUP( default_node_type )

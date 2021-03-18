@@ -676,14 +676,22 @@ main(int argc, char* argv[])
     }
   }
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   using graph_type = Tpetra::CrsGraph<local_ordinal, global_ordinal, node_type>;
+#else
+  using graph_type = Tpetra::CrsGraph<node_type>;
+#endif
   RCP<graph_type> g_owned;
   RCP<graph_type> g_shared;
   generate_graphs(comm, g_owned, g_shared, rows_per_rank, overlap, dense_rows);
 
   Tpetra::Details::Behavior::enable_timing();
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   using matrix_type = Tpetra::CrsMatrix<real, local_ordinal, global_ordinal, node_type>;
+#else
+  using matrix_type = Tpetra::CrsMatrix<real, node_type>;
+#endif
   RCP<matrix_type> m_owned = rcp(new matrix_type(g_owned));
   RCP<matrix_type> m_shared = rcp(new matrix_type(g_shared));
 
@@ -694,7 +702,11 @@ main(int argc, char* argv[])
       comm, g_owned, g_shared, rows_per_rank, overlap, dense_rows
     );
 
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
     using dist_object_type = Tpetra::DistObject<char, local_ordinal, global_ordinal, node_type>;
+#else
+    using dist_object_type = Tpetra::DistObject<char, node_type>;
+#endif
     using bdt = typename dist_object_type::buffer_device_type;
     time_single_row_unpack<local_ordinal, global_ordinal, node_type, bdt>();
   }

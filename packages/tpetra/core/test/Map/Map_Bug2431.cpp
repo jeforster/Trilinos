@@ -115,12 +115,22 @@ int runTest(
   const char *message,
   std::ostream &outStream,   // allows varying levels of output
   Teuchos::RCP<const Teuchos::Comm<int>> &comm,
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   std::vector<GO> &vecP0,
   std::vector<GO> &vecP1,
   std::vector<GO> &vecP2,
   std::vector<GO> &vecP3
+#else
+  std::vector<Tpetra::Map<>::global_ordinal_type> &vecP0,
+  std::vector<Tpetra::Map<>::global_ordinal_type> &vecP1,
+  std::vector<Tpetra::Map<>::global_ordinal_type> &vecP2,
+  std::vector<Tpetra::Map<>::global_ordinal_type> &vecP3
+#endif
 )
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
   int errorFlag = 0;
 
   try {

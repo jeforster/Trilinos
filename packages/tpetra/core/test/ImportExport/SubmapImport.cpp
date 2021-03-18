@@ -69,8 +69,13 @@ RCP<Tpetra::Vector<int> >
 TestTpetra (const Teuchos::ArrayView<const Tpetra::Map<>::global_ordinal_type>& srcGID,
             const Teuchos::ArrayView<const Tpetra::Map<>::global_ordinal_type>& destGID)
 {
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   typedef Tpetra::Map<int> map_type;
   typedef map_type::global_ordinal_type GO;
+#else
+  typedef Tpetra::Map<> map_type;
+  typedef map_type::global_ordinal_type GO;
+#endif
   typedef Tpetra::global_size_t GST;
   using std::endl;
 
@@ -196,9 +201,6 @@ TEUCHOS_UNIT_TEST( DistObject, SubMapImport2 )
   //            Processor 1: Values =   0 -1
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   RCP<Tpetra::Vector<int,int> > destVector;
-#else
-  RCP<Tpetra::Vector<> > destVector;
-#endif
   if (MyPid == 0) {
     TEST_NOTHROW( destVector = TestTpetra(ArrayView<GO>(), tuple<GO>(0,1,2) ) )
     TEST_COMPARE_ARRAYS( tuple<int>(0,0,-1), destVector->get1dView() )
@@ -207,6 +209,9 @@ TEUCHOS_UNIT_TEST( DistObject, SubMapImport2 )
     TEST_NOTHROW( destVector = TestTpetra(tuple<GO>(0,1), tuple<GO>(1,2) ) )
     TEST_COMPARE_ARRAYS( tuple<int>(0,-1), destVector->get1dView() )
   }
+#else
+  RCP<Tpetra::Vector<> > destVector;
+#endif
 
   // Process 0 is responsible for printing the "SUCCESS" / "PASSED"
   // message, so without the barrier, it's possible for the test to be
@@ -238,9 +243,6 @@ TEUCHOS_UNIT_TEST( DistObject, SubMapImport3 )
   //            Processor 1: Values = -1 -1
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
   RCP<Tpetra::Vector<int,int> > destVector;
-#else
-  RCP<Tpetra::Vector<> > destVector;
-#endif
   if (MyPid == 0) {
     TEST_NOTHROW( destVector = TestTpetra(ArrayView<GO>(), tuple<GO>(0,1) ) )
   }
@@ -248,6 +250,9 @@ TEUCHOS_UNIT_TEST( DistObject, SubMapImport3 )
     TEST_NOTHROW( destVector = TestTpetra(ArrayView<GO>(), tuple<GO>(0,1) ) )
   }
   TEST_COMPARE_ARRAYS( tuple<int>(-1,-1), destVector->get1dView() )
+#else
+  RCP<Tpetra::Vector<> > destVector;
+#endif
 
   // Process 0 is responsible for printing the "SUCCESS" / "PASSED"
   // message, so without the barrier, it's possible for the test to be

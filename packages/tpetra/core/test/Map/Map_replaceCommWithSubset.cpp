@@ -94,6 +94,10 @@ testSubsetMapOverSubsetComm (int& gblSuccess, // output argument; 0 means false
 #endif
                              const Teuchos::RCP<const Teuchos::Comm<int> >& subsetComm)
 {
+#ifndef TPETRA_ENABLE_TEMPLATE_ORDINALS
+  using LO = typename Tpetra::Map<>::local_ordinal_type;
+  using GO = typename Tpetra::Map<>::global_ordinal_type;
+#endif
   int lclSuccess = 1; // to be modified below
 
   // We need to establish Map validity collectively.  If the input Map
