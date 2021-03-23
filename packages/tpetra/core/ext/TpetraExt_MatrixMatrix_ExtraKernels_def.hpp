@@ -1043,7 +1043,11 @@ void copy_out_from_thread_memory(const OutColindType& thread_total_nnz,
 
 
 /*********************************************************************************************************/
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
 template<class Scalar, class LocalOrdinal, class GlobalOrdinal, class Node, class LocalOrdinalViewType>
+#else
+template<class Scalar, class Node, class LocalOrdinalViewType>
+#endif
 void jacobi_A_B_newmatrix_MultiplyScaleAddKernel(Scalar omega,
 #ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS
                                                   const Vector<Scalar,LocalOrdinal,GlobalOrdinal, Node> & Dinv,

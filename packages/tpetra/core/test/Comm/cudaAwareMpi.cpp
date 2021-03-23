@@ -78,7 +78,11 @@ namespace { // (anonymous)
   typedef Kokkos::Compat::KokkosCudaWrapperNode test_node_type;
   typedef Tpetra::Map<>::local_ordinal_type LO;
   typedef Tpetra::Map<>::global_ordinal_type GO;
+#ifdef TPETRA_ENABLE_TEMPLATE_ORDINALS 
   typedef Tpetra::Map<LO, GO, test_node_type> map_type;
+#else
+  typedef Tpetra::Map<test_node_type> map_type;
+#endif
 
   //
   // UNIT TESTS
